@@ -2,7 +2,8 @@
 
 #### Email:
 
-Domingo Huang - yhuang158@dons.usfca.edu
+Domingo Huang - yhuang158@dons.usfca.edu  
+Kei Fukutani - kfukutani@usfca.edu  
 
 
 

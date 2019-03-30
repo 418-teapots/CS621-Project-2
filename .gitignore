@@ -1,0 +1,5 @@
+*
+!.gitignore
+!Technical_Manual.md
+!README.md
+!/ns-3.29/config/config.txt

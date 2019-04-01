@@ -123,13 +123,12 @@ main (int argc, char *argv[])
   std::string innerDataRate = std::to_string(compressionLinkCapacity) + "Mbps"; //set the inner link capcity
 
 
-  //Create four nodes and form a group
+  //Create three nodes and form a group
   NS_LOG_INFO ("Create nodes.");
   NodeContainer c;
-  c.Create (4);
+  c.Create (3);
   NodeContainer n0n1 = NodeContainer (c.Get (0), c.Get (1));
   NodeContainer n1n2 = NodeContainer (c.Get (1), c.Get (2));
-  NodeContainer n2n3 = NodeContainer (c.Get (2), c.Get (3));
 
   //install internet
   InternetStackHelper internet;
@@ -141,7 +140,7 @@ main (int argc, char *argv[])
   p2p.SetDeviceAttribute ("DataRate", StringValue (outerDataRate));
   p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));
   NetDeviceContainer d0d1 = p2p.Install (n0n1); //outer links
-  NetDeviceContainer d2d3 = p2p.Install (n2n3); //outer links
+  NetDeviceContainer d2d3 = p2p.Install (n1n2); //outer links
 
   p2p.SetDeviceAttribute ("DataRate", StringValue (innerDataRate));
   p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));

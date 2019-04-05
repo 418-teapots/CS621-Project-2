@@ -70,4 +70,6 @@ public:
   virtual bool match(Ptr<ns3::Packet> p)
 };
 
-}
+} // namespace ns3
+
+#endif /* DIFFERENTIATED_SERVICES_H */

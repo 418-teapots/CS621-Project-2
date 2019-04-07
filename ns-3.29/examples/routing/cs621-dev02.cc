@@ -35,7 +35,8 @@
 #include "ns3/ipv4-global-routing-helper.h"
 #include "ns3/ipv4-flow-classifier.h"
 #include "ns3/flow-monitor.h"
-
+using std::cout;
+using std::endl;
 
 using namespace ns3;
 

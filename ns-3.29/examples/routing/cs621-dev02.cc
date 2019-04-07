@@ -69,8 +69,8 @@ int main (int argc, char *argv[])
 {
   //declare  of given variables
 
-  //uint32_t packetSize; //#size of the packets
-  //uint32_t maxPacketCount;//# of packets to send
+  uint32_t packetSize = 1000; //#size of the packets
+  uint32_t maxPacketCount = 6000;//# of packets to send
   std::string dataRate = "4Mbps";
   std::string configFile;
   std::vector<int> queueList;
@@ -148,17 +148,17 @@ int main (int argc, char *argv[])
   // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
   Time interPacketInterval = Seconds (0.01);
   UdpEchoClientHelper client (i1i2.GetAddress (1), port);
-  //client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+  client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   client.SetAttribute ("Interval", TimeValue (interPacketInterval));
-  //client.SetAttribute ("PacketSize", UintegerValue (packetSize));
+  client.SetAttribute ("PacketSize", UintegerValue (packetSize));
   apps = client.Install (c.Get (0));
   apps.Start (Seconds (5.0));
   apps.Stop (Seconds (40.0));
 
   UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
-  //client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+  client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
-  //client.SetAttribute ("PacketSize", UintegerValue (packetSize));
+  client.SetAttribute ("PacketSize", UintegerValue (packetSize));
   apps = client2.Install (c.Get (0));
   apps.Start (Seconds (2.0));
   apps.Stop (Seconds (40.0));

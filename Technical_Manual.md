@@ -50,7 +50,7 @@ Do not overwrite the exisiting files.
 Under the ns-3 top directory, you can run the application by typing the following:
 
 ``` cd ~/GitHub/CS621-Project-2/ns-3.29```   
-```./waf --run "cs621-dev01 --cap=1"```  
+```./waf --run "cs621-dev02 --conf=SPQ"```  
   
 2) ***Run Simulation***  
 You can run the network simulation by using python script. Type the following:  

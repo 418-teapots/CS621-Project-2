@@ -18,7 +18,7 @@ Refer to [Technical Manual](Technical_Manual.md)
 2. Implement Strict Priority Queueing (SPQ) and Deficit Round Robin (DRR), using the base class.
 3. Validate and verify your SPQ and DRR implementations
 ## Components
-(1) DiffServ: A Base Class to Simulate Differentiated Services
+### (1) DiffServ: A Base Class to Simulate Differentiated Services
 DiffServ class provides basic functionalities required to simulate differentiated services:
 • Classification - The classify function utilizes filter aspect to sort the traffic packets into appropriate traffic
 queues.
@@ -51,7 +51,7 @@ Refer to Figure 2 for an example.
 – elements - the array of pointers to FilterElement.
 • FilterElement - a base class for a primitive condition to match on. You should write one subclass for every
 seven (light purple) boxes in the design diagram. Refer to Figure 2 for an example.
-(2) Implementing SPQ and DRR with DiffServ
+### (2) Implementing SPQ and DRR with DiffServ
 You will make two separate implementations, one implementing Strict Priority Queueing, and the other implementing DRR, both using your implemented DiffServ class.
 Your SPQ implementation should take exactly one command line input, the name of a config file. In that file you
 should specify the number of queues and a priority level for each queue.
@@ -61,7 +61,7 @@ Extra Credit: Implement a parser for your config file for SPQ, so that the confi
 for Cisco Catalyst 3750 switch.
 Figure 2: An example of how users of your base class will be able to match any boolean condition given the right
 set of Filters and FilterElements.
-(3) Simulation Verification and Validation
+### (3) Simulation Verification and Validation
 As the last part of your project, you are to create ns-3 applications and simulations to demonstrate the correctness
 of your implementations above. For both SPQ and DRR, create a 3-node topology (set data-rates to 4-1 Mps),
 where the middle node is a QoS-enabled router and two outer nodes are end-hosts running simple client/server

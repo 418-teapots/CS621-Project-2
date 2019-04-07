@@ -55,7 +55,7 @@ main (int argc, char *argv[])
   CommandLine cmd;
   cmd.AddValue("conf", "Specify the config file", configFile);
   cmd.Parse (argc, argv);
-  if (compressionLinkCapacity != "DRR" || compressionLinkCapacity != "SPQ" ) {
+  if (configFile != "DRR" || configFile != "SPQ" ) {
     cout << "You must specify the compression link capacity!" << endl; // must specify compression link capacity
     return 0;
   }

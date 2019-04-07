@@ -115,7 +115,7 @@ main (int argc, char *argv[])
 
   NS_LOG_INFO ("Create Applications.");
   uint16_t port = 9;  // well-known echo port number
-  RequestResponseServerHelper server (port);
+  UdpEchoServerHelper server (port);
   // uint32_t responseSize = 1024;
   // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
   ApplicationContainer apps = server.Install (c.Get (2));
@@ -124,7 +124,7 @@ main (int argc, char *argv[])
 
   // (Client)
   // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-  RequestResponseClientHelper client (i2i3.GetAddress (1), port);
+  UdpEchoClientHelper client (i2i3.GetAddress (1), port);
   //client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   //client.SetAttribute ("Interval", TimeValue (interPacketInterval));
   //client.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -132,7 +132,7 @@ main (int argc, char *argv[])
   apps.Start (Seconds (5.0));
   apps.Stop (Seconds (65.0));
 
-  RequestResponseClientHelper client2 (i2i3.GetAddress (1), port);
+  UdpEchoClientHelper client2 (i2i3.GetAddress (1), port);
   //client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   //client.SetAttribute ("Interval", TimeValue (interPacketInterval));
   //client.SetAttribute ("PacketSize", UintegerValue (packetSize));

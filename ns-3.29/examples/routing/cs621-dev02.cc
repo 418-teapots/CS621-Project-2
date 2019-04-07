@@ -40,10 +40,30 @@ using std::endl;
 
 using namespace ns3;
 
+void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
+	{
+		flowMon->CheckForLostPackets();
+		std::map<FlowId, FlowMonitor::FlowStats> flowStats = flowMon->GetFlowStats();
+		Ptr<Ipv4FlowClassifier> classing = DynamicCast<Ipv4FlowClassifier> (fmhelper->GetClassifier());
+		for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator stats = flowStats.begin (); stats != flowStats.end (); ++stats)
+		{
+			Ipv4FlowClassifier::FiveTuple fiveTuple = classing->FindFlow (stats->first);
+			std::cout<<"Flow ID			: " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
+//			std::cout<<"Tx Packets = " << stats->second.txPackets<<std::endl;
+//			std::cout<<"Rx Packets = " << stats->second.rxPackets<<std::endl;
+			std::cout<<"Duration		: "<<stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds()<<std::endl;
+			std::cout<<"Last Received Packet	: "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
+			std::cout<<"Throughput: " << stats->second.rxBytes * 8.0 / (stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds())/1024/1024  << " Mbps"<<std::endl;
+			std::cout<<"---------------------------------------------------------------------------"<<std::endl;
+		}
+			Simulator::Schedule(Seconds(1),&ThroughputMonitor, fmhelper, flowMon);
+
+
+	}
+
 NS_LOG_COMPONENT_DEFINE ("SimpleGlobalRoutingExample");
 
-int
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
   //declare  of given variables
 
@@ -139,14 +159,14 @@ main (int argc, char *argv[])
   apps = client2.Install (c.Get (0));
   apps.Start (Seconds (2.0));
   apps.Stop (Seconds (65.0));
-  /*
+
   //generate pcap files
   AsciiTraceHelper ascii;
   p2p.EnableAsciiAll (ascii.CreateFileStream ("cs621-dev02.tr"));
   p2p.EnablePcap("UDPsender.pcap",d0d1.Get(0), false, true);
-  p2p.EnablePcap("UDPreceiver.pcap",d2d3.Get(1), false, true);
-  p2p.EnablePcap("Compression.pcap",d1d2.Get(0), false, true);
-  p2p.EnablePcap("Decompression.pcap",d1d2.Get(1), false, true);
+  //p2p.EnablePcap("UDPreceiver.pcap",d2d3.Get(1), false, true);
+  //p2p.EnablePcap("Compression.pcap",d1d2.Get(0), false, true);
+  //p2p.EnablePcap("Decompression.pcap",d1d2.Get(1), false, true);
   //p2p.EnablePcapAll ("cs621-dev01");
 
   //Flow Monitor
@@ -157,7 +177,7 @@ main (int argc, char *argv[])
   //Simulator::Schedule(Seconds(0.2),&sendHandler,udp, nodes2, Ptr<Packet>(&a));
   Simulator::Stop (Seconds (65));
   Simulator::Run ();
-  monitor->CheckForLostPackets ();
+  /*monitor->CheckForLostPackets ();
   Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier> (flowmonHelper.GetClassifier ());
   std::map<FlowId, FlowMonitor::FlowStats> stats = monitor->GetFlowStats ();
   int64_t first = 0; //save time for first packet train

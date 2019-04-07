@@ -7,7 +7,7 @@
 !/ns-3.29/src/network/utils/queue.h
 !/ns-3.29/examples/routing/simple-global-routing.cc
 !/ns-3.29/examples/routing/wscript
-!/ns-3.29/examples/routing/cs621-dev01.cc
+!/ns-3.29/examples/routing/cs621-dev02.cc
 !/ns-3.29/src/applications/wscript
 !/ns-3.29/src/applications/model/request-response-client.cc
 !/ns-3.29/src/applications/model/request-response-client.h
@@ -20,5 +20,6 @@
 !/ns-3.29/src/point-to-point/model/ppp-header.cc
 !/ns-3.29/src/point-to-point/wscript
 !/ns-3.29/wscript
-!/ns-3.29/config/config.txt
+!/ns-3.29/config/DRR.txt
+!/ns-3.29/config/SPQ.txt
 !run.py

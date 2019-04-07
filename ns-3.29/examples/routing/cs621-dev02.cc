@@ -56,7 +56,7 @@ main (int argc, char *argv[])
   cmd.AddValue("conf", "Specify the config file", configFile);
   cmd.Parse (argc, argv);
   if (configFile != "DRR" || configFile != "SPQ" ) {
-    cout << "You must specify the compression link capacity!" << endl; // must specify compression link capacity
+    std::cout << "You must specify the configuration file" << endl; // must specify compression link capacity
     return 0;
   }
   //initailze variables with values from config file

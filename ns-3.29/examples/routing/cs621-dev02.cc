@@ -142,25 +142,26 @@ int main (int argc, char *argv[])
   // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
   ApplicationContainer apps = server.Install (c.Get (2));
   apps.Start (Seconds (1.0));
-  apps.Stop (Seconds (60.0));
+  apps.Stop (Seconds (40.0));
 
   // (Client)
   // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
+  Time interPacketInterval = Seconds (0.01);
   UdpEchoClientHelper client (i1i2.GetAddress (1), port);
   //client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
-  //client.SetAttribute ("Interval", TimeValue (interPacketInterval));
+  client.SetAttribute ("Interval", TimeValue (interPacketInterval));
   //client.SetAttribute ("PacketSize", UintegerValue (packetSize));
   apps = client.Install (c.Get (0));
   apps.Start (Seconds (5.0));
-  apps.Stop (Seconds (65.0));
+  apps.Stop (Seconds (40.0));
 
   UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
   //client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
-  //client.SetAttribute ("Interval", TimeValue (interPacketInterval));
+  client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
   //client.SetAttribute ("PacketSize", UintegerValue (packetSize));
   apps = client2.Install (c.Get (0));
   apps.Start (Seconds (2.0));
-  apps.Stop (Seconds (65.0));
+  apps.Stop (Seconds (40.0));
 
   //generate pcap files
   AsciiTraceHelper ascii;
@@ -180,7 +181,7 @@ int main (int argc, char *argv[])
   monitor->SetAttribute("PacketSizeBinWidth", DoubleValue(20));
   NS_LOG_INFO ("Run Simulation.");
   //Simulator::Schedule(Seconds(0.2),&sendHandler,udp, nodes2, Ptr<Packet>(&a));
-  Simulator::Stop (Seconds (65));
+  Simulator::Stop (Seconds (40));
   ThroughputMonitor(&flowmonHelper ,monitor);
   Simulator::Run ();
   /*monitor->CheckForLostPackets ();

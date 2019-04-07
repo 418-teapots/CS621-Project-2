@@ -68,8 +68,8 @@ main (int argc, char *argv[])
     std::string line;
     while(getline(cFile, line, ','))
     {
-      queueList.push_back(std::stoi(tmp));
-      cout << tmp << endl;
+      queueList.push_back(std::stoi(line));
+      cout << line << endl;
     }
   }
   else {
@@ -136,9 +136,9 @@ main (int argc, char *argv[])
   //client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   //client.SetAttribute ("Interval", TimeValue (interPacketInterval));
   //client.SetAttribute ("PacketSize", UintegerValue (packetSize));
-  apps2 = client2.Install (c.Get (0));
-  apps2.Start (Seconds (2.0));
-  apps2.Stop (Seconds (65.0));
+  apps = client2.Install (c.Get (0));
+  apps.Start (Seconds (2.0));
+  apps.Stop (Seconds (65.0));
   /*
   //generate pcap files
   AsciiTraceHelper ascii;

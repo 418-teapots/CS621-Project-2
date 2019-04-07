@@ -173,9 +173,13 @@ int main (int argc, char *argv[])
   //Use flow monitor to get stats on when the last packet in the packet train arrives
   FlowMonitorHelper flowmonHelper;
   Ptr<FlowMonitor> monitor = flowmonHelper.InstallAll ();
+  monitor->SetAttribute("DelayBinWidth", DoubleValue(0.001));
+  monitor->SetAttribute("JitterBinWidth", DoubleValue(0.001));
+  monitor->SetAttribute("PacketSizeBinWidth", DoubleValue(20));
   NS_LOG_INFO ("Run Simulation.");
   //Simulator::Schedule(Seconds(0.2),&sendHandler,udp, nodes2, Ptr<Packet>(&a));
   Simulator::Stop (Seconds (65));
+  ThroughputMonitor(&flowmonHelper ,monitor);
   Simulator::Run ();
   /*monitor->CheckForLostPackets ();
   Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier> (flowmonHelper.GetClassifier ());

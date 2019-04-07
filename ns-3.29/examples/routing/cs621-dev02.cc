@@ -48,13 +48,15 @@ void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
 		for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator stats = flowStats.begin (); stats != flowStats.end (); ++stats)
 		{
 			Ipv4FlowClassifier::FiveTuple fiveTuple = classing->FindFlow (stats->first);
-			std::cout<<"Flow ID			: " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
-//			std::cout<<"Tx Packets = " << stats->second.txPackets<<std::endl;
-//			std::cout<<"Rx Packets = " << stats->second.rxPackets<<std::endl;
-			std::cout<<"Duration		: "<<stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds()<<std::endl;
-			std::cout<<"Last Received Packet	: "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
-			std::cout<<"Throughput: " << stats->second.rxBytes * 8.0 / (stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds())/1024/1024  << " Mbps"<<std::endl;
-			std::cout<<"---------------------------------------------------------------------------"<<std::endl;
+      if (fiveTuple.sourceAddress == Ipv4Address("10.1.1.1") && fiveTuple.destinationAddress == Ipv4Address("10.1.2.2")) {
+        std::cout<<"Flow ID			: " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
+  //			std::cout<<"Tx Packets = " << stats->second.txPackets<<std::endl;
+  //			std::cout<<"Rx Packets = " << stats->second.rxPackets<<std::endl;
+  			std::cout<<"Duration		: "<<stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds()<<std::endl;
+  			std::cout<<"Last Received Packet	: "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
+  			std::cout<<"Throughput: " << stats->second.rxBytes * 8.0 / (stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds())/1024/1024  << " Mbps"<<std::endl;
+  			std::cout<<"---------------------------------------------------------------------------"<<std::endl;
+      }
 		}
 			Simulator::Schedule(Seconds(1),&ThroughputMonitor, fmhelper, flowMon);
 

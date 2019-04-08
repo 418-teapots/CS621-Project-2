@@ -43,7 +43,7 @@ std::string fileName = "stats.csv";
 void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
 	{
     std::ofstream myFile;
-    myFile.open(fileName);
+    myFile.open(fileName, std::ios_base::app);
 		flowMon->CheckForLostPackets();
 		std::map<FlowId, FlowMonitor::FlowStats> flowStats = flowMon->GetFlowStats();
 		Ptr<Ipv4FlowClassifier> classing = DynamicCast<Ipv4FlowClassifier> (fmhelper->GetClassifier());

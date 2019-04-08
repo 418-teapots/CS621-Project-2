@@ -153,7 +153,7 @@ int main (int argc, char *argv[])
   client.SetAttribute ("PacketSize", UintegerValue (packetSize));
   apps = client.Install (c.Get (0));
   apps.Start (Seconds (5.0));
-  apps.Stop (Seconds (40.0));*/
+  apps.Stop (Seconds (40.0));
 
   UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
   client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));

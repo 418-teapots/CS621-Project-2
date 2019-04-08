@@ -194,7 +194,7 @@ int main (int argc, char *argv[])
   NS_LOG_INFO ("Run Simulation.");
   //Simulator::Schedule(Seconds(0.2),&sendHandler,udp, nodes2, Ptr<Packet>(&a));
   Simulator::Stop (Seconds (40));
-  ThroughputMonitor(&flowmonHelper ,monitor, fileName);
+  ThroughputMonitor(&flowmonHelper ,monitor);
   Simulator::Run ();
   /*monitor->CheckForLostPackets ();
   Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier> (flowmonHelper.GetClassifier ());

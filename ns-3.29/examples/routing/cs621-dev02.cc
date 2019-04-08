@@ -146,8 +146,8 @@ int main (int argc, char *argv[])
 
   // (Client)
   // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-  Time interPacketInterval = Seconds (0.1);
-  /*UdpEchoClientHelper client (i1i2.GetAddress (1), port);
+  Time interPacketInterval = Seconds (0.01);
+  UdpEchoClientHelper client (i1i2.GetAddress (1), port);
   client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   client.SetAttribute ("Interval", TimeValue (interPacketInterval));
   client.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -156,9 +156,9 @@ int main (int argc, char *argv[])
   apps.Stop (Seconds (40.0));*/
 
   UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
-  client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+  client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
-  client.SetAttribute ("PacketSize", UintegerValue (packetSize));
+  client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
   apps = client2.Install (c.Get (0));
   apps.Start (Seconds (2.0));
   apps.Stop (Seconds (40.0));

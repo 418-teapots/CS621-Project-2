@@ -3,9 +3,9 @@ import sys
 import pandas as pd
 import seaborn as sns
 
-print ('Running for SPQ: ' + str(cap) + 'Mbps' + ' without compression')
+print ('Running for SPQ')
 os.system('cd ns-3.29' + ' && ' + './waf --run "cs621-dev02 --conf=SPQ"')
-print ('Running for DRR: ' + str(cap) + 'Mbps' + ' with compression')
+print ('Running for DRR')
 os.system('cd ns-3.29' + ' && ' + './waf --run "cs621-dev02 --conf=DRR"')
 
 stats_SPQ = "./ns-3.29/stats_SPQ.csv"

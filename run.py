@@ -22,6 +22,9 @@ df2['packets'] = df2.groupby('flowID')['numPackets'].diff()
 df2['duration'] = df2.groupby('flowID')['timePacketReceived'].diff()
 df2['rate'] = df2['packets']/df2['duration']
 
+print df1.head()
+print df2.head()
+
 sns_plot1 = sns.set(style='darkgrid')
 sns_plot1 = sns.lineplot(x='timePacketReceived', y='rate', data=df1)
 sns_plot1.get_figure().savefig("SPQ.png")

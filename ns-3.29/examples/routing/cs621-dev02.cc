@@ -57,6 +57,10 @@ void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
           numPackets = stats->second.rxPackets - one;
           one = stats->second.rxPackets;
         }
+        else if (flowId == 3){
+          numPackets = stats->second.rxPackets - three;
+          three = stats->second.rxPackets;
+        }
 
         std::cout<<"Flow ID			: " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
   			std::cout<<"Number of Packets Received = " << numPackets<<std::endl;

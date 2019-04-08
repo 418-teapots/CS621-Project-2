@@ -205,7 +205,7 @@ int main (int argc, char *argv[])
   }
   file.close();
   std::ofstream myfile(fileName);
-  myfile << "flowID, timePacketReceived, numPackets" << endl;
+  myfile << "flowID,timePacketReceived,numPackets" << endl;
   myfile.close();
   FlowMonitorHelper flowmonHelper;
   Ptr<FlowMonitor> monitor = flowmonHelper.InstallAll ();

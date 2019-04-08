@@ -134,7 +134,6 @@ int main (int argc, char *argv[])
   // Create router nodes, initialize routing database and set up the routing tables in the nodes.
   Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
 
-
   // (Server)
   // Create a RequestResponseServer application on node three.
 
@@ -168,9 +167,8 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
   }
-  else {
+  else { //DRR
     fileName = "stats_DRR.csv";
-
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
     Time interPacketInterval = Seconds (0.01);
@@ -179,7 +177,7 @@ int main (int argc, char *argv[])
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client.Install (c.Get (0));
-    apps.Start (Seconds (5.0));
+    apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
 
     UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
@@ -198,14 +196,6 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
   }
-  //generate pcap files
-  AsciiTraceHelper ascii;
-  p2p.EnableAsciiAll (ascii.CreateFileStream ("cs621-dev02.tr"));
-  //p2p.EnablePcap("UDPsender.pcap",d0d1.Get(0), false, true);
-  //p2p.EnablePcap("UDPreceiver.pcap",d2d3.Get(1), false, true);
-  //p2p.EnablePcap("Compression.pcap",d1d2.Get(0), false, true);
-  //p2p.EnablePcap("Decompression.pcap",d1d2.Get(1), false, true);
-  //p2p.EnablePcapAll ("cs621-dev01");
 
   //Flow Monitor
   //Use flow monitor to get stats on when the last packet in the packet train arrives
@@ -227,41 +217,6 @@ int main (int argc, char *argv[])
   Simulator::Stop (Seconds (40));
   ThroughputMonitor(&flowmonHelper ,monitor);
   Simulator::Run ();
-  /*monitor->CheckForLostPackets ();
-  Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier> (flowmonHelper.GetClassifier ());
-  std::map<FlowId, FlowMonitor::FlowStats> stats = monitor->GetFlowStats ();
-  int64_t first = 0; //save time for first packet train
-  int64_t second = 0; //save time for second packet train
-  int count = 0; //count how many packet trains were detected
-  for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator iter = stats.begin (); iter != stats.end (); ++iter)
-    {
-      Ipv4FlowClassifier::FiveTuple t = classifier->FindFlow (iter->first);
-      if (t.sourceAddress == Ipv4Address("10.1.1.1") && t.destinationAddress == Ipv4Address("10.1.3.2"))
-      {
-        FlowMonitor::FlowStats fs = iter->second;
-        if (first == 0)
-          first = fs.timeLastRxPacket.GetMilliSeconds() - fs.timeFirstRxPacket.GetMilliSeconds();
-        else
-          second = fs.timeLastRxPacket.GetMilliSeconds() - fs.timeFirstRxPacket.GetMilliSeconds();
-        count ++;
-      }
-
-    }
-
-  //if the flow monitor detected more than two trains, there is something wrong
-  if (count > 2)
-  {
-    cout << "more than two trains sent" << endl;
-  }
-  else {
-    if (abs(first-second) > threshold) { //if the difference between the two trains is bigger than the threshhold
-      cout << std::__cxx11::to_string((int) first) << " and " << std::__cxx11::to_string((int) second) << " Compression Detected" << endl;
-    }
-    else {
-      cout << std::__cxx11::to_string((int) first) << " and " << std::__cxx11::to_string((int) second) << " Compression Not Detected :(" << endl;
-    }
-  }
-  */
   NS_LOG_INFO ("Done.");
 
   Simulator::Destroy ();

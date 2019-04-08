@@ -178,7 +178,7 @@ int main (int argc, char *argv[])
   std::string fileName = "stats.csv";
   std::ifstream file(fileName);
   if (file) {
-    remove(fileName);
+    std::remove(fileName);
   }
   file.close();
   std::ofstream myfile(fileName);

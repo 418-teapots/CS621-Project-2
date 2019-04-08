@@ -45,13 +45,21 @@ void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
 		flowMon->CheckForLostPackets();
 		std::map<FlowId, FlowMonitor::FlowStats> flowStats = flowMon->GetFlowStats();
 		Ptr<Ipv4FlowClassifier> classing = DynamicCast<Ipv4FlowClassifier> (fmhelper->GetClassifier());
+    uint32_t one = 0;
+    uint32_t three = 0;
 		for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator stats = flowStats.begin (); stats != flowStats.end (); ++stats)
 		{
 			Ipv4FlowClassifier::FiveTuple fiveTuple = classing->FindFlow (stats->first);
       if (fiveTuple.sourceAddress == Ipv4Address("10.1.1.1") && fiveTuple.destinationAddress == Ipv4Address("10.1.2.2")) {
+        uint32_t flowId = stats->first;
+        uint32_t numPackets = 0;
+        if (flowId == 1) {
+          numPackets = stats->second.rxPackets - one;
+          one = stats->second.rxPackets;
+        }
+
         std::cout<<"Flow ID			: " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
-  			std::cout<<"Tx Packets = " << stats->second.txPackets<<std::endl;
-  			std::cout<<"Rx Packets = " << stats->second.rxPackets<<std::endl;
+  			std::cout<<"Number of Packets Received = " << numPackets<<std::endl;
   			std::cout<<"Duration		: "<<stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds()<<std::endl;
   			std::cout<<"Last Received Packet	: "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
   			std::cout<<"Throughput: " << stats->second.rxBytes * 8.0 / (stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds())/1024/1024  << " Mbps"<<std::endl;

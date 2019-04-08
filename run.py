@@ -15,11 +15,11 @@ if not (os.path.isfile(stats_SPQ) and os.path.isfile(stats_DRR)):
 
 df1 = pd.read_csv(stats_SPQ)
 df2 = pd.read_csv(stats_DRR)
-df1['packets'] = df.groupby('flowID')['numPackets'].diff()
-df1['duration'] = df.groupby('flowID')['timePacketReceived'].diff()
+df1['packets'] = df1.groupby('flowID')['numPackets'].diff()
+df1['duration'] = df1.groupby('flowID')['timePacketReceived'].diff()
 df1['rate'] = df1['packets']/df1['duration']
-df2['packets'] = df.groupby('flowID')['numPackets'].diff()
-df2['duration'] = df.groupby('flowID')['timePacketReceived'].diff()
+df2['packets'] = df2.groupby('flowID')['numPackets'].diff()
+df2['duration'] = df2.groupby('flowID')['timePacketReceived'].diff()
 df2['rate'] = df2['packets']/df2['duration']
 
 sns_plot1 = sns.set(style='darkgrid')

@@ -40,8 +40,10 @@ using std::endl;
 
 using namespace ns3;
 
-void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon, std::ofstream myFile)
+void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon, std::string fileName)
 	{
+    std::ofstream myFile;
+    myFile.open(fileName);
 		flowMon->CheckForLostPackets();
 		std::map<FlowId, FlowMonitor::FlowStats> flowStats = flowMon->GetFlowStats();
 		Ptr<Ipv4FlowClassifier> classing = DynamicCast<Ipv4FlowClassifier> (fmhelper->GetClassifier());
@@ -59,6 +61,7 @@ void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon, s
   			std::cout<<"---------------------------------------------------------------------------"<<std::endl;
       }
 		}
+    myFile.close();
 			Simulator::Schedule(Seconds(1),&ThroughputMonitor, fmhelper, flowMon);
 
 
@@ -183,7 +186,7 @@ int main (int argc, char *argv[])
   file.close();
   std::ofstream myfile(fileName);
   myfile << "flowID, timePacketReceived, numPackets" << endl;
-
+  myfile.close();
   FlowMonitorHelper flowmonHelper;
   Ptr<FlowMonitor> monitor = flowmonHelper.InstallAll ();
   monitor->SetAttribute("DelayBinWidth", DoubleValue(0.001));
@@ -192,7 +195,7 @@ int main (int argc, char *argv[])
   NS_LOG_INFO ("Run Simulation.");
   //Simulator::Schedule(Seconds(0.2),&sendHandler,udp, nodes2, Ptr<Packet>(&a));
   Simulator::Stop (Seconds (40));
-  ThroughputMonitor(&flowmonHelper ,monitor, myfile);
+  ThroughputMonitor(&flowmonHelper ,monitor, fileName);
   Simulator::Run ();
   /*monitor->CheckForLostPackets ();
   Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier> (flowmonHelper.GetClassifier ());
@@ -232,6 +235,5 @@ int main (int argc, char *argv[])
   NS_LOG_INFO ("Done.");
 
   Simulator::Destroy ();
-  myfile.close();
   return 0;
 }

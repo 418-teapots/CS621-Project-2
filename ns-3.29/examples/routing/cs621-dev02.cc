@@ -39,7 +39,8 @@ using std::cout;
 using std::endl;
 
 using namespace ns3;
-std::string fileName = "stats.csv";
+std::string fileName = "";
+
 void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
 	{
     std::ofstream myFile;
@@ -51,7 +52,7 @@ void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
 		{
 			Ipv4FlowClassifier::FiveTuple fiveTuple = classing->FindFlow (stats->first);
       if (fiveTuple.sourceAddress == Ipv4Address("10.1.1.1") && fiveTuple.destinationAddress == Ipv4Address("10.1.2.2")) {
-        myFile << stats->first << "," << stats->second.timeLastRxPacket << "," << stats->second.rxPackets <<endl;
+        myFile << stats->first << "," << stats->second.timeLastRxPacket.GetSeconds() << "," << stats->second.rxPackets <<endl;
 
         std::cout<<"Flow ID			: " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
   			std::cout<<"Number of Packets Received = " << stats->second.rxPackets <<std::endl;
@@ -102,8 +103,6 @@ int main (int argc, char *argv[])
     cout << "No config file detected" << endl;
     return 0;
   }
-
-
   //Create three nodes and form a group
   NS_LOG_INFO ("Create nodes.");
   NodeContainer c;
@@ -148,29 +147,61 @@ int main (int argc, char *argv[])
   apps.Start (Seconds (1.0));
   apps.Stop (Seconds (40.0));
 
-  // (Client)
-  // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-  Time interPacketInterval = Seconds (0.01);
-  UdpEchoClientHelper client (i1i2.GetAddress (1), port);
-  client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
-  client.SetAttribute ("Interval", TimeValue (interPacketInterval));
-  client.SetAttribute ("PacketSize", UintegerValue (packetSize));
-  apps = client.Install (c.Get (0));
-  apps.Start (Seconds (5.0));
-  apps.Stop (Seconds (40.0));
+  if (configFile == "SPQ") {
+    fileName = "stats_SPQ.csv";
+    // (Client)
+    // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
+    Time interPacketInterval = Seconds (0.01);
+    UdpEchoClientHelper client (i1i2.GetAddress (1), port);
+    client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+    client.SetAttribute ("Interval", TimeValue (interPacketInterval));
+    client.SetAttribute ("PacketSize", UintegerValue (packetSize));
+    apps = client.Install (c.Get (0));
+    apps.Start (Seconds (5.0));
+    apps.Stop (Seconds (40.0));
 
-  UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
-  client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
-  client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
-  client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
-  apps = client2.Install (c.Get (0));
-  apps.Start (Seconds (2.0));
-  apps.Stop (Seconds (40.0));
+    UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
+    client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+    client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
+    client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
+    apps = client2.Install (c.Get (0));
+    apps.Start (Seconds (2.0));
+    apps.Stop (Seconds (40.0));
+  }
+  else {
+    fileName = "stats_DRR.csv";
 
+    // (Client)
+    // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
+    Time interPacketInterval = Seconds (0.01);
+    UdpEchoClientHelper client (i1i2.GetAddress (1), port);
+    client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+    client.SetAttribute ("Interval", TimeValue (interPacketInterval));
+    client.SetAttribute ("PacketSize", UintegerValue (packetSize));
+    apps = client.Install (c.Get (0));
+    apps.Start (Seconds (5.0));
+    apps.Stop (Seconds (40.0));
+
+    UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
+    client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+    client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
+    client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
+    apps = client2.Install (c.Get (0));
+    apps.Start (Seconds (2.0));
+    apps.Stop (Seconds (40.0));
+
+    UdpEchoClientHelper client3 (i1i2.GetAddress (1), port);
+    client3.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+    client3.SetAttribute ("Interval", TimeValue (interPacketInterval));
+    client3.SetAttribute ("PacketSize", UintegerValue (packetSize));
+    apps = client3.Install (c.Get (0));
+    apps.Start (Seconds (2.0));
+    apps.Stop (Seconds (40.0));
+  }
   //generate pcap files
   AsciiTraceHelper ascii;
   p2p.EnableAsciiAll (ascii.CreateFileStream ("cs621-dev02.tr"));
-  p2p.EnablePcap("UDPsender.pcap",d0d1.Get(0), false, true);
+  //p2p.EnablePcap("UDPsender.pcap",d0d1.Get(0), false, true);
   //p2p.EnablePcap("UDPreceiver.pcap",d2d3.Get(1), false, true);
   //p2p.EnablePcap("Compression.pcap",d1d2.Get(0), false, true);
   //p2p.EnablePcap("Decompression.pcap",d1d2.Get(1), false, true);
@@ -234,5 +265,6 @@ int main (int argc, char *argv[])
   NS_LOG_INFO ("Done.");
 
   Simulator::Destroy ();
+
   return 0;
 }

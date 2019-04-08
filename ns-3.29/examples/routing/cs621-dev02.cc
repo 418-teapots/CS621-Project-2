@@ -39,8 +39,8 @@ using std::cout;
 using std::endl;
 
 using namespace ns3;
-
-void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon, std::string fileName)
+std::string fileName = "stats.csv";
+void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
 	{
     std::ofstream myFile;
     myFile.open(fileName);
@@ -178,7 +178,6 @@ int main (int argc, char *argv[])
 
   //Flow Monitor
   //Use flow monitor to get stats on when the last packet in the packet train arrives
-  std::string fileName = "stats.csv";
   std::ifstream file(fileName);
   if (file) {
     std::remove(fileName.c_str());

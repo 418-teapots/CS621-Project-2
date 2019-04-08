@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
   //declare  of given variables
 
   uint32_t packetSize = 1000; //#size of the packets
-  uint32_t maxPacketCount = 6000;//# of packets to send
+  uint32_t maxPacketCount = 3000;//# of packets to send
   std::string dataRate = "4Mbps";
   std::string configFile;
   std::vector<int> queueList;

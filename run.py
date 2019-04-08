@@ -10,7 +10,7 @@ os.system('cd ns-3.29' + ' && ' + './waf --run "cs621-dev02 --conf=DRR"')
 
 stats_SPQ = "./ns-3.29/stats_SPQ.csv"
 stats_DRR = "./ns-3.29/stats_DRR.csv"
-if !(os.path.isfile(stats_SPQ) and os.path.isfile(stats_DRR)):
+if not (os.path.isfile(stats_SPQ) and os.path.isfile(stats_DRR)):
     sys.exit()
 
 df1 = pd.read_csv(stats_SPQ)

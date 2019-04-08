@@ -175,10 +175,10 @@ int main (int argc, char *argv[])
 
   //Flow Monitor
   //Use flow monitor to get stats on when the last packet in the packet train arrives
-  std::string fileName = "stats.csv"
+  std::string fileName = "stats.csv";
   std::ifstream file(fileName);
   if (file) {
-    remove(fileName)
+    remove(fileName);
   }
   file.close();
   std::ofstream myfile(fileName);

@@ -91,7 +91,7 @@ private:
   /**
    * applicable if the QoS mechanism uses weight.
    */
-  double_t weight;
+  double weight;
   /**
    * applicable if the QoS mechanism uses priority level.
    */

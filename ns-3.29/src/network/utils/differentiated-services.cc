@@ -68,6 +68,10 @@ DiffServ::DoEnqueue (Ptr<Packet> p) {
        return false;
      }
  
+
+   // TODO
+   // The packet should be enqueued into m_queue. 
+
    m_packets.insert (pos, p);
  
    uint32_t size = p->GetSize ();

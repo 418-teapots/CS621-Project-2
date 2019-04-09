@@ -2,6 +2,9 @@
 #define DIFFERENTIATED_SERVICES_H
 
 #include "queue.h"
+#include <vector>
+
+using namespace std;
 
 namespace ns3 {
 
@@ -14,39 +17,40 @@ namespace ns3 {
  * to schedule which traffic queue to be served at the time.
  */
 template <typename Item>
-class DiffServ : public Queue<ns3::Packet>
+class DiffServ : public Queue<Packet>
 {
 public:
   DiffServ ();
   virtual ~DiffServ ();
 
-  void SetMode (QueueMode mode);
-  QueueMode GetMode ();
+  // void SetMode (QueueMode mode);
+  // QueueMode GetMode ();
   /**
    * \return Returns a packet to transmit.
    */
-  Ptr<ns::Packet> Schedule ();
+  Ptr<Packet> Schedule ();
   /**
    * \brief Takes a packet and returns an integer.
    * \return An integer
    */
-  uint32_t Classify (Ptr<ns::Packet> p);
+  uint32_t Classify (Ptr<Packet> p);
 
 private:
   /**
    * The QueueMode specifies whether service is in byte mode or packet mode.
    */
-  QueueMode m_mode;
+  // QueueMode m_mode;
+
   /**
    * The vector (array) of TrafficClass pointers. 
    * setMode()/getMode() - the accessor and modifier for private variable m mode.
    */
   vector<TrafficClass*> q_class;
 
-  bool DoEnqueue (Ptr<ns::Packet> p);
-  Ptr<ns::Packet> DoDequeue ();
-  Ptr<ns::Packet> DoRemove ();
-  Ptr<const ns::Packet> DoPeek ();
+  bool DoEnqueue (Ptr<Packet> p);
+  Ptr<Packet> DoDequeue ();
+  Ptr<Packet> DoRemove ();
+  Ptr<const Packet> DoPeek ();
 };
 
 /**
@@ -63,9 +67,9 @@ public:
    */
   vector<Filter*> filters;
 
-  bool Enqueue (Ptr<ns3::Packet> p);
-  Ptr<ns3::Packet> Dequeue ();
-  bool match (Ptr<ns3::Packet> p);
+  bool Enqueue (Ptr<Packet> p);
+  Ptr<Packet> Dequeue ();
+  bool match (Ptr<Packet> p);
 
 private:
   /**
@@ -99,7 +103,7 @@ private:
   /**
    *
    */
-  std::queue<Ptr<ns3::Packet>> m_queue;
+  std::queue<Ptr<Packet>> m_queue;
 };
 
 /**
@@ -116,7 +120,7 @@ public:
    */
   std::vector<FilterElement*> elements;
 
-  bool match (Ptr<ns3::Packet> p);
+  bool match (Ptr<Packet> p);
 };
 
 /**
@@ -129,7 +133,7 @@ public:
   FilterElement ();
   virtual ~FilterElement ();
 
-  virtual bool match(Ptr<ns3::Packet> p)
+  virtual bool match(Ptr<Packet> p)
 };
 
 } // namespace ns3

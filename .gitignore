@@ -5,6 +5,7 @@
 !/ns-3.29/src/network/utils/drop-tail-queue.h
 !/ns-3.29/src/network/utils/queue.cc
 !/ns-3.29/src/network/utils/queue.h
+!/ns-3.29/src/network/utils/wscript
 !/ns-3.29/examples/routing/simple-global-routing.cc
 !/ns-3.29/examples/routing/wscript
 !/ns-3.29/examples/routing/cs621-dev02.cc

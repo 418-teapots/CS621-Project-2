@@ -60,6 +60,7 @@ def build(bld):
         'utils/simple-channel.cc',
         'utils/simple-net-device.cc',
         'utils/sll-header.cc',
+        'utils/traffic-class.cc', 
         'utils/packet-socket-client.cc',
         'utils/packet-socket-server.cc',
         'utils/packet-data-calculators.cc',

@@ -7,13 +7,11 @@
 namespace ns3 {
 
 
-DiffServ::DiffServ (int num_queue) {
-  NS_LOG_FUNCTION (this);
+DiffServ::DiffServ () {
 
   
-  TrafficClass trafficClass;
-
-  q_class.assign(num_queue, &trafficClass)
+  // TrafficClass trafficClass;
+  // q_class.assign(num_queue, &trafficClass)
 
 
 
@@ -24,8 +22,8 @@ DiffServ::DiffServ (int num_queue) {
 }
 
 
-DDiffServ::~DiffServ () {
-  NS_LOG_FUNCTION (this);
+DiffServ::~DiffServ () {
+  
 }
 
 
@@ -58,35 +56,24 @@ DiffServ::Classify (Ptr<Packet> p) {
 
 bool
 DiffServ::DoEnqueue (Ptr<Packet> p) {
-    // TODO
-    NS_LOG_FUNCTION (this << p);
- 
-   if (GetCurrentSize () + p > GetMaxSize ())
-     {
-       NS_LOG_LOGIC ("Queue full -- dropping pkt");
-       DropBeforeEnqueue (p);
-       return false;
-     }
- 
 
-   // TODO
-   // The packet should be enqueued into m_queue. 
-
-   m_packets.insert (pos, p);
- 
-   uint32_t size = p->GetSize ();
-   m_nBytes += size;
-   m_nTotalReceivedBytes += size;
- 
-   m_nPackets++;
-   m_nTotalReceivedPackets++;
- 
-   NS_LOG_LOGIC ("m_traceEnqueue (p)");
-   m_traceEnqueue (p);
- 
-   return true;
+  NS_LOG_FUNCTION (this << p);
 
 
+  // TODO: Call Enqueue() in TrafficClass object.  
+  // bool b = tc.Enqueue(p);
+  
+  uint32_t size = p->GetSize ();
+  m_nBytes += size;
+  m_nTotalReceivedBytes += size;
+
+  m_nPackets++;
+  m_nTotalReceivedPackets++;
+
+  NS_LOG_LOGIC ("m_traceEnqueue (p)");
+  m_traceEnqueue (p);
+
+  return b;
 }
 
 Ptr<Packet> 

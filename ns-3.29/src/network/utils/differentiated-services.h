@@ -3,54 +3,40 @@
 
 #include "queue.h"
 #include <vector>
+#include <queue>
 
 using namespace std;
 
 namespace ns3 {
 
 /**
- * DiffServ class provides basic functionalities required to simulate differentiated services:
- *
- * 1. Classification - The classify function utilizes filter aspect to sort the traffic packets 
- * into appropriate traffic queues.
- * 2. Scheduling - The schedule function carries out designed Quality-of-Service (QoS) algorithm 
- * to schedule which traffic queue to be served at the time.
+ * A base class for a primitive condition to match on. You should write one subclass for every 
+ * seven (light purple) boxes in the design diagram. 
  */
-template <typename Item>
-class DiffServ : public Queue<Packet>
+class FilterElement
 {
 public:
-  DiffServ ();
-  virtual ~DiffServ ();
+  FilterElement ();
+  virtual ~FilterElement ();
 
-  // void SetMode (QueueMode mode);
-  // QueueMode GetMode ();
-  /**
-   * \return Returns a packet to transmit.
-   */
-  Ptr<Packet> Schedule ();
-  /**
-   * \brief Takes a packet and returns an integer.
-   * \return An integer
-   */
-  uint32_t Classify (Ptr<Packet> p);
+  virtual bool match(Ptr<Packet> p);
+};
 
-private:
-  /**
-   * The QueueMode specifies whether service is in byte mode or packet mode.
-   */
-  // QueueMode m_mode;
+/**
+ * A collection of conditions as FilterElements, all of which should match in order to trigger match.
+ */
+class Filter
+{
+public:
+  Filter ();
+  virtual ~Filter ();
 
   /**
-   * The vector (array) of TrafficClass pointers. 
-   * setMode()/getMode() - the accessor and modifier for private variable m mode.
+   * the array of pointers to FilterElement.
    */
-  vector<TrafficClass*> q_class;
+  std::vector<FilterElement*> elements;
 
-  bool DoEnqueue (Ptr<Packet> p);
-  Ptr<Packet> DoDequeue ();
-  Ptr<Packet> DoRemove ();
-  Ptr<const Packet> DoPeek ();
+  bool match (Ptr<Packet> p);
 };
 
 /**
@@ -103,37 +89,51 @@ private:
   /**
    *
    */
-  std::queue<Ptr<Packet>> m_queue;
+  queue<Ptr<Packet>> m_queue;
 };
 
 /**
- * A collection of conditions as FilterElements, all of which should match in order to trigger match.
+ * DiffServ class provides basic functionalities required to simulate differentiated services:
+ *
+ * 1. Classification - The classify function utilizes filter aspect to sort the traffic packets 
+ * into appropriate traffic queues.
+ * 2. Scheduling - The schedule function carries out designed Quality-of-Service (QoS) algorithm 
+ * to schedule which traffic queue to be served at the time.
  */
-class Filter
+class DiffServ : public Queue<Packet>
 {
 public:
-  Filter ();
-  virtual ~Filter ();
+  DiffServ ();
+  virtual ~DiffServ ();
+
+  // void SetMode (QueueMode mode);
+  // QueueMode GetMode ();
+  /**
+   * \return Returns a packet to transmit.
+   */
+  Ptr<Packet> Schedule ();
+  /**
+   * \brief Takes a packet and returns an integer.
+   * \return An integer
+   */
+  uint32_t Classify (Ptr<Packet> p);
+
+private:
+  /**
+   * The QueueMode specifies whether service is in byte mode or packet mode.
+   */
+  // QueueMode m_mode;
 
   /**
-   * the array of pointers to FilterElement.
+   * The vector (array) of TrafficClass pointers. 
+   * setMode()/getMode() - the accessor and modifier for private variable m mode.
    */
-  std::vector<FilterElement*> elements;
+  vector<TrafficClass*> q_class;
 
-  bool match (Ptr<Packet> p);
-};
-
-/**
- * A base class for a primitive condition to match on. You should write one subclass for every 
- * seven (light purple) boxes in the design diagram. 
- */
-class FilterElement
-{
-public:
-  FilterElement ();
-  virtual ~FilterElement ();
-
-  virtual bool match(Ptr<Packet> p)
+  bool DoEnqueue (Ptr<Packet> p);
+  Ptr<Packet> DoDequeue ();
+  Ptr<Packet> DoRemove ();
+  Ptr<const Packet> DoPeek ();
 };
 
 } // namespace ns3

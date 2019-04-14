@@ -99,6 +99,8 @@ DropTailQueue<Item>::Enqueue (Ptr<Item> item)
 {
   NS_LOG_FUNCTION (this << item);
 
+  printf ("Enqueue() in DropTailQueue start.\n");
+
   return DoEnqueue (Tail (), item);
 }
 
@@ -107,6 +109,8 @@ Ptr<Item>
 DropTailQueue<Item>::Dequeue (void)
 {
   NS_LOG_FUNCTION (this);
+
+  printf ("Dequeue() in DropTailQueue start.\n");
 
   Ptr<Item> item = DoDequeue (Head ());
 

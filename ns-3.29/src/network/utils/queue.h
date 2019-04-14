@@ -334,14 +334,14 @@ protected:
    * \param item the item to enqueue
    * \return true if success, false if the packet has been dropped.
    */
-  bool DoEnqueue (ConstIterator pos, Ptr<Item> item);
+  virtual bool DoEnqueue (ConstIterator pos, Ptr<Item> item);
 
   /**
    * Pull the item to dequeue from the queue
    * \param pos the position of the item to dequeue
    * \return the item.
    */
-  Ptr<Item> DoDequeue (ConstIterator pos);
+  virtual Ptr<Item> DoDequeue (ConstIterator pos);
 
   /**
    * Pull the item to drop from the queue
@@ -442,6 +442,8 @@ Queue<Item>::DoEnqueue (ConstIterator pos, Ptr<Item> item)
 {
   NS_LOG_FUNCTION (this << item);
 
+  printf ("DoEnqueue() in Queue start.\n");
+
   if (GetCurrentSize () + item > GetMaxSize ())
     {
       NS_LOG_LOGIC ("Queue full -- dropping pkt");
@@ -469,6 +471,8 @@ Ptr<Item>
 Queue<Item>::DoDequeue (ConstIterator pos)
 {
   NS_LOG_FUNCTION (this);
+
+  printf ("DoDequeue() in Queue start.\n");
 
   if (m_nPackets.Get () == 0)
     {

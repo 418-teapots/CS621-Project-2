@@ -46,6 +46,7 @@ class TrafficClass
 {
 public:
   TrafficClass ();
+  TrafficClass (const TrafficClass& tc);
   virtual ~TrafficClass ();
 
   /**
@@ -130,8 +131,8 @@ private:
    */
   vector<TrafficClass*> q_class;
 
-  bool DoEnqueue (Ptr<Packet> p);
-  Ptr<Packet> DoDequeue ();
+  virtual bool DoEnqueue (Ptr<Packet> p);
+  virtual Ptr<Packet> DoDequeue ();
   Ptr<Packet> DoRemove ();
   Ptr<const Packet> DoPeek ();
 };

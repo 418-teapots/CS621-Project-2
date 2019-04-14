@@ -9,13 +9,11 @@ namespace ns3 {
 
 DiffServ::DiffServ () {
 
-  
-  // TrafficClass trafficClass;
+  // TODO
+
+  TrafficClass trafficClass;
   // q_class.assign(num_queue, &trafficClass)
-
-
-
-
+  q_class.assign(1, &trafficClass);
 
 
 
@@ -23,7 +21,7 @@ DiffServ::DiffServ () {
 
 
 DiffServ::~DiffServ () {
-  
+
 }
 
 
@@ -47,54 +45,65 @@ DiffServ::~DiffServ () {
 uint32_t
 DiffServ::Classify (Ptr<Packet> p) {
     // TODO
-    uint32_t priority_level;
+    // uint32_t priority_level;
 
-    return priority_level;
+    return 1;
 }
 
-
-
-bool
+bool 
 DiffServ::DoEnqueue (Ptr<Packet> p) {
-
-  NS_LOG_FUNCTION (this << p);
-
+  printf ("DoEnqueue() in DiffServ start.\n");
 
   // TODO: Call Enqueue() in TrafficClass object.  
-  // bool b = tc.Enqueue(p);
+  bool b = q_class[0]->Enqueue(p);
   
-  uint32_t size = p->GetSize ();
-  m_nBytes += size;
-  m_nTotalReceivedBytes += size;
+  // uint32_t size = p->GetSize ();
+  // m_nBytes += size;
+  // m_nTotalReceivedBytes += size;
 
-  m_nPackets++;
-  m_nTotalReceivedPackets++;
+  // m_nPackets++;
+  // m_nTotalReceivedPackets++;
 
-  NS_LOG_LOGIC ("m_traceEnqueue (p)");
-  m_traceEnqueue (p);
+  // // NS_LOG_LOGIC ("m_traceEnqueue (p)");
+  // m_traceEnqueue (p);
 
   return b;
 }
 
 Ptr<Packet> 
 DiffServ::DoDequeue () {
-    // TODO
+  printf ("DoDequeue() in DiffServ start.\n");
 
+  // TODO
+  Ptr<Packet> p = q_class[0]->Dequeue();
 
+  // if (p != 0)
+  //   {
+  //     NS_ASSERT (m_nBytes.Get () >= p->GetSize ());
+  //     NS_ASSERT (m_nPackets.Get () > 0);
+
+  //     m_nBytes -= p->GetSize ();
+  //     m_nPackets--;
+
+  //     NS_LOG_LOGIC ("m_traceDequeue (p)");
+  //     m_traceDequeue (p);
+  //   }
+
+  return p;
 }
 
 Ptr<Packet> 
 DiffServ::DoRemove () {
     // TODO
 
-
+  return 0;
 }
 
 Ptr<const Packet> 
 DiffServ::DoPeek () {
     // TODO
 
-
+  return 0;
 }
 
 

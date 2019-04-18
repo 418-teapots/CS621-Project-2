@@ -30,6 +30,10 @@ public:
   bool Enqueue (Ptr<Packet> p);
   Ptr<Packet> Dequeue ();
   bool match (Ptr<Packet> p);
+  void setWeight (double weight);
+  double getWeight ();
+  void setPriorityLevel (uint32_t plevel);
+  uint32_t getPriorityLevel ();
 
 private:
   /**

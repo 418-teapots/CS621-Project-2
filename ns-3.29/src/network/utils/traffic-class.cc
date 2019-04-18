@@ -6,24 +6,53 @@
 
 using namespace std;
 
-
 namespace ns3 {
 
 
-TrafficClass::TrafficClass () {
+TrafficClass::TrafficClass () : 
+  weight(0), 
+  priority_level(0) 
+{
 
 }
 // Copy Constructor. 
-TrafficClass::TrafficClass (const TrafficClass& tc) {
+TrafficClass::TrafficClass (const TrafficClass& tc) 
+{
 
 }
 
-TrafficClass::~TrafficClass () {
+TrafficClass::~TrafficClass () 
+{
 
+}
+
+void 
+TrafficClass::setWeight (double w) 
+{
+  weight = w;
+}
+
+double 
+TrafficClass::getWeight () 
+{
+  return weight;
+}
+
+void 
+TrafficClass::setPriorityLevel (uint32_t pl) 
+{
+  priority_level = pl;
+}
+
+uint32_t 
+TrafficClass::getPriorityLevel () 
+{
+  return priority_level;
 }
 
 bool 
-TrafficClass::Enqueue (Ptr<Packet> p) {
+TrafficClass::Enqueue (Ptr<Packet> p) 
+{
   printf ("Enqueue() in TrafficClass start.\n");
 
   // Check if the queue is full. 
@@ -40,7 +69,8 @@ TrafficClass::Enqueue (Ptr<Packet> p) {
 }
 
 Ptr<Packet> 
-TrafficClass::Dequeue () {
+TrafficClass::Dequeue () 
+{
   printf ("Dequeue() in TrafficClass start.\n");
   
   Ptr<Packet> p;
@@ -60,7 +90,8 @@ TrafficClass::Dequeue () {
 }
 
 bool 
-TrafficClass::match (Ptr<Packet> p) {
+TrafficClass::match (Ptr<Packet> p) 
+{
   // TODO
 
 

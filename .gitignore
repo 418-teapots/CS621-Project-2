@@ -1,7 +1,9 @@
 *
 !.gitignore
 !/ns-3.29/src/network/utils/differentiated-services.*
-!/ns-3.29/src/network/utils/traffic-class.cc
+!/ns-3.29/src/network/utils/traffic-class.*
+!/ns-3.29/src/network/utils/filter.*
+!/ns-3.29/src/network/utils/filter-element.*
 !/ns-3.29/src/network/utils/drop-tail-queue.cc
 !/ns-3.29/src/network/utils/drop-tail-queue.h
 !/ns-3.29/src/network/utils/queue.cc

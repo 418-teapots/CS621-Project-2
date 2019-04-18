@@ -20,20 +20,25 @@ DiffServ::DiffServ () {
 }
 
 
-DiffServ::~DiffServ () {
+DiffServ::~DiffServ () 
+{
+
+  // m_mode = QUEUE_MODE_PACKETS;
 
 }
 
-
-// void
-// DiffServ::SetMode (QueueMode mode) {
-
+// void 
+// DiffServ::SetMode (QueueMode mode)
+// {
+//   m_mode = mode;
+// }
+  
+// QueueMode 
+// DiffServ::GetMode ()
+// {
+//   return m_mode;
 // }
 
-// QueueMode
-// DiffServ::GetMode () {
-
-// }
 
 // Ptr<Packet>
 // DiffServ::Schedule () {

@@ -1,6 +1,7 @@
 
+#include "traffic-class.h"
 #include "queue.h"
-#include "differentiated-services.h"
+// #include "differentiated-services.h"
 #include <iostream>
 
 using namespace std;
@@ -12,7 +13,7 @@ namespace ns3 {
 TrafficClass::TrafficClass () {
 
 }
-// Copy constructor. 
+// Copy Constructor. 
 TrafficClass::TrafficClass (const TrafficClass& tc) {
 
 }

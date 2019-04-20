@@ -9,6 +9,7 @@ namespace ns3 {
 
 DiffServ::DiffServ () 
 {
+  // TODO
 
   TrafficClass trafficClass;
   q_class.assign(1, &trafficClass);
@@ -17,6 +18,7 @@ DiffServ::DiffServ ()
 
 DiffServ::DiffServ (uint32_t numQueue, vector<Filter*> filters)
 {
+  // TODO
 
   TrafficClass trafficClass;
   q_class.assign(numQueue, &trafficClass);
@@ -149,12 +151,6 @@ DiffServ::Schedule ()
 }
 
 
-/**
- * A single port or IP address can be set by the user and 
- * matching traffic is sorted into the priority queue,
- * all other traffic is sorted into the lower priority 
- * default queue.
- */
 uint32_t 
 DiffServ::Classify (Ptr<Packet> p)
 {

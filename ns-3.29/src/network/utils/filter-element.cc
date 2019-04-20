@@ -14,6 +14,7 @@ FilterElement::~FilterElement() {
 
 bool
 FilterElement::match (Ptr<Packet> p) {
+  // TODO?
   
   return false;
 }

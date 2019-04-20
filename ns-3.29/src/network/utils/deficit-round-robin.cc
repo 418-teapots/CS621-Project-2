@@ -79,6 +79,8 @@ DRR::Schedule ()
 uint32_t 
 DRR::Classify (Ptr<Packet> p)
 {
+
+  
       
 
 
@@ -126,34 +128,34 @@ DRR::DoEnqueue (Ptr<Packet> p)
 
 
 
-  // TrafficClass* highPriorityQueue;
-  // highPriorityQueue = q_class[HIGH_PRIORITY];
+  TrafficClass* highPriorityQueue;
+  highPriorityQueue = q_class[HIGH_PRIORITY];
 
-  // TrafficClass* lowPriorityQueue;
-  // lowPriorityQueue = q_class[LOW_PRIORITY];
+  TrafficClass* lowPriorityQueue;
+  lowPriorityQueue = q_class[LOW_PRIORITY];
 
 
-  // uint32_t trafficClassToGo;
-  // trafficClassToGo = Classify(p);
+  uint32_t trafficClassToGo;
+  trafficClassToGo = Classify(p);
 
-  // if (trafficClassToGo == 0) // high
-  // {
-  //   if (highPriorityQueue->Enqueue(p)) 
-  //   {
-  //     NS_LOG_LOGIC ("High Priority Queue push");
-  //   }
-  //   else 
-  //   {
-  //     if (lowPriorityQueue->Enqueue(p))
-  //     {
-  //       NS_LOG_LOGIC ("Low Priority Queue push");
-  //     }
-  //     else 
-  //     {
-  //       NS_LOG_LOGIC ("All Queues are full");
-  //     }
-  //   }
-  // }
+  if (trafficClassToGo == 0) // high
+  {
+    if (highPriorityQueue->Enqueue(p)) 
+    {
+      NS_LOG_LOGIC ("High Priority Queue push");
+    }
+    else 
+    {
+      if (lowPriorityQueue->Enqueue(p))
+      {
+        NS_LOG_LOGIC ("Low Priority Queue push");
+      }
+      else 
+      {
+        NS_LOG_LOGIC ("All Queues are full");
+      }
+    }
+  }
 
 }
 

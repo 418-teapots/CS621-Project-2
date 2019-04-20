@@ -42,7 +42,7 @@ DiffServ::~DiffServ ()
 bool
 DiffServ::Enqueue (Ptr<Packet> packet)
 {
-  printf ("DoEnqueue() in DiffServ start.\n");
+  printf ("Enqueue() in DiffServ start.\n");
   bool b = DoEnqueue (packet);
   
   // uint32_t size = p->GetSize ();
@@ -62,7 +62,7 @@ DiffServ::Enqueue (Ptr<Packet> packet)
 Ptr<Packet>
 DiffServ::Dequeue (void)
 {
-  printf ("DoEnqueue() in DiffServ start.\n");
+  printf ("Dequeue() in DiffServ start.\n");
   Ptr<Packet> p = DoDequeue ();
   
   // uint32_t size = p->GetSize ();
@@ -131,6 +131,12 @@ DiffServ::Schedule ()
 uint32_t 
 DiffServ::Classify (Ptr<Packet> p)
 {
+  // TODO
+  // filters = q_class[0].filters[0];
+
+
+
+
   return 0;
 }
 

@@ -23,6 +23,209 @@ public:
 };
 
 
+class SourceIPAddress : public FilterElement 
+{
+public:
+  SourceIPAddress (Ipv4Address ipv4Address) : 
+    value(ipv4Address)
+  {
+
+  }
+
+  virtual ~SourceIPAddress ()
+  {
+
+  }
+
+  bool match(Ptr<Packet> p)
+  {
+    // TODO
+    // return p->?? == value;
+    return 0;
+  }
+
+private:
+
+  Ipv4Address value;
+
+};
+
+class SourceMask : public FilterElement 
+{
+public:
+  SourceMask (Ipv4Mask ipv4Mask) : 
+    value(ipv4Mask)
+  {
+
+  }
+
+  virtual ~SourceMask ()
+  {
+
+  }
+
+  bool match(Ptr<Packet> p)
+  {
+    // TODO
+    // return p->?? == value;
+    return 0;
+  }
+
+private:
+
+  Ipv4Mask value;
+
+};
+
+class SourcePortNumber : public FilterElement 
+{
+public:
+  SourcePortNumber (uint32_t portNumber) : 
+    value(portNumber)
+  {
+
+  }
+
+  virtual ~SourcePortNumber ()
+  {
+
+  }
+
+  bool match(Ptr<Packet> p)
+  {
+    // TODO
+    // return p->?? == value;
+    return 0;
+  }
+
+private:
+
+  uint32_t value;
+
+};
+
+class DestinationIPAddress : public FilterElement 
+{
+public:
+  DestinationIPAddress (Ipv4Address ipv4Address) : 
+    value(ipv4Address)
+  {
+
+  }
+
+  virtual ~DestinationIPAddress ()
+  {
+
+  }
+
+  bool match(Ptr<Packet> p)
+  {
+    // TODO
+    // return p->?? == value;
+    return 0;
+  }
+
+private:
+
+  Ipv4Address value;
+
+};
+
+class DestinationMask : public FilterElement 
+{
+public:
+  DestinationMask (Ipv4Mask ipv4Mask) : 
+    value(ipv4Mask)
+  {
+
+  }
+
+  virtual ~DestinationMask ()
+  {
+
+  }
+
+  bool match(Ptr<Packet> p)
+  {
+    // TODO
+    // return p->?? == value;
+    return 0;
+  }
+
+private:
+
+  Ipv4Mask value;
+
+};
+
+class DestinationPortNumber : public FilterElement 
+{
+public:
+  DestinationPortNumber (uint32_t portNumber) : 
+    value(portNumber)
+  {
+
+  }
+
+  virtual ~DestinationPortNumber ()
+  {
+
+  }
+
+  bool match(Ptr<Packet> p)
+  {
+    // TODO
+    // return p->?? == value;
+    return 0;
+  }
+
+private:
+
+  uint32_t value;
+
+};
+
+class ProtocolNumber : public FilterElement 
+{
+public:
+  ProtocolNumber (uint32_t protocolNumber) : 
+    value(protocolNumber)
+  {
+
+  }
+
+  virtual ~ProtocolNumber ()
+  {
+
+  }
+
+  bool match(Ptr<Packet> p)
+  {
+    // TODO
+    // return p->?? == value;
+    return 0;
+  }
+
+private:
+
+  uint32_t value;
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 } // namespace ns3

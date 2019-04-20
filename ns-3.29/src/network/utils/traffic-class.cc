@@ -19,11 +19,12 @@ TrafficClass::TrafficClass () :
 {
 
 }
-// Copy Constructor. 
-TrafficClass::TrafficClass (const TrafficClass& tc) 
-{
 
-}
+// Copy Constructor. 
+// TrafficClass::TrafficClass (const TrafficClass& tc) 
+// {
+
+// }
 
 TrafficClass::~TrafficClass () 
 {

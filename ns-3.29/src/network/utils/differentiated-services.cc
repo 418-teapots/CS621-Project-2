@@ -39,28 +39,11 @@ DiffServ::~DiffServ ()
 //   return m_mode;
 // }
 
-
-// Ptr<Packet>
-// DiffServ::Schedule () {
-//     // TODO
-
-//     return 
-// }
-  
-uint32_t
-DiffServ::Classify (Ptr<Packet> p) {
-    // TODO
-    // uint32_t priority_level;
-
-    return 1;
-}
-
-bool 
-DiffServ::DoEnqueue (Ptr<Packet> p) {
+bool
+DiffServ::Enqueue (Ptr<Packet> packet)
+{
   printf ("DoEnqueue() in DiffServ start.\n");
-
-  // TODO: Call Enqueue() in TrafficClass object.  
-  bool b = q_class[0]->Enqueue(p);
+  bool b = DoEnqueue (packet);
   
   // uint32_t size = p->GetSize ();
   // m_nBytes += size;
@@ -75,65 +58,88 @@ DiffServ::DoEnqueue (Ptr<Packet> p) {
   return b;
 }
 
-Ptr<Packet> 
-DiffServ::DoDequeue () {
-  printf ("DoDequeue() in DiffServ start.\n");
 
-  // TODO
-  Ptr<Packet> p = q_class[0]->Dequeue();
+Ptr<Packet>
+DiffServ::Dequeue (void)
+{
+  printf ("DoEnqueue() in DiffServ start.\n");
+  Ptr<Packet> p = DoDequeue ();
+  
+  // uint32_t size = p->GetSize ();
+  // m_nBytes += size;
+  // m_nTotalReceivedBytes += size;
 
-  // if (p != 0)
-  //   {
-  //     NS_ASSERT (m_nBytes.Get () >= p->GetSize ());
-  //     NS_ASSERT (m_nPackets.Get () > 0);
+  // m_nPackets++;
+  // m_nTotalReceivedPackets++;
 
-  //     m_nBytes -= p->GetSize ();
-  //     m_nPackets--;
-
-  //     NS_LOG_LOGIC ("m_traceDequeue (p)");
-  //     m_traceDequeue (p);
-  //   }
+  // // NS_LOG_LOGIC ("m_traceEnqueue (p)");
+  // m_traceEnqueue (p);
 
   return p;
 }
 
-Ptr<Packet> 
-DiffServ::DoRemove () {
-    // TODO
+Ptr<Packet>
+DiffServ::Remove (void)
+{
+  Ptr<Packet> p = DoRemove ();
 
+  return p;
+}
+
+// TODO error. 
+// Ptr<const Packet>
+// DiffServ::Peek (void) const
+// {
+//   return DoPeek ();
+// }
+
+bool 
+DiffServ::DoEnqueue (Ptr<Packet> p) 
+{
+  printf ("DoEnqueue() in DiffServ start.\n");
+
+  return false;
+}
+
+Ptr<Packet> 
+DiffServ::DoDequeue ()
+{
+  printf ("DoDequeue() in DiffServ start.\n");
+
+  return 0;
+}
+
+Ptr<Packet> 
+DiffServ::DoRemove () 
+{
   return 0;
 }
 
 Ptr<const Packet> 
-DiffServ::DoPeek () {
-    // TODO
+DiffServ::DoPeek () 
+{
 
+  return 0;
+}
+
+Ptr<Packet> 
+DiffServ::Schedule () 
+{
+  return 0;
+}
+
+uint32_t 
+DiffServ::Classify (Ptr<Packet> p)
+{
   return 0;
 }
 
 
 
 
+} // namespace ns3
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
 
 
 

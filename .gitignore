@@ -6,6 +6,7 @@
 !/ns-3.29/src/network/utils/filter-element.*
 !/ns-3.29/src/network/utils/drop-tail-queue.cc
 !/ns-3.29/src/network/utils/drop-tail-queue.h
+!/ns-3.29/src/network/utils/deficit-round-robin.*
 !/ns-3.29/src/network/utils/queue.cc
 !/ns-3.29/src/network/utils/queue.h
 !/ns-3.29/src/network/utils/wscript

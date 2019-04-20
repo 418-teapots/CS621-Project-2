@@ -10,6 +10,10 @@ namespace ns3 {
 
 
 TrafficClass::TrafficClass () : 
+  bytes (0),
+  packets (0),
+  maxPackets (1000),
+  maxBytes (10000),
   weight(0), 
   priority_level(0) 
 {
@@ -65,6 +69,8 @@ TrafficClass::Enqueue (Ptr<Packet> p)
 
   m_queue.push (p);
 
+  packets++;
+
   return true;
 }
 
@@ -82,6 +88,25 @@ TrafficClass::Dequeue ()
 
   p = m_queue.front ();
   m_queue.pop ();
+  packets--;
+
+  std::string packetStr = p->ToString ();
+  cout << packetStr << endl;
+  
+  return p;
+}
+
+Ptr<Packet> 
+TrafficClass::Peek () 
+{  
+  Ptr<Packet> p;
+  if (m_queue.empty ()) 
+    {
+      printf ("Queue is empty.\n");
+      return 0;
+    }
+
+  p = m_queue.front ();
 
   std::string packetStr = p->ToString ();
   cout << packetStr << endl;
@@ -97,11 +122,6 @@ TrafficClass::match (Ptr<Packet> p)
 
   return true;
 }
-
-
-
-
-
 
 } // namespace ns3
 

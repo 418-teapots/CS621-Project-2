@@ -10,8 +10,6 @@ using namespace std;
 
 namespace ns3 {
 
-
-
 /**
  * DiffServ class provides basic functionalities required to simulate differentiated services:
  *
@@ -31,12 +29,18 @@ public:
   /**
    * \return Returns a packet to transmit.
    */
-  Ptr<Packet> Schedule ();
+  virtual Ptr<Packet> Schedule ();
   /**
    * \brief Takes a packet and returns an integer.
    * \return An integer
    */
-  uint32_t Classify (Ptr<Packet> p);
+  virtual uint32_t Classify (Ptr<Packet> p);
+
+  virtual bool Enqueue (Ptr<Packet> p);
+  virtual Ptr<Packet> Dequeue (void);
+  virtual Ptr<Packet> Remove (void);
+  // TODO error
+  // virtual Ptr<const Packet> Peek (void) const;
 
 private:
   /**
@@ -52,10 +56,42 @@ private:
 
   virtual bool DoEnqueue (Ptr<Packet> p);
   virtual Ptr<Packet> DoDequeue ();
-  Ptr<Packet> DoRemove ();
-  Ptr<const Packet> DoPeek ();
+  virtual Ptr<Packet> DoRemove ();
+  virtual Ptr<const Packet> DoPeek ();
 };
 
 } // namespace ns3
 
 #endif /* DIFFERENTIATED_SERVICES_H_ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

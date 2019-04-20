@@ -29,6 +29,7 @@ public:
 
   bool Enqueue (Ptr<Packet> p);
   Ptr<Packet> Dequeue ();
+  Ptr<Packet> Peek ();  
   bool match (Ptr<Packet> p);
   void setWeight (double weight);
   double getWeight ();

@@ -11,6 +11,7 @@ Filter::Filter () {
 Filter::~Filter () {
 }
 
+// Return true if all the FilterElement is true, otherwise false. 
 bool
 Filter::match (Ptr<Packet> p) 
 {

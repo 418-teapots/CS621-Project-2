@@ -115,6 +115,7 @@ TrafficClass::Peek ()
   return p;
 }
 
+// Return true if at least one Filter is true, otherwise false. 
 bool 
 TrafficClass::match (Ptr<Packet> p) 
 {

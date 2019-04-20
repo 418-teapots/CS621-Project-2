@@ -118,10 +118,18 @@ TrafficClass::Peek ()
 bool 
 TrafficClass::match (Ptr<Packet> p) 
 {
-  // TODO
+  bool isMaching = false;
 
+  for (uint32_t i = 0; i < filters.size(); i++)
+  {
+    isMaching = filters[i]->match(p);
+    if (isMaching)
+    {
+      return true;
+    }
+  }
 
-  return true;
+  return false;
 }
 
 } // namespace ns3

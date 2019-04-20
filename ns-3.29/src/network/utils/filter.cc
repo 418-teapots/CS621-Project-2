@@ -12,19 +12,18 @@ Filter::~Filter () {
 }
 
 bool
-Filter::match (Ptr<Packet> p) {
-  // TODO
-  
-  // bool isMaching = false;
+Filter::match (Ptr<Packet> p) 
+{
+  bool isMaching = false;
 
-  // for (int i = 0; i < elements.size(); i++)
-  // {
-  //   isMaching = element[i].mactch();
-  //   if (!isMaching)
-  //   {
-  //     return false;
-  //   }
-  // }
+  for (uint32_t i = 0; i < elements.size(); i++)
+  {
+    isMaching = elements[i]->match(p);
+    if (!isMaching)
+    {
+      return false;
+    }
+  }
 
   return true;
 }

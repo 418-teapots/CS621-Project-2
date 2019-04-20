@@ -79,10 +79,15 @@ DRR::Schedule ()
 uint32_t 
 DRR::Classify (Ptr<Packet> p)
 {
+  for (uint32_t i = 0; i < q_class.size(); i++)
+  {
+    if (q_class[i].match(p)) 
+    {
+      return i;
+    }
+  }
 
-  
-      
-
+  return -1;
 
 /*TODO: setMode()??????
   if (queueMode == DiffServ::QUEUE_MODE_PACKETS) 
@@ -107,11 +112,14 @@ DRR::DoEnqueue (Ptr<Packet> p)
   printf ("DoEnqueue() in DRR start.\n");
   
   // TODO
+  uint32_t trafficClassToGo = Classify(p);
 
+
+  
 
 
   // TODO: Call Enqueue() in TrafficClass object.  
-  bool b = q_class[0]->Enqueue(p);
+  bool b = q_class[trafficClassToGo]->Enqueue(p);
   
   // uint32_t size = p->GetSize ();
   // m_nBytes += size;
@@ -128,34 +136,34 @@ DRR::DoEnqueue (Ptr<Packet> p)
 
 
 
-  TrafficClass* highPriorityQueue;
-  highPriorityQueue = q_class[HIGH_PRIORITY];
+  // TrafficClass* highPriorityQueue;
+  // highPriorityQueue = q_class[HIGH_PRIORITY];
 
-  TrafficClass* lowPriorityQueue;
-  lowPriorityQueue = q_class[LOW_PRIORITY];
+  // TrafficClass* lowPriorityQueue;
+  // lowPriorityQueue = q_class[LOW_PRIORITY];
 
 
-  uint32_t trafficClassToGo;
-  trafficClassToGo = Classify(p);
+  // uint32_t trafficClassToGo;
+  // trafficClassToGo = Classify(p);
 
-  if (trafficClassToGo == 0) // high
-  {
-    if (highPriorityQueue->Enqueue(p)) 
-    {
-      NS_LOG_LOGIC ("High Priority Queue push");
-    }
-    else 
-    {
-      if (lowPriorityQueue->Enqueue(p))
-      {
-        NS_LOG_LOGIC ("Low Priority Queue push");
-      }
-      else 
-      {
-        NS_LOG_LOGIC ("All Queues are full");
-      }
-    }
-  }
+  // if (trafficClassToGo == 0) // high
+  // {
+  //   if (highPriorityQueue->Enqueue(p)) 
+  //   {
+  //     NS_LOG_LOGIC ("High Priority Queue push");
+  //   }
+  //   else 
+  //   {
+  //     if (lowPriorityQueue->Enqueue(p))
+  //     {
+  //       NS_LOG_LOGIC ("Low Priority Queue push");
+  //     }
+  //     else 
+  //     {
+  //       NS_LOG_LOGIC ("All Queues are full");
+  //     }
+  //   }
+  // }
 
 }
 

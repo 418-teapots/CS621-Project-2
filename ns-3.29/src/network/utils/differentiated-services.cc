@@ -7,17 +7,26 @@
 namespace ns3 {
 
 
-DiffServ::DiffServ () {
-
-  // TODO
+DiffServ::DiffServ () 
+{
 
   TrafficClass trafficClass;
-  // q_class.assign(num_queue, &trafficClass)
   q_class.assign(1, &trafficClass);
 
+}
+
+DiffServ::DiffServ (uint32_t numQueue, vector<Filter*> filters)
+{
+
+  TrafficClass trafficClass;
+  q_class.assign(numQueue, &trafficClass);
+
+  q_class[0]->filters = filters;
+  q_class[0]->setWeight(500);
 
 
 }
+
 
 
 DiffServ::~DiffServ () 
@@ -98,7 +107,10 @@ DiffServ::DoEnqueue (Ptr<Packet> p)
 {
   printf ("DoEnqueue() in DiffServ start.\n");
 
-  return false;
+  uint32_t trafficClassToGo = Classify(p);
+  bool b = q_class[trafficClassToGo]->Enqueue(p);
+  
+  return b;
 }
 
 Ptr<Packet> 
@@ -106,18 +118,24 @@ DiffServ::DoDequeue ()
 {
   printf ("DoDequeue() in DiffServ start.\n");
 
-  return 0;
+  // TODO
+
+  Ptr<Packet> p = Schedule();
+  return p;
 }
 
 Ptr<Packet> 
 DiffServ::DoRemove () 
 {
+  // TODO
+
   return 0;
 }
 
 Ptr<const Packet> 
 DiffServ::DoPeek () 
 {
+  // TODO
 
   return 0;
 }
@@ -125,19 +143,32 @@ DiffServ::DoPeek ()
 Ptr<Packet> 
 DiffServ::Schedule () 
 {
+  // TODO
+  
   return 0;
 }
 
+
+/**
+ * A single port or IP address can be set by the user and 
+ * matching traffic is sorted into the priority queue,
+ * all other traffic is sorted into the lower priority 
+ * default queue.
+ */
 uint32_t 
 DiffServ::Classify (Ptr<Packet> p)
 {
   // TODO
-  // filters = q_class[0].filters[0];
 
+  for (uint32_t i = 0; i < q_class.size(); i++)
+  {
+    if (q_class[i]->match(p)) 
+    {
+      return i;
+    }
+  }
 
-
-
-  return 0;
+  return -1;
 }
 
 

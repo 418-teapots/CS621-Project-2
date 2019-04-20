@@ -22,6 +22,7 @@ class DiffServ : public Queue<Packet>
 {
 public:
   DiffServ ();
+  DiffServ (uint32_t numQueue, vector<Filter*> filters);
   virtual ~DiffServ ();
 
   // void SetMode (QueueMode mode);
@@ -54,10 +55,10 @@ private:
    */
   vector<TrafficClass*> q_class;
 
-  virtual bool DoEnqueue (Ptr<Packet> p);
-  virtual Ptr<Packet> DoDequeue ();
-  virtual Ptr<Packet> DoRemove ();
-  virtual Ptr<const Packet> DoPeek ();
+  bool DoEnqueue (Ptr<Packet> p);
+  Ptr<Packet> DoDequeue ();
+  Ptr<Packet> DoRemove ();
+  Ptr<const Packet> DoPeek ();
 };
 
 } // namespace ns3

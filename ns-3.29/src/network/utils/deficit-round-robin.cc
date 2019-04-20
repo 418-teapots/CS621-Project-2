@@ -17,6 +17,21 @@ DRR::GetTypeId (void)
 
 DRR::DRR ()
 {
+  // Make conditions on which queue to go. 
+  Ipv4Address addr("1.1.1.1");
+  SourceIPAddress sourceIPAddress(addr);
+
+  uint32_t portNum = 433;
+  SourcePortNumber sourcePortNumber(portNum);
+
+  Filter filter1.elements.push_back(sourceIPAddress);
+  Filter filter1.elements.push_back(sourcePortNumber);
+
+  q_class[0].push_back(filter1);
+
+
+
+
 
   // TODO
 
@@ -178,6 +193,7 @@ DRR::DoDequeue ()
 Ptr<Packet> 
 DRR::DoRemove ()
 {
+  // TODO
     
 }
 

@@ -37,6 +37,9 @@ public:
    */
   uint32_t Classify (Ptr<Packet> p);
 
+  void setFilters(uint32_t queueIndex, vector<Filter*> filters);
+  void setDefaultQueue(uint32_t queueIndex, bool b);
+
   virtual bool Enqueue (Ptr<Packet> p);
   virtual Ptr<Packet> Dequeue (void);
   virtual Ptr<Packet> Remove (void);

@@ -19,17 +19,6 @@ TrafficClass::TrafficClass () :
 
 }
 
-TrafficClass::TrafficClass (bool b) : 
-  bytes (0),
-  packets (0),
-  maxPackets (1000),
-  maxBytes (10000),
-  weight(0), 
-  priority_level(0), 
-  isDefault(b)
-{
-
-}
 
 // Copy Constructor. 
 // TrafficClass::TrafficClass (const TrafficClass& tc) 
@@ -65,6 +54,21 @@ TrafficClass::getPriorityLevel ()
 {
   return priority_level;
 }
+
+bool
+TrafficClass::getIsDefault()
+{
+  return isDefault;
+}
+
+void
+TrafficClass::setIsDefault(bool b)
+{
+  isDefault = b;
+}
+
+
+
 
 bool 
 TrafficClass::Enqueue (Ptr<Packet> p) 
@@ -142,12 +146,6 @@ TrafficClass::match (Ptr<Packet> p)
   }
 
   return false;
-}
-
-bool
-TrafficClass::isDefaultQueue()
-{
-  return isDefault;
 }
 
 

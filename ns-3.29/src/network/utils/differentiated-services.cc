@@ -20,7 +20,8 @@ DiffServ::DiffServ ()
 }
 
 
-// priorityPrams is a list of priority_level or weight. 
+// 'numQueue' is the number of queues. 
+// 'priorityPrams' is a list of priority_level or weight. 
 // e.g. 300 200 100 
 DiffServ::DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams)
 {
@@ -31,52 +32,25 @@ DiffServ::DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams)
   // Example. TODO
   for (uint32_t i = 0; i < numQueue; ++i)
   {
-    TrafficClass trafficClass(false);
+    TrafficClass trafficClass;
     // TODO: What about priority_level (SPQ)?
     trafficClass.setWeight(priorityPrams[i]);
     q_class.push_back(&trafficClass);
   }
 
-  ////// Filter settings example start. //////
-  // Make conditions on which queue to go. 
-  // e.g. ("1.1.1.1" AND 443) OR ("2.2.2.2" AND 888) => this packet goes to q_class[0]. 
-  
-  // For Filter 1. 
-  Ipv4Address addr1("1.1.1.1");
-  SourceIPAddress sourceIPAddress1(addr1);
-
-  uint32_t portNum1 = 443;
-  SourcePortNumber sourcePortNumber1(portNum1);
-
-  Filter filter1;
-  filter1.elements.push_back(&sourceIPAddress1);
-  filter1.elements.push_back(&sourcePortNumber1);
-
-  // For Filter 2. 
-  Ipv4Address addr2("2.2.2.2");
-  SourceIPAddress sourceIPAddress2(addr2);
-
-  uint32_t portNum2 = 888;
-  SourcePortNumber sourcePortNumber2(portNum2);
-
-  Filter filter2;
-  filter2.elements.push_back(&sourceIPAddress2);
-  filter2.elements.push_back(&sourcePortNumber2);
-
-  // Set Filter 1 and Filter 2 to filters. 
-  vector<Filter*> filters;
-  filters.push_back(&filter1);
-  filters.push_back(&filter2);
-
-  // Set filters to q_class[0]. 
-  q_class[0]->filters = filters;
-
-  ////// Filter settings example end. //////
-
-
-
 }
 
+void 
+DiffServ::setFilters(uint32_t queueIndex, vector<Filter*> filters) 
+{
+  q_class[queueIndex]->filters = filters;
+}
+
+void 
+DiffServ::setDefaultQueue(uint32_t queueIndex, bool b) 
+{
+  q_class[queueIndex]->setIsDefault(b);
+}
 
 
 DiffServ::~DiffServ () 
@@ -195,7 +169,7 @@ DiffServ::DoPeek ()
 Ptr<Packet> 
 DiffServ::Schedule () 
 {
-  // TODO
+  // TODO?
   
   return 0;
 }
@@ -204,9 +178,7 @@ DiffServ::Schedule ()
 uint32_t 
 DiffServ::Classify (Ptr<Packet> p)
 {
-  // TODO
-
-  uint32_t defaultQueue;
+  uint32_t defaultQueueIndex;
   for (uint32_t i = 0; i < q_class.size(); ++i)
   {
     if (q_class[i]->match(p)) 
@@ -214,14 +186,17 @@ DiffServ::Classify (Ptr<Packet> p)
       return i;
     }
 
-    if (q_class[i]->isDefaultQueue()) 
+    if (q_class[i]->getIsDefault()) 
     {
-       defaultQueue = i;
+       defaultQueueIndex = i;
     }
   }
 
-  return defaultQueue;
+  return defaultQueueIndex;
 }
+
+
+
 
 
 

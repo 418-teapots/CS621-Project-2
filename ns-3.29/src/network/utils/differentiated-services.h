@@ -22,7 +22,7 @@ class DiffServ : public Queue<Packet>
 {
 public:
   DiffServ ();
-  DiffServ (uint32_t numQueue, vector<Filter*> filters);
+  DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams);
   virtual ~DiffServ ();
 
   // void SetMode (QueueMode mode);

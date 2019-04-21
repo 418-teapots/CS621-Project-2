@@ -8,14 +8,25 @@ using namespace std;
 
 namespace ns3 {
 
-
 TrafficClass::TrafficClass () : 
   bytes (0),
   packets (0),
   maxPackets (1000),
   maxBytes (10000),
   weight(0), 
-  priority_level(0) 
+  priority_level(0)
+{
+
+}
+
+TrafficClass::TrafficClass (bool b) : 
+  bytes (0),
+  packets (0),
+  maxPackets (1000),
+  maxBytes (10000),
+  weight(0), 
+  priority_level(0), 
+  isDefault(b)
 {
 
 }
@@ -132,6 +143,13 @@ TrafficClass::match (Ptr<Packet> p)
 
   return false;
 }
+
+bool
+TrafficClass::isDefaultQueue()
+{
+  return isDefault;
+}
+
 
 } // namespace ns3
 

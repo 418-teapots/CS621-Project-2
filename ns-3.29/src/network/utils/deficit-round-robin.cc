@@ -17,20 +17,39 @@ namespace ns3 {
 
 DRR::DRR ()
 {
+  // TODO
 
   // Make conditions on which queue to go. 
-  // Ipv4Address addr("1.1.1.1");
-  // SourceIPAddress sourceIPAddress(addr);
+  // ("1.1.1.1" AND 443) OR ("2.2.2.2" AND 888)
+  
+  // Ipv4Address addr1("1.1.1.1");
+  // SourceIPAddress sourceIPAddress1(addr1);
 
-  // uint32_t portNum = 433;
-  // SourcePortNumber sourcePortNumber(portNum);
+  // uint32_t portNum1 = 443;
+  // SourcePortNumber sourcePortNumber1(portNum1);
 
   // Filter filter1;
-  // filter1.elements.push_back(&sourceIPAddress);
-  // filter1.elements.push_back(&sourcePortNumber);
+  // filter1.elements.push_back(&sourceIPAddress1);
+  // filter1.elements.push_back(&sourcePortNumber1);
+
+
+  // Ipv4Address addr2("2.2.2.2");
+  // SourceIPAddress sourceIPAddress2(addr2);
+
+  // uint32_t portNum2 = 888;
+  // SourcePortNumber sourcePortNumber2(portNum2);
+
+  // Filter filter2;
+  // filter2.elements.push_back(&sourceIPAddress2);
+  // filter2.elements.push_back(&sourcePortNumber2);
+
 
   // vector<Filter*> filters;
   // filters.push_back(&filter1);
+  // filters.push_back(&filter2);
+
+  // q_class[0]->filters = filters;
+
 
   // DiffServ(3, filters);
   

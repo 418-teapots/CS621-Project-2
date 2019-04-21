@@ -19,6 +19,7 @@ class TrafficClass
 {
 public:
   TrafficClass ();
+  TrafficClass (bool b);
   TrafficClass (const TrafficClass& tc);
   virtual ~TrafficClass ();
 
@@ -35,6 +36,7 @@ public:
   double getWeight ();
   void setPriorityLevel (uint32_t plevel);
   uint32_t getPriorityLevel ();
+  bool isDefaultQueue ();
 
 private:
   /**

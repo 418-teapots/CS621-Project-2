@@ -20,11 +20,16 @@ DiffServ::DiffServ (uint32_t numQueue, vector<Filter*> filters)
 {
   // TODO
 
-  TrafficClass trafficClass;
-  q_class.assign(numQueue, &trafficClass);
 
-  q_class[0]->filters = filters;
-  q_class[0]->setWeight(500);
+  for (uint32_t i = 0; i < numQueue; ++i)
+  {
+    TrafficClass trafficClass(false);
+    trafficClass.filters = filters;
+    trafficClass.setWeight(500);
+    q_class.push_back(&trafficClass);
+  }
+
+  
 
 
 }
@@ -121,8 +126,10 @@ DiffServ::DoDequeue ()
   printf ("DoDequeue() in DiffServ start.\n");
 
   // TODO
+  // Ptr<Packet> p = Schedule();
 
-  Ptr<Packet> p = Schedule();
+  Ptr<Packet> p = q_class[0]->Dequeue();
+
   return p;
 }
 
@@ -156,15 +163,21 @@ DiffServ::Classify (Ptr<Packet> p)
 {
   // TODO
 
-  for (uint32_t i = 0; i < q_class.size(); i++)
+  uint32_t defaultQueue;
+  for (uint32_t i = 0; i < q_class.size(); ++i)
   {
     if (q_class[i]->match(p)) 
     {
       return i;
     }
+
+    if (q_class[i]->isDefaultQueue()) 
+    {
+       defaultQueue = i;
+    }
   }
 
-  return -1;
+  return defaultQueue;
 }
 
 

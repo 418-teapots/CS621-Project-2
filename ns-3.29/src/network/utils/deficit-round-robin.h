@@ -3,6 +3,7 @@
 #ifndef DEFICIT_ROUND_ROBIN_H_
 #define DEFICIT_ROUND_ROBIN_H_
 
+#include <vector>
 #include "differentiated-services.h"
 #include "ns3/pointer.h"
 #include "ns3/packet.h"
@@ -20,6 +21,16 @@ public:
   virtual ~DRR ();
 
   Ptr<Packet> Schedule ();
+  void setDeficitCounter (int n);
+  int getDeficitCounter ();
+  void setQuantum (uint32_t quantum);
+  uint32_t getQuantum ();
+
+private: 
+  
+  vector<uint32_t> activeQueueList;
+  int deficitCounter;
+  uint32_t quantum;
 
 };
 

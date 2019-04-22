@@ -13,8 +13,8 @@ TrafficClass::TrafficClass () :
   packets (0),
   maxPackets (1000),
   maxBytes (10000),
-  weight(0), 
-  priority_level(0)
+  weight (0), 
+  priority_level (0)
 {
 
 }

@@ -15,7 +15,9 @@ namespace ns3 {
 // }
 
 
-DRR::DRR ()
+DRR::DRR () : 
+  deficitCounter (0), 
+  quantum (0)
 {
   // Make conditions on which queue to go. 
   // e.g. (src IP: "1.1.1.1" AND src port: 2048) OR (src IP: "2.2.2.2" AND src port: 2048) => this packet goes to q_class[0]. 
@@ -112,10 +114,35 @@ DRR::~DRR ()
     
 }
 
+void 
+DRR::setDeficitCounter (int n) 
+{
+  deficitCounter = n;
+}
+  
+int 
+DRR::getDeficitCounter ()
+{
+  return deficitCounter;
+}
+  
+void 
+DRR::setQuantum (uint32_t _quantum)
+{
+  quantum = _quantum;
+}
+
+uint32_t 
+DRR::getQuantum ()
+{
+  return quantum;
+}
+
 Ptr<Packet> 
 DRR::Schedule ()
 {
   // TODO
+  
 
 
 

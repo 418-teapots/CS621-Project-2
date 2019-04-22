@@ -39,6 +39,7 @@ public:
   bool getIsDefault ();
   void setIsDefault (bool b);
 
+
 private:
   /**
    * the count of bytes in the queue.

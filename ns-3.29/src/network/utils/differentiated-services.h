@@ -22,7 +22,7 @@ class DiffServ : public Queue<Packet>
 {
 public:
   DiffServ ();
-  DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams);
+  DiffServ (uint32_t numQueue);
   virtual ~DiffServ ();
 
   /**
@@ -31,18 +31,23 @@ public:
   // void SetMode (QueueMode mode);
   // QueueMode GetMode ();
 
+
+  vector<TrafficClass*>* getQueuesPtr();
+
+
   /**
    * \return Returns a packet to transmit.
    */
+  // virtual Ptr<Packet> Schedule (vector<TrafficClass*>& q_class) const;
   virtual Ptr<Packet> Schedule () const;
+
   /**
    * \brief Takes a packet and returns an integer.
    * \return An integer
    */
   uint32_t Classify (Ptr<Packet> p);
 
-  void setFilters (uint32_t queueIndex, vector<Filter*> filters);
-  void setDefaultQueue (uint32_t queueIndex, bool b);
+
 
   virtual bool Enqueue (Ptr<Packet> p);
   virtual Ptr<Packet> Dequeue (void);

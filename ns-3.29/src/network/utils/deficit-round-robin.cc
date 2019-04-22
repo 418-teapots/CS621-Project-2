@@ -14,15 +14,29 @@ namespace ns3 {
 //   return tid;
 // }
 
-
 DRR::DRR () : 
-  deficitCounter (0)
-  // quantum (0)
+  roundRobinPtr (0)
 {
+
+}
+
+/** 
+ * 'numQueue' is the number of queues. 
+ * 'priorityPrams' is a list of priority_level or weight. 
+ *  e.g. 300 200 100 
+ */
+DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) : 
+  roundRobinPtr (0)
+  // DiffServ(numQueue)
+{
+
+  vector<TrafficClass*>* queuesPtr = getQueuesPtr();
+
   // Make conditions on which queue to go. 
   // e.g. (src IP: "1.1.1.1" AND src port: 2048) OR (src IP: "2.2.2.2" AND src port: 2048) => this packet goes to q_class[0]. 
   
   // Queue 0. 
+  DRRQueue* drrQueue0 = new DRRQueue;
   // For Filter 1. 
   Ipv4Address addr1("1.1.1.1");
   SourceIPAddress sourceIPAddress1(addr1);
@@ -50,13 +64,16 @@ DRR::DRR () :
   filters0.push_back(&filter1);
   filters0.push_back(&filter2);
 
-  // Assign filters to q_class[0]. 
-  setFilters(0, filters0);
-  setDefaultQueue(0, false);
-
+  // Assign filters and other settings to q_class[0]. 
+  drrQueue0->filters = filters0;
+  drrQueue0->setIsDefault(false);
+  drrQueue0->setWeight(priorityPrams[0]);
+  (*queuesPtr).push_back(drrQueue0);
 
 
   // Queue 1. 
+  DRRQueue* drrQueue1 = new DRRQueue;
+
   Ipv4Address addr3("1.1.1.1");
   SourceIPAddress sourceIPAddress3(addr3);
 
@@ -70,12 +87,16 @@ DRR::DRR () :
   vector<Filter*> filters1;
   filters1.push_back(&filter3);
 
-  // Assign filters to q_class[1]. 
-  setFilters(1, filters1);
-  setDefaultQueue(1, false);
+  // Assign filters and other settings to q_class[1]. 
+  drrQueue1->filters = filters1;
+  drrQueue1->setIsDefault(false);
+  drrQueue1->setWeight(priorityPrams[1]);
+  (*queuesPtr).push_back(drrQueue1);
   
 
   // Queue 2. 
+  DRRQueue* drrQueue2 = new DRRQueue;
+
   Ipv4Address addr4("1.1.1.1");
   SourceIPAddress sourceIPAddress4(addr4);
 
@@ -89,9 +110,11 @@ DRR::DRR () :
   vector<Filter*> filters2;
   filters2.push_back(&filter4);
 
-  // Assign filters to q_class[2]. 
-  setFilters(2, filters2);
-  setDefaultQueue(2, true);
+  // Assign filters and other settings to q_class[2]. 
+  drrQueue2->filters = filters2;
+  drrQueue2->setIsDefault(true);
+  drrQueue2->setWeight(priorityPrams[2]);
+  (*queuesPtr).push_back(drrQueue2);
 
 
   
@@ -115,35 +138,22 @@ DRR::~DRR ()
     
 }
 
-void 
-DRR::setDeficitCounter (int n) 
-{
-  deficitCounter = n;
-}
-  
-int 
-DRR::getDeficitCounter ()
-{
-  return deficitCounter;
-}
-  
-// void 
-// DRR::setQuantum (uint32_t _quantum)
-// {
-//   quantum = _quantum;
-// }
-
-// uint32_t 
-// DRR::getQuantum ()
-// {
-//   return quantum;
-// }
-
 Ptr<Packet> 
 DRR::Schedule ()
 {
   // TODO
+
+  // If the queue contain at least one packet, then 
+  // we keep this queue index to avoid examine empty queues. 
+  // if (q_class[roundRobinPointer]->getPacketsCount() > 0)
+  // {
+  //   activeQueueList.push_back(roundRobinPointer);
+  // }
+
+  // 
   
+  // q_class[roundRobinPointer]->
+
 
 
 

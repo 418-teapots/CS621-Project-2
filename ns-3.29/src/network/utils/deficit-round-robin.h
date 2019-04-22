@@ -18,22 +18,55 @@ public:
 
   static TypeId GetTypeId (void);
   DRR ();
-  DRR (vector<uint32_t> priorityPrams);
+  /** 
+   * 'numQueue' is the number of queues. 
+   * 'priorityPrams' is a list of priority_level or weight. 
+   *  e.g. 300 200 100 
+   */
+  DRR (uint32_t numQueue, vector<uint32_t> priorityPrams);
   virtual ~DRR ();
 
   Ptr<Packet> Schedule ();
-  void setDeficitCounter (int n);
-  int getDeficitCounter ();
-  // void setQuantum (uint32_t quantum);
-  // uint32_t getQuantum ();
 
 private: 
   
+  /**
+   *  A list of queue indices whose queue contains at least one packet. 
+   */ 
   vector<uint32_t> activeQueueList;
-  int deficitCounter;
-  // uint32_t quantum;
+
+  uint32_t roundRobinPtr;
 
 };
+
+
+class DRRQueue : public TrafficClass
+{
+public:
+  DRRQueue () : 
+    deficitCounter (0)
+  {
+
+  }
+
+  virtual ~DRRQueue () {}
+  
+  void setDeficitCounter (int n)
+  {
+    deficitCounter = n;
+  }
+  int getDeficitCounter ()
+  {
+    return deficitCounter;
+  }
+
+private: 
+
+  int deficitCounter;
+
+
+};
+
 
 
 } // namespace ns3

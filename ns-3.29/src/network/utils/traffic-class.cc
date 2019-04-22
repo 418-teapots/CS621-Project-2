@@ -73,9 +73,6 @@ TrafficClass::setIsDefault(bool b)
   isDefault = b;
 }
 
-
-
-
 bool 
 TrafficClass::Enqueue (Ptr<Packet> p) 
 {

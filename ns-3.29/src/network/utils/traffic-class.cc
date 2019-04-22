@@ -106,8 +106,8 @@ TrafficClass::Dequeue ()
   m_queue.pop ();
   packets--;
 
-  std::string packetStr = p->ToString ();
-  cout << packetStr << endl;
+  string packetStr = p->ToString ();
+  cout << "Packet dequeued: " << packetStr << endl;
   
   return p;
 }
@@ -124,8 +124,8 @@ TrafficClass::Peek ()
 
   p = m_queue.front ();
 
-  std::string packetStr = p->ToString ();
-  cout << packetStr << endl;
+  string packetStr = p->ToString ();
+  cout << "Packet peeked: " << packetStr << endl;
   
   return p;
 }

@@ -25,12 +25,16 @@ public:
   DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams);
   virtual ~DiffServ ();
 
+  /**
+   * setMode()/getMode() - the accessor and modifier for private variable m mode.
+   */
   // void SetMode (QueueMode mode);
   // QueueMode GetMode ();
+
   /**
    * \return Returns a packet to transmit.
    */
-  virtual Ptr<Packet> Schedule ();
+  virtual Ptr<Packet> Schedule () const;
   /**
    * \brief Takes a packet and returns an integer.
    * \return An integer
@@ -44,7 +48,7 @@ public:
   virtual Ptr<Packet> Dequeue (void);
   virtual Ptr<Packet> Remove (void);
   // TODO error
-  // virtual Ptr<const Packet> Peek (void) const;
+  virtual Ptr<const Packet> Peek (void) const;
 
 private:
   /**
@@ -54,14 +58,13 @@ private:
 
   /**
    * The vector (array) of TrafficClass pointers. 
-   * setMode()/getMode() - the accessor and modifier for private variable m mode.
    */
   vector<TrafficClass*> q_class;
 
   bool DoEnqueue (Ptr<Packet> p);
   Ptr<Packet> DoDequeue ();
   Ptr<Packet> DoRemove ();
-  Ptr<const Packet> DoPeek ();
+  Ptr<const Packet> DoPeek (void) const;
 };
 
 } // namespace ns3

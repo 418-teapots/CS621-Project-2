@@ -17,8 +17,6 @@ namespace ns3 {
 
 DRR::DRR ()
 {
-  // TODO
-
   // Make conditions on which queue to go. 
   // e.g. (src IP: "1.1.1.1" AND src port: 2048) OR (src IP: "2.2.2.2" AND src port: 2048) => this packet goes to q_class[0]. 
   

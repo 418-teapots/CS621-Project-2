@@ -11,8 +11,7 @@ DiffServ::DiffServ ()
 {
   printf("DiffServ() start.");
 
-  // TODO
-
+  // TODO?
 
   TrafficClass trafficClass;
   q_class.assign(1, &trafficClass);
@@ -27,14 +26,13 @@ DiffServ::DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams)
 {
   printf("DiffServ(uint32_t numQueue, vector<uint32_t> priorityPrams) start.");
 
-  // TODO
-
-  // Example. TODO
   for (uint32_t i = 0; i < numQueue; ++i)
   {
     TrafficClass trafficClass;
+
     // TODO: What about priority_level (SPQ)?
     trafficClass.setWeight(priorityPrams[i]);
+
     q_class.push_back(&trafficClass);
   }
 
@@ -120,11 +118,13 @@ DiffServ::Remove (void)
 }
 
 // TODO error. 
-// Ptr<const Packet>
-// DiffServ::Peek (void) const
-// {
-//   return DoPeek ();
-// }
+Ptr<const Packet>
+DiffServ::Peek (void) const
+{
+  Ptr<const Packet> p = DoPeek ();
+
+  return p;
+}
 
 bool 
 DiffServ::DoEnqueue (Ptr<Packet> p) 
@@ -143,9 +143,8 @@ DiffServ::DoDequeue ()
   printf ("DoDequeue() in DiffServ start.\n");
 
   // TODO
-  // Ptr<Packet> p = Schedule();
-
-  Ptr<Packet> p = q_class[0]->Dequeue();
+  Ptr<Packet> p = Schedule();
+  // Ptr<Packet> p = q_class[0]->Dequeue();
 
   return p;
 }
@@ -154,20 +153,24 @@ Ptr<Packet>
 DiffServ::DoRemove () 
 {
   // TODO
+  // Ptr<Packet> p = Schedule();
+
+  Ptr<Packet> p = q_class[0]->Dequeue();
 
   return 0;
 }
 
 Ptr<const Packet> 
-DiffServ::DoPeek () 
+DiffServ::DoPeek (void) const
 {
   // TODO
+  Ptr<const Packet> p = Schedule();
 
-  return 0;
+  return p;
 }
 
 Ptr<Packet> 
-DiffServ::Schedule () 
+DiffServ::Schedule () const
 {
   // TODO?
   
@@ -186,6 +189,8 @@ DiffServ::Classify (Ptr<Packet> p)
       return i;
     }
 
+    // Get the default queue index. 
+    // The packet that does not match any filter goes to the default queue. 
     if (q_class[i]->getIsDefault()) 
     {
        defaultQueueIndex = i;

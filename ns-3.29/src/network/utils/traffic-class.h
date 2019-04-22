@@ -31,6 +31,7 @@ public:
   Ptr<Packet> Dequeue ();
   Ptr<Packet> Peek ();
   bool match (Ptr<Packet> p);
+  uint32_t getPacketsCount ();
   void setWeight (double weight);
   double getWeight ();
   void setPriorityLevel (uint32_t plevel);

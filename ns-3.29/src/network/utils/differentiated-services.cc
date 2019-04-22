@@ -11,8 +11,6 @@ DiffServ::DiffServ ()
 {
   printf("DiffServ() start.");
 
-  // TODO?
-
   TrafficClass trafficClass;
   q_class.assign(1, &trafficClass);
 
@@ -25,7 +23,7 @@ DiffServ::DiffServ ()
 DiffServ::DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams)
 {
   printf("DiffServ(uint32_t numQueue, vector<uint32_t> priorityPrams) start.");
-
+ 
   for (uint32_t i = 0; i < numQueue; ++i)
   {
     TrafficClass trafficClass;
@@ -35,21 +33,21 @@ DiffServ::DiffServ (uint32_t numQueue, vector<uint32_t> priorityPrams)
 
     q_class.push_back(&trafficClass);
   }
-
+ 
 }
 
+
 void 
-DiffServ::setFilters(uint32_t queueIndex, vector<Filter*> filters) 
+DiffServ::setFilters (uint32_t queueIndex, vector<Filter*> filters) 
 {
   q_class[queueIndex]->filters = filters;
 }
 
 void 
-DiffServ::setDefaultQueue(uint32_t queueIndex, bool b) 
+DiffServ::setDefaultQueue (uint32_t queueIndex, bool b) 
 {
   q_class[queueIndex]->setIsDefault(b);
 }
-
 
 DiffServ::~DiffServ () 
 {

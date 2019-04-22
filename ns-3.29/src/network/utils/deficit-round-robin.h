@@ -18,19 +18,20 @@ public:
 
   static TypeId GetTypeId (void);
   DRR ();
+  DRR (vector<uint32_t> priorityPrams);
   virtual ~DRR ();
 
   Ptr<Packet> Schedule ();
   void setDeficitCounter (int n);
   int getDeficitCounter ();
-  void setQuantum (uint32_t quantum);
-  uint32_t getQuantum ();
+  // void setQuantum (uint32_t quantum);
+  // uint32_t getQuantum ();
 
 private: 
   
   vector<uint32_t> activeQueueList;
   int deficitCounter;
-  uint32_t quantum;
+  // uint32_t quantum;
 
 };
 

@@ -10,6 +10,9 @@ using namespace std;
 
 namespace ns3 {
 
+/**
+ * Handles Deficit-Round-Robin (DRR) algorithm with DiffServ class. 
+ */
 class DRR : public DiffServ 
 {
 public:
@@ -24,10 +27,13 @@ public:
   DRR (uint32_t numQueue, vector<uint32_t> priorityPrams);
   virtual ~DRR ();
 
+  /**
+   * \return Returns a queue index whose queue has the next packet to be transmitted.
+   */
   uint32_t Schedule ();
 
-  void setRoundRobinPointer (uint32_t v);
-  uint32_t getRoundRobinPointer ();
+  void SetRoundRobinPointer (uint32_t v);
+  uint32_t GetRoundRobinPointer ();
 
 private: 
   
@@ -39,7 +45,7 @@ private:
   /**
    * Indicates queue index whose queue will be serviced next.  
    */ 
-  uint32_t roundRobinPointer;
+  uint32_t m_roundRobinPointer;
 
 };
 
@@ -47,29 +53,29 @@ private:
  * Holds Deficit Counter specifically for Deficit-Round-Robin algorithm, 
  * in addition to the members in TrafficClass. 
  */
-class DRRQueue : public TrafficClass
+class DrrQueue : public TrafficClass
 {
 public:
-  DRRQueue () : 
-    deficitCounter (0)
+  DrrQueue () : 
+    m_deficitCounter (0)
   {
 
   }
 
-  virtual ~DRRQueue () {}
+  virtual ~DrrQueue () {}
   
-  void setDeficitCounter (uint32_t v)
+  void SetDeficitCounter (uint32_t v)
   {
-    deficitCounter = v;
+    m_deficitCounter = v;
   }
-  uint32_t getDeficitCounter ()
+  uint32_t GetDeficitCounter ()
   {
-    return deficitCounter;
+    return m_deficitCounter;
   }
 
 private: 
 
-  uint32_t deficitCounter;
+  uint32_t m_deficitCounter;
 
 };
 

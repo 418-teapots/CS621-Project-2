@@ -24,6 +24,9 @@ public:
    */
   vector<FilterElement*> elements;
 
+  /**
+   * \return Return true if all the FilterElement is true, otherwise false.
+   */
   bool match (Ptr<Packet> p);
 };
 

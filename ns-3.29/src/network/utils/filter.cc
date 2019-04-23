@@ -1,4 +1,3 @@
-
 #include "filter.h"
 
 namespace ns3 {

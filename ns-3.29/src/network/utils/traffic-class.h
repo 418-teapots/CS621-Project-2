@@ -1,7 +1,6 @@
 #ifndef TRAFFIC_CLASS_H
 #define TRAFFIC_CLASS_H
 
-// #include "differentiated-services.h"
 #include "filter.h"
 #include "ns3/pointer.h"
 #include "ns3/packet.h"
@@ -30,15 +29,20 @@ public:
   bool Enqueue (Ptr<Packet> p);
   Ptr<Packet> Dequeue ();
   Ptr<Packet> Peek ();
+  
+  /**
+   * \return Return true if at least one Filter is true, otherwise false. 
+   */
   bool match (Ptr<Packet> p);
-  uint32_t getPacketsCount ();
-  void setPacketsCount (uint32_t packetsCount);
-  void setWeight (double weight);
-  double getWeight ();
-  void setPriorityLevel (uint32_t plevel);
-  uint32_t getPriorityLevel ();
-  bool getIsDefault ();
-  void setIsDefault (bool b);
+
+  void SetPacketsCount (uint32_t packetsCount);
+  uint32_t GetPacketsCount ();
+  void SetWeight (double weight);
+  double GetWeight ();
+  void SetPriorityLevel (uint32_t plevel);
+  uint32_t GetPriorityLevel ();
+  void SetIsDefault (bool b);
+  bool GetIsDefault ();
 
 
 private:
@@ -67,11 +71,11 @@ private:
    */
   uint32_t priority_level;
   /**
-   *
+   * true if the queue is default, where all the packets that does not match the conditions go. 
    */
   bool isDefault;
   /**
-   *
+   * Actual queue that packets are queued in. 
    */
   queue<Ptr<Packet>> m_queue;
 };

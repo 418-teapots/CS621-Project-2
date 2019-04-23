@@ -1,7 +1,5 @@
-
 #include "traffic-class.h"
 #include "queue.h"
-// #include "differentiated-services.h"
 #include <iostream>
 
 using namespace std;
@@ -31,53 +29,52 @@ TrafficClass::~TrafficClass ()
 
 }
 
+void 
+TrafficClass::SetPacketsCount (uint32_t packetsCount) 
+{
+  packets = packetsCount;
+}
+
 uint32_t 
-TrafficClass::getPacketsCount () 
+TrafficClass::GetPacketsCount () 
 {
   return packets;
 }
 
 void 
-TrafficClass::setPacketsCount (uint32_t packetsCount) 
-{
-  packets = packetsCount;
-}
-
-
-void 
-TrafficClass::setWeight (double w) 
+TrafficClass::SetWeight (double w) 
 {
   weight = w;
 }
 
 double 
-TrafficClass::getWeight () 
+TrafficClass::GetWeight () 
 {
   return weight;
 }
 
 void 
-TrafficClass::setPriorityLevel (uint32_t pl) 
+TrafficClass::SetPriorityLevel (uint32_t pl) 
 {
   priority_level = pl;
 }
 
 uint32_t 
-TrafficClass::getPriorityLevel () 
+TrafficClass::GetPriorityLevel () 
 {
   return priority_level;
 }
 
-bool
-TrafficClass::getIsDefault()
-{
-  return isDefault;
-}
-
 void
-TrafficClass::setIsDefault(bool b)
+TrafficClass::SetIsDefault(bool b)
 {
   isDefault = b;
+}
+
+bool
+TrafficClass::GetIsDefault()
+{
+  return isDefault;
 }
 
 bool 

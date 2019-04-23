@@ -1,5 +1,3 @@
-
-
 #include "differentiated-services.h"
 #include <iostream>
 
@@ -29,7 +27,7 @@ DiffServ::DiffServ (uint32_t numQueue)
 }
 
 vector<TrafficClass*>* 
-DiffServ::getQueuesPtr()
+DiffServ::GetQueuesPtr()
 {
   return &q_class;
 }
@@ -170,7 +168,7 @@ DiffServ::Classify (Ptr<Packet> p)
 
     // Get the default queue index. 
     // The packet that does not match any filter goes to the default queue. 
-    if (q_class[i]->getIsDefault()) 
+    if (q_class[i]->GetIsDefault()) 
     {
        defaultQueueIndex = i;
     }

@@ -15,28 +15,28 @@ namespace ns3 {
 // }
 
 DRR::DRR () : 
-  roundRobinPointer (0)
+  m_roundRobinPointer (0)
 {
 
 }
 
 /** 
- * 'numQueue' is the number of queues. 
- * 'priorityPrams' is a list of priority_level or weight. 
- *  e.g. 300 200 100 
+ * \param numQueue  the number of queues. 
+ * \param priorityPrams  a list of priority_level or weight. 
+ *                       e.g. 300 200 100 
  */
 DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) : 
-  roundRobinPointer (0)
+  m_roundRobinPointer (0)
   // DiffServ(numQueue)
 {
 
-  vector<TrafficClass*>* queuesPtr = getQueuesPtr();
+  vector<TrafficClass*>* queuesPtr = GetQueuesPtr();
 
   // Make conditions on which queue to go. 
   // e.g. (src IP: "1.1.1.1" AND src port: 2048) OR (src IP: "2.2.2.2" AND src port: 2048) => this packet goes to q_class[0]. 
   
   // Queue 0. 
-  DRRQueue* drrQueue0 = new DRRQueue;
+  DrrQueue* drrQueue0 = new DrrQueue;
   // For Filter 1. 
   Ipv4Address addr1("1.1.1.1");
   SourceIPAddress sourceIPAddress1(addr1);
@@ -66,13 +66,13 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) :
 
   // Assign filters and other settings to q_class[0]. 
   drrQueue0->filters = filters0;
-  drrQueue0->setIsDefault(false);
-  drrQueue0->setWeight(priorityPrams[0]);
+  drrQueue0->SetIsDefault(false);
+  drrQueue0->SetWeight(priorityPrams[0]);
   (*queuesPtr).push_back(drrQueue0);
 
 
   // Queue 1. 
-  DRRQueue* drrQueue1 = new DRRQueue;
+  DrrQueue* drrQueue1 = new DrrQueue;
 
   Ipv4Address addr3("1.1.1.1");
   SourceIPAddress sourceIPAddress3(addr3);
@@ -89,13 +89,13 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) :
 
   // Assign filters and other settings to q_class[1]. 
   drrQueue1->filters = filters1;
-  drrQueue1->setIsDefault(false);
-  drrQueue1->setWeight(priorityPrams[1]);
+  drrQueue1->SetIsDefault(false);
+  drrQueue1->SetWeight(priorityPrams[1]);
   (*queuesPtr).push_back(drrQueue1);
   
 
   // Queue 2. 
-  DRRQueue* drrQueue2 = new DRRQueue;
+  DrrQueue* drrQueue2 = new DrrQueue;
 
   Ipv4Address addr4("1.1.1.1");
   SourceIPAddress sourceIPAddress4(addr4);
@@ -112,25 +112,11 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) :
 
   // Assign filters and other settings to q_class[2]. 
   drrQueue2->filters = filters2;
-  drrQueue2->setIsDefault(true);
-  drrQueue2->setWeight(priorityPrams[2]);
+  drrQueue2->SetIsDefault(true);
+  drrQueue2->SetWeight(priorityPrams[2]);
   (*queuesPtr).push_back(drrQueue2);
 
 
-  
-
-
-
-
-  // TrafficClass* highPriorityQueue;
-  // highPriorityQueue->setPriorityLevel(HIGH_PRIORITY);
-  // TrafficClass* lowPriorityQueue;
-  // lowPriorityQueue->setPriorityLevel(LOW_PRIORITY);
-
-  // q_class.push_back(highPriorityQueue); //q_class[0]:highPriorityQueue;
-  // q_class.push_back(lowPriorityQueue);  //q_class[1]:lowPriorityQueue;
-
-  // queueMode = DiffServ::GetMode ();
 }
 
 DRR::~DRR ()
@@ -139,15 +125,15 @@ DRR::~DRR ()
 }
 
 void 
-DRR::setRoundRobinPointer (uint32_t v)
+DRR::SetRoundRobinPointer (uint32_t v)
 {
-  roundRobinPointer = v;
+  m_roundRobinPointer = v;
 }
 
 uint32_t 
-DRR::getRoundRobinPointer ()
+DRR::GetRoundRobinPointer ()
 {
-  return roundRobinPointer;
+  return m_roundRobinPointer;
 }
 
 uint32_t
@@ -155,17 +141,17 @@ DRR::Schedule ()
 {
   uint32_t nextScheduledQueueIndex = 0;
   
-  vector<TrafficClass*>* queuesPtr = getQueuesPtr();
+  vector<TrafficClass*>* queuesPtr = GetQueuesPtr();
 
   uint32_t numQueue = (*queuesPtr).size();
-  uint32_t rrp = getRoundRobinPointer();
+  uint32_t rrp = GetRoundRobinPointer();
   while (true)
   {
     rrp = rrp % numQueue;
-    DRRQueue* queuePtr = (DRRQueue*)(*queuesPtr)[rrp];
+    DrrQueue* queuePtr = (DrrQueue*)(*queuesPtr)[rrp];
 
     // Check if the queue is empty. 
-    uint32_t packetsCount = queuePtr->getPacketsCount();
+    uint32_t packetsCount = queuePtr->GetPacketsCount();
     if (packetsCount <= 0)
     {
       rrp++;
@@ -173,8 +159,8 @@ DRR::Schedule ()
     }
     
     // Add the quantum to the Deficit Counter of the queue.
-    uint32_t quantum = static_cast<uint32_t>(queuePtr->getWeight());
-    uint32_t dc = queuePtr->getDeficitCounter();
+    uint32_t quantum = static_cast<uint32_t>(queuePtr->GetWeight());
+    uint32_t dc = queuePtr->GetDeficitCounter();
     dc += quantum;
 
     // Check the size of the packet in the front and 
@@ -185,7 +171,7 @@ DRR::Schedule ()
     {
       nextScheduledQueueIndex = rrp;
       packetsCount--;
-      queuePtr->setPacketsCount(packetsCount);
+      queuePtr->SetPacketsCount(packetsCount);
 
       // Update the Deficit Counter. 
       if (packetsCount <= 0)
@@ -199,8 +185,8 @@ DRR::Schedule ()
         dc -= packetSize;
       }
 
-      queuePtr->setDeficitCounter(dc);
-      setRoundRobinPointer(rrp);
+      queuePtr->SetDeficitCounter(dc);
+      SetRoundRobinPointer(rrp);
 
       return nextScheduledQueueIndex;
     }

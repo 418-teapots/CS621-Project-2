@@ -36,18 +36,15 @@ public:
 
 
   /**
-   * \return Returns a packet to transmit.
+   * \return Returns a queue index whose queue has the next packet to be transmitted.
    */
-  // virtual Ptr<Packet> Schedule (vector<TrafficClass*>& q_class) const;
-  virtual Ptr<Packet> Schedule () const;
+  virtual uint32_t Schedule () const;
 
   /**
    * \brief Takes a packet and returns an integer.
    * \return An integer
    */
   uint32_t Classify (Ptr<Packet> p);
-
-
 
   virtual bool Enqueue (Ptr<Packet> p);
   virtual Ptr<Packet> Dequeue (void);

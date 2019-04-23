@@ -38,6 +38,13 @@ TrafficClass::getPacketsCount ()
 }
 
 void 
+TrafficClass::setPacketsCount (uint32_t packetsCount) 
+{
+  packets = packetsCount;
+}
+
+
+void 
 TrafficClass::setWeight (double w) 
 {
   weight = w;

@@ -15,7 +15,7 @@ namespace ns3 {
 // }
 
 DRR::DRR () : 
-  roundRobinPtr (0)
+  roundRobinPointer (0)
 {
 
 }
@@ -26,7 +26,7 @@ DRR::DRR () :
  *  e.g. 300 200 100 
  */
 DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) : 
-  roundRobinPtr (0)
+  roundRobinPointer (0)
   // DiffServ(numQueue)
 {
 
@@ -138,62 +138,140 @@ DRR::~DRR ()
     
 }
 
-Ptr<Packet> 
+void 
+DRR::setRoundRobinPointer (uint32_t v)
+{
+  roundRobinPointer = v;
+}
+
+uint32_t 
+DRR::getRoundRobinPointer ()
+{
+  return roundRobinPointer;
+}
+
+uint32_t
 DRR::Schedule ()
 {
-  // TODO
-
-  // If the queue contain at least one packet, then 
-  // we keep this queue index to avoid examine empty queues. 
-  // if (q_class[roundRobinPointer]->getPacketsCount() > 0)
-  // {
-  //   activeQueueList.push_back(roundRobinPointer);
-  // }
-
-  // 
+  uint32_t nextScheduledQueueIndex = 0;
   
-  // q_class[roundRobinPointer]->
+  vector<TrafficClass*>* queuesPtr = getQueuesPtr();
 
+  uint32_t numQueue = (*queuesPtr).size();
+  uint32_t rrp = getRoundRobinPointer();
+  while (true)
+  {
+    rrp = rrp % numQueue;
+    DRRQueue* queuePtr = (DRRQueue*)(*queuesPtr)[rrp];
 
+    // Check if the queue is empty. 
+    uint32_t packetsCount = queuePtr->getPacketsCount();
+    if (packetsCount <= 0)
+    {
+      rrp++;
+      continue;
+    }
+    
+    // Add the quantum to the Deficit Counter of the queue.
+    uint32_t quantum = static_cast<uint32_t>(queuePtr->getWeight());
+    uint32_t dc = queuePtr->getDeficitCounter();
+    dc += quantum;
 
+    // Check the size of the packet in the front and 
+    // Dequeue it if the Deficit Counter is larger than the size. 
+    Ptr<Packet> packet = queuePtr->Peek();
+    uint32_t packetSize = packet->GetSize();
+    if (dc - packetSize > 0)
+    {
+      nextScheduledQueueIndex = rrp;
+      packetsCount--;
+      queuePtr->setPacketsCount(packetsCount);
 
+      // Update the Deficit Counter. 
+      if (packetsCount <= 0)
+      {
+        // Queue is empty. Set the DC to 0. 
+        dc = 0;
+        rrp++;
+      }
+      else
+      {
+        dc -= packetSize;
+      }
 
+      queuePtr->setDeficitCounter(dc);
+      setRoundRobinPointer(rrp);
 
+      return nextScheduledQueueIndex;
+    }
+    else
+    {
+      rrp++;
+    }
 
+  }
 
-
-
-
-
-  return 0;
-
-  // TrafficClass* highPriorityQueue;
-  // highPriorityQueue = q_class[HIGH_PRIORITY];
-
-  // TrafficClass* lowPriorityQueue;
-  // lowPriorityQueue = q_class[LOW_PRIORITY];
-
-  // Ptr<Packet> toDequeue = highPriorityQueue->Dequeue();
-  // if (toDequeue != 0) 
-  // {
-  //   NS_LOG_LOGIC ("High Priority Queue pop");
-  //   return toDequeue;
-  // }
-  // else
-  // {
-  //   toDequeue = lowPriorityQueue->Dequeue();
-  //   if (toDequeue != 0)
-  //   {
-  //     NS_LOG_LOGIC ("Low Priority Queue pop");
-  //     return toDequeue;
-  //   }
-  //   else 
-  //   {
-  //     NS_LOG_LOGIC ("All Queues are empty");
-  //     return 0;
-  //   }
-  // }
 }
+
+// Schedule member function that returns packet. 
+// Ptr<Packet> 
+// DRR::Schedule ()
+// {
+  
+//   vector<TrafficClass*>* queuesPtr = getQueuesPtr();
+
+//   uint32_t numQueue = (*queuesPtr).size();
+//   uint32_t rrp = getRoundRobinPointer();
+//   while (true)
+//   {
+//     rrp = rrp % numQueue;
+//     DRRQueue* queuePtr = (DRRQueue*)(*queuesPtr)[rrp];
+
+//     // Check if the queue is empty. 
+//     if (queuePtr->getPacketsCount() <= 0)
+//     {
+//       rrp++;
+//       continue;
+//     }
+    
+//     // Add the quantum to the Deficit Counter of the queue.
+//     uint32_t quantum = static_cast<uint32_t>(queuePtr->getWeight());
+//     uint32_t dc = queuePtr->getDeficitCounter();
+//     dc += quantum;
+
+//     // Check the size of the packet in the front and 
+//     // Dequeue it if the Deficit Counter is larger than the size. 
+//     Ptr<Packet> packet = queuePtr->Peek();
+//     uint32_t packetSize = packet->GetSize();
+//     if (dc - packetSize > 0)
+//     {
+//       packet = queuePtr->Dequeue();
+
+//       // Update the Deficit Counter. 
+//       if (queuePtr->getPacketsCount() <= 0)
+//       {
+//         // Queue is empty. Set the DC to 0. 
+//         dc = 0;
+//         rrp++;
+//       }
+//       else
+//       {
+//         dc -= packetSize;
+//       }
+
+//       queuePtr->setDeficitCounter(dc);
+//       setRoundRobinPointer(rrp);
+
+//       return packet;
+//     }
+//     else
+//     {
+//       rrp++;
+//     }
+
+//   }
+
+// }
 
 
 

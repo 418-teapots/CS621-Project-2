@@ -1,5 +1,3 @@
-
-
 #ifndef DEFICIT_ROUND_ROBIN_H_
 #define DEFICIT_ROUND_ROBIN_H_
 
@@ -26,20 +24,29 @@ public:
   DRR (uint32_t numQueue, vector<uint32_t> priorityPrams);
   virtual ~DRR ();
 
-  Ptr<Packet> Schedule ();
+  uint32_t Schedule ();
+
+  void setRoundRobinPointer (uint32_t v);
+  uint32_t getRoundRobinPointer ();
 
 private: 
   
   /**
    *  A list of queue indices whose queue contains at least one packet. 
    */ 
-  vector<uint32_t> activeQueueList;
-
-  uint32_t roundRobinPtr;
+  // vector<uint32_t> activeQueueList;
+  
+  /**
+   * Indicates queue index whose queue will be serviced next.  
+   */ 
+  uint32_t roundRobinPointer;
 
 };
 
-
+/**
+ * Holds Deficit Counter specifically for Deficit-Round-Robin algorithm, 
+ * in addition to the members in TrafficClass. 
+ */
 class DRRQueue : public TrafficClass
 {
 public:
@@ -51,19 +58,18 @@ public:
 
   virtual ~DRRQueue () {}
   
-  void setDeficitCounter (int n)
+  void setDeficitCounter (uint32_t v)
   {
-    deficitCounter = n;
+    deficitCounter = v;
   }
-  int getDeficitCounter ()
+  uint32_t getDeficitCounter ()
   {
     return deficitCounter;
   }
 
 private: 
 
-  int deficitCounter;
-
+  uint32_t deficitCounter;
 
 };
 

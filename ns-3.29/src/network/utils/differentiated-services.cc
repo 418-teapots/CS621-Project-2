@@ -100,7 +100,6 @@ DiffServ::Remove (void)
   return p;
 }
 
-// TODO error. 
 Ptr<const Packet>
 DiffServ::Peek (void) const
 {
@@ -125,9 +124,9 @@ DiffServ::DoDequeue ()
 {
   printf ("DoDequeue() in DiffServ start.\n");
 
-  // TODO
-  Ptr<Packet> p = Schedule();
-  // Ptr<Packet> p = q_class[0]->Dequeue();
+  uint32_t queueIndex = Schedule();
+
+  Ptr<Packet> p = q_class[queueIndex]->Dequeue();
 
   return p;
 }
@@ -135,31 +134,28 @@ DiffServ::DoDequeue ()
 Ptr<Packet> 
 DiffServ::DoRemove () 
 {
-  // TODO
-  // Ptr<Packet> p = Schedule();
+  uint32_t queueIndex = Schedule();
 
-  Ptr<Packet> p = q_class[0]->Dequeue();
+  Ptr<Packet> p = q_class[queueIndex]->Dequeue();
 
-  return 0;
+  return p;
 }
 
 Ptr<const Packet> 
 DiffServ::DoPeek (void) const
 {
-  // TODO
-  Ptr<const Packet> p = Schedule();
+  uint32_t queueIndex = Schedule();
+
+  Ptr<const Packet> p = q_class[queueIndex]->Peek();
 
   return p;
 }
 
-Ptr<Packet> 
+uint32_t
 DiffServ::Schedule () const
 {
-  // TODO?
-  
   return 0;
 }
-
 
 uint32_t 
 DiffServ::Classify (Ptr<Packet> p)

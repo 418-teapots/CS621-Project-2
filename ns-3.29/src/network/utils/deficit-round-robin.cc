@@ -22,10 +22,9 @@ DRR::DRR () :
 
 /** 
  * \param numQueue  the number of queues. 
- * \param priorityPrams  a list of priority_level or weight. 
- *                       e.g. 300 200 100 
+ * \param priorityParams  a list of priority_level or weight. e.g. 300 200 100 
  */
-DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) : 
+DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityParams) : 
   m_roundRobinPointer (0)
   // DiffServ(numQueue)
 {
@@ -33,7 +32,8 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) :
   vector<TrafficClass*>* queuesPtr = GetQueuesPtr();
 
   // Make conditions on which queue to go. 
-  // e.g. (src IP: "1.1.1.1" AND src port: 2048) OR (src IP: "2.2.2.2" AND src port: 2048) => this packet goes to q_class[0]. 
+  // e.g. (src IP: "1.1.1.1" AND src port: 2048) OR (src IP: "2.2.2.2" AND src port: 2048) 
+  //      => this packet goes to q_class[0]. 
   
   // Queue 0. 
   DrrQueue* drrQueue0 = new DrrQueue;
@@ -67,7 +67,7 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) :
   // Assign filters and other settings to q_class[0]. 
   drrQueue0->filters = filters0;
   drrQueue0->SetIsDefault(false);
-  drrQueue0->SetWeight(priorityPrams[0]);
+  drrQueue0->SetWeight(priorityParams[0]);
   (*queuesPtr).push_back(drrQueue0);
 
 
@@ -90,7 +90,7 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) :
   // Assign filters and other settings to q_class[1]. 
   drrQueue1->filters = filters1;
   drrQueue1->SetIsDefault(false);
-  drrQueue1->SetWeight(priorityPrams[1]);
+  drrQueue1->SetWeight(priorityParams[1]);
   (*queuesPtr).push_back(drrQueue1);
   
 
@@ -113,7 +113,7 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityPrams) :
   // Assign filters and other settings to q_class[2]. 
   drrQueue2->filters = filters2;
   drrQueue2->SetIsDefault(true);
-  drrQueue2->SetWeight(priorityPrams[2]);
+  drrQueue2->SetWeight(priorityParams[2]);
   (*queuesPtr).push_back(drrQueue2);
 
 

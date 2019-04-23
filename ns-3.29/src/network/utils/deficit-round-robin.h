@@ -24,7 +24,7 @@ public:
    * 'priorityPrams' is a list of priority_level or weight. 
    *  e.g. 300 200 100 
    */
-  DRR (uint32_t numQueue, vector<uint32_t> priorityPrams);
+  DRR (uint32_t numQueue, vector<uint32_t> priorityParams);
   virtual ~DRR ();
 
   /**

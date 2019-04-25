@@ -20,6 +20,16 @@ public:
   virtual ~FilterElement ();
 
   virtual bool match(Ptr<Packet> p);
+  
+
+  /**
+   * CS621 Project 2
+   */
+  // std::string GetSrcIpAddr (Ptr<Packet> p);
+  // std::string GetDestIpAddr (Ptr<Packet> p);
+  uint32_t GetSrcPortNum (Ptr<Packet> p);
+  // std::string GetDestPortNum (Ptr<Packet> p);
+
 };
 
 
@@ -94,8 +104,8 @@ public:
   bool match(Ptr<Packet> p)
   {
     // TODO
-    // return p->?? == value;
-    return 0;
+    uint32_t srcPort = GetSrcPortNum (p);
+    return srcPort == value;
   }
 
 private:

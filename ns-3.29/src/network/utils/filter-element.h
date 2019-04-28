@@ -3,6 +3,9 @@
 
 #include "ns3/pointer.h"
 #include "ns3/packet.h"
+#include "ipv4-address.h"
+
+
 
 // using namespace std;
 
@@ -46,17 +49,9 @@ public:
 
   bool match(Ptr<Packet> packet)
   {
-    // TODO
-
-    std::string srcIpAddr = GetSrcIpAddr (packet);
-
-    // Ipv4Address srcIpAddr = Ipv4Address(GetSrcIpAddr (packet))
-
-    std::ostringstream oss;
-    m_srcIpAddr.Print (oss);
-    std::string m_srcIpAddrStr = oss.str();
-
-    return srcIpAddr == m_srcIpAddrStr;
+    std::string srcIpAddrStr = GetSrcIpAddr (packet);
+    Ipv4Address srcIpAddr = Ipv4Address (srcIpAddrStr.c_str());
+    return srcIpAddr.IsEqual (m_srcIpAddr);
   }
 
 private:
@@ -68,8 +63,9 @@ private:
 class SourceMask : public FilterElement 
 {
 public:
-  SourceMask (Ipv4Mask ipv4Mask) : 
-    value(ipv4Mask)
+  SourceMask (Ipv4Mask ipv4Mask, Ipv4Address ipv4Address) : 
+    m_srcMask(ipv4Mask), 
+    m_srcIpAddrForSubNet(ipv4Address)
   {
 
   }
@@ -81,14 +77,15 @@ public:
 
   bool match(Ptr<Packet> packet)
   {
-    // TODO
-    // return p->?? == value;
-    return 0;
+    std::string srcIpAddrStr = GetSrcIpAddr (packet);
+    Ipv4Address srcIpAddr = Ipv4Address (srcIpAddrStr.c_str());
+    return m_srcMask.IsMatch(srcIpAddr, m_srcIpAddrForSubNet);
   }
 
 private:
 
-  Ipv4Mask value;
+  Ipv4Mask m_srcMask;
+  Ipv4Address m_srcIpAddrForSubNet;
 
 };
 
@@ -134,13 +131,9 @@ public:
 
   bool match(Ptr<Packet> packet)
   {
-    std::string destIpAddr = GetDestIpAddr (packet);
-
-    std::ostringstream oss;
-    m_destIpAddrStr.Print (oss);
-    std::string m_destIpAddrStr = oss.str();
-
-    return destIpAddr == m_destIpAddrStr;
+    std::string destIpAddrStr = GetDestIpAddr (packet);
+    Ipv4Address destIpAddr = Ipv4Address (destIpAddrStr.c_str());
+    return destIpAddr.IsEqual (m_destIpAddrStr);
   }
 
 private:
@@ -152,8 +145,9 @@ private:
 class DestinationMask : public FilterElement 
 {
 public:
-  DestinationMask (Ipv4Mask ipv4Mask) : 
-    value(ipv4Mask)
+  DestinationMask (Ipv4Mask ipv4Mask, Ipv4Address ipv4Address) : 
+    m_destMask(ipv4Mask), 
+    m_destIpAddrForSubNet(ipv4Address)
   {
 
   }
@@ -165,14 +159,15 @@ public:
 
   bool match(Ptr<Packet> packet)
   {
-    // TODO
-    // return p->?? == value;
-    return 0;
+    std::string destIpAddrStr = GetDestIpAddr (packet);
+    Ipv4Address destIpAddr = Ipv4Address (destIpAddrStr.c_str());
+    return m_destMask.IsMatch(destIpAddr, m_destIpAddrForSubNet);
   }
 
 private:
 
-  Ipv4Mask value;
+  Ipv4Mask m_destMask;
+  Ipv4Address m_destIpAddrForSubNet;
 
 };
 

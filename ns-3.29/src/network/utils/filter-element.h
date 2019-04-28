@@ -46,7 +46,11 @@ public:
 
   bool match(Ptr<Packet> packet)
   {
+    // TODO
+
     std::string srcIpAddr = GetSrcIpAddr (packet);
+
+    // Ipv4Address srcIpAddr = Ipv4Address(GetSrcIpAddr (packet))
 
     std::ostringstream oss;
     m_srcIpAddr.Print (oss);

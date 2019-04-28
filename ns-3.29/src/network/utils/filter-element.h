@@ -4,8 +4,7 @@
 #include "ns3/pointer.h"
 #include "ns3/packet.h"
 
-
-using namespace std;
+// using namespace std;
 
 namespace ns3 {
 
@@ -21,14 +20,12 @@ public:
 
   virtual bool match(Ptr<Packet> p);
   
-
-  /**
-   * CS621 Project 2
-   */
-  // std::string GetSrcIpAddr (Ptr<Packet> p);
-  // std::string GetDestIpAddr (Ptr<Packet> p);
+  std::string GetSrcIpAddr (Ptr<Packet> p);
+  std::string GetDestIpAddr (Ptr<Packet> p);
   uint32_t GetSrcPortNum (Ptr<Packet> p);
-  // std::string GetDestPortNum (Ptr<Packet> p);
+  uint32_t GetDestPortNum (Ptr<Packet> p);
+  uint32_t GetProtocolNum (Ptr<Packet> p);
+
 
 };
 
@@ -37,7 +34,7 @@ class SourceIPAddress : public FilterElement
 {
 public:
   SourceIPAddress (Ipv4Address ipv4Address) : 
-    value(ipv4Address)
+    m_srcIpAddr(ipv4Address)
   {
 
   }
@@ -47,16 +44,20 @@ public:
 
   }
 
-  bool match(Ptr<Packet> p)
+  bool match(Ptr<Packet> packet)
   {
-    // TODO
-    // return p->?? == value;
-    return 0;
+    std::string srcIpAddr = GetSrcIpAddr (packet);
+
+    std::ostringstream oss;
+    m_srcIpAddr.Print (oss);
+    std::string m_srcIpAddrStr = oss.str();
+
+    return srcIpAddr == m_srcIpAddrStr;
   }
 
 private:
 
-  Ipv4Address value;
+  Ipv4Address m_srcIpAddr;
 
 };
 
@@ -74,7 +75,7 @@ public:
 
   }
 
-  bool match(Ptr<Packet> p)
+  bool match(Ptr<Packet> packet)
   {
     // TODO
     // return p->?? == value;
@@ -91,7 +92,7 @@ class SourcePortNumber : public FilterElement
 {
 public:
   SourcePortNumber (uint32_t portNumber) : 
-    value(portNumber)
+    m_srcPortNum(portNumber)
   {
 
   }
@@ -101,16 +102,15 @@ public:
 
   }
 
-  bool match(Ptr<Packet> p)
+  bool match(Ptr<Packet> packet)
   {
-    // TODO
-    uint32_t srcPort = GetSrcPortNum (p);
-    return srcPort == value;
+    uint32_t srcPortNum = GetSrcPortNum (packet);
+    return srcPortNum == m_srcPortNum;
   }
 
 private:
 
-  uint32_t value;
+  uint32_t m_srcPortNum;
 
 };
 
@@ -118,7 +118,7 @@ class DestinationIPAddress : public FilterElement
 {
 public:
   DestinationIPAddress (Ipv4Address ipv4Address) : 
-    value(ipv4Address)
+    m_destIpAddrStr(ipv4Address)
   {
 
   }
@@ -128,16 +128,20 @@ public:
 
   }
 
-  bool match(Ptr<Packet> p)
+  bool match(Ptr<Packet> packet)
   {
-    // TODO
-    // return p->?? == value;
-    return 0;
+    std::string destIpAddr = GetDestIpAddr (packet);
+
+    std::ostringstream oss;
+    m_destIpAddrStr.Print (oss);
+    std::string m_destIpAddrStr = oss.str();
+
+    return destIpAddr == m_destIpAddrStr;
   }
 
 private:
 
-  Ipv4Address value;
+  Ipv4Address m_destIpAddrStr;
 
 };
 
@@ -155,7 +159,7 @@ public:
 
   }
 
-  bool match(Ptr<Packet> p)
+  bool match(Ptr<Packet> packet)
   {
     // TODO
     // return p->?? == value;
@@ -172,7 +176,7 @@ class DestinationPortNumber : public FilterElement
 {
 public:
   DestinationPortNumber (uint32_t portNumber) : 
-    value(portNumber)
+    m_destPortNum(portNumber)
   {
 
   }
@@ -182,16 +186,15 @@ public:
 
   }
 
-  bool match(Ptr<Packet> p)
+  bool match(Ptr<Packet> packet)
   {
-    // TODO
-    // return p->?? == value;
-    return 0;
+    uint32_t destPortNum = GetDestPortNum (packet);
+    return destPortNum == m_destPortNum;
   }
 
 private:
 
-  uint32_t value;
+  uint32_t m_destPortNum;
 
 };
 
@@ -199,7 +202,7 @@ class ProtocolNumber : public FilterElement
 {
 public:
   ProtocolNumber (uint32_t protocolNumber) : 
-    value(protocolNumber)
+    m_protocolNum(protocolNumber)
   {
 
   }
@@ -209,16 +212,15 @@ public:
 
   }
 
-  bool match(Ptr<Packet> p)
+  bool match(Ptr<Packet> packet)
   {
-    // TODO
-    // return p->?? == value;
-    return 0;
+    uint32_t protocolNum = GetProtocolNum (packet);
+    return protocolNum == m_protocolNum;
   }
 
 private:
 
-  uint32_t value;
+  uint32_t m_protocolNum;
 
 };
 

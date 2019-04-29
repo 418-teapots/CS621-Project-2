@@ -140,7 +140,7 @@ int main (int argc, char *argv[])
 
   NS_LOG_INFO ("Create Applications.");
   uint16_t port = 9;  // well-known echo port number
-  UdpEchoServerHelper server (port);
+  RequestResponseServerHelper server (port);
   // uint32_t responseSize = 1024;
   // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
   ApplicationContainer apps = server.Install (c.Get (2));
@@ -152,7 +152,7 @@ int main (int argc, char *argv[])
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
     Time interPacketInterval = Seconds (0.01);
-    UdpEchoClientHelper client (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client (i1i2.GetAddress (1), port);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -160,7 +160,7 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (5.0));
     apps.Stop (Seconds (40.0));
 
-    UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client2 (i1i2.GetAddress (1), port);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -177,7 +177,7 @@ int main (int argc, char *argv[])
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
     Time interPacketInterval = Seconds (0.01);
-    UdpEchoClientHelper client (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client (i1i2.GetAddress (1), port);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -185,7 +185,7 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
 
-    UdpEchoClientHelper client2 (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client2 (i1i2.GetAddress (1), port);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -193,7 +193,7 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
 
-    UdpEchoClientHelper client3 (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client3 (i1i2.GetAddress (1), port);
     client3.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client3.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client3.SetAttribute ("PacketSize", UintegerValue (packetSize));

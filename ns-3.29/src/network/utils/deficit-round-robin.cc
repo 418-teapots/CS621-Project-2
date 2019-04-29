@@ -17,6 +17,7 @@ namespace ns3 {
 DRR::DRR () : 
   m_roundRobinPointer (0)
 {
+  printf ("Default DRR constructor start. \n");
 
 }
 
@@ -28,6 +29,8 @@ DRR::DRR (uint32_t numQueue, vector<uint32_t> priorityParams) :
   m_roundRobinPointer (0)
   // DiffServ(numQueue)
 {
+  printf ("Constructor DRR (uint32_t numQueue, vector<uint32_t> priorityParams) start. \n");
+
 
   vector<TrafficClass*>* queuesPtr = GetQueuesPtr();
 

@@ -7,7 +7,7 @@ namespace ns3 {
 
 DiffServ::DiffServ () 
 {
-  printf("DiffServ() start.");
+  printf ("DiffServ() start. \n");
 
   // TODO
   // TrafficClass trafficClass;
@@ -18,7 +18,7 @@ DiffServ::DiffServ ()
 // 'numQueue' is the number of queues. 
 DiffServ::DiffServ (uint32_t numQueue)
 {
-  printf("DiffServ(uint32_t numQueue) start.");
+  printf ("DiffServ(uint32_t numQueue) start. \n");
  
   // TODO
   // TrafficClass trafficClass;
@@ -158,6 +158,8 @@ DiffServ::Schedule () const
 uint32_t 
 DiffServ::Classify (Ptr<Packet> p)
 {
+  printf ("Classify() in DiffServ start. \n");
+
   uint32_t defaultQueueIndex;
   for (uint32_t i = 0; i < q_class.size(); ++i)
   {

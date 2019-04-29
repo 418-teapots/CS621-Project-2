@@ -79,7 +79,7 @@ int main (int argc, char *argv[])
   uint32_t maxPacketCount = 1;//# of packets to send
   std::string dataRate = "4Mbps";
   std::string configFile;
-  std::vector<int> queueList;
+  std::vector<uint32_t> queueList;
   // Allow the user to override any of the defaults and the above
   CommandLine cmd;
   cmd.AddValue("conf", "Specify the config file", configFile);

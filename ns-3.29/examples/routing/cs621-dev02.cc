@@ -172,8 +172,8 @@ int main (int argc, char *argv[])
     fileName = "stats_DRR.csv";
     Ptr<NetDevice> netDevice = d1d2.Get(0);
     Ptr<PointToPointNetDevice> p2pNetDevice = StaticCast<PointToPointNetDevice>(netDevice);
-    Ptr<DRR> drrQueue = Create<DRR>(3, queueList);
-    p2pNetDevice->SetQueue(drrQueue);
+    Ptr<DRR> drr = Create<DRR>(3, queueList);
+    p2pNetDevice->SetQueue(drr);
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
     Time interPacketInterval = Seconds (0.01);

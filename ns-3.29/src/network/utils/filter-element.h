@@ -37,7 +37,7 @@ class SourceIPAddress : public FilterElement
 {
 public:
   SourceIPAddress (Ipv4Address ipv4Address) : 
-    m_srcIpAddr(ipv4Address)
+    m_srcIpAddr (ipv4Address)
   {
 
   }
@@ -47,7 +47,7 @@ public:
 
   }
 
-  bool match(Ptr<Packet> packet)
+  bool match (Ptr<Packet> packet)
   {
     std::string srcIpAddrStr = GetSrcIpAddr (packet);
     Ipv4Address srcIpAddr = Ipv4Address (srcIpAddrStr.c_str());
@@ -64,8 +64,8 @@ class SourceMask : public FilterElement
 {
 public:
   SourceMask (Ipv4Mask ipv4Mask, Ipv4Address ipv4Address) : 
-    m_srcMask(ipv4Mask), 
-    m_srcIpAddrForSubNet(ipv4Address)
+    m_srcMask (ipv4Mask), 
+    m_srcIpAddrForSubNet (ipv4Address)
   {
 
   }
@@ -75,11 +75,11 @@ public:
 
   }
 
-  bool match(Ptr<Packet> packet)
+  bool match (Ptr<Packet> packet)
   {
     std::string srcIpAddrStr = GetSrcIpAddr (packet);
     Ipv4Address srcIpAddr = Ipv4Address (srcIpAddrStr.c_str());
-    return m_srcMask.IsMatch(srcIpAddr, m_srcIpAddrForSubNet);
+    return m_srcMask.IsMatch (srcIpAddr, m_srcIpAddrForSubNet);
   }
 
 private:
@@ -93,8 +93,10 @@ class SourcePortNumber : public FilterElement
 {
 public:
   SourcePortNumber (uint32_t portNumber) : 
-    m_srcPortNum(portNumber)
+    m_srcPortNum (portNumber)
   {
+    printf("Constructor in SourcePortNumber start.\n");
+    printf("m_srcPortNum is set. %u\n", portNumber);
 
   }
 
@@ -105,7 +107,11 @@ public:
 
   bool match(Ptr<Packet> packet)
   {
+    printf("match() in SourcePortNumber start.\n");
+
     uint32_t srcPortNum = GetSrcPortNum (packet);
+    printf("srcPortNum: %u\n", srcPortNum);
+
     return srcPortNum == m_srcPortNum;
   }
 
@@ -119,7 +125,7 @@ class DestinationIPAddress : public FilterElement
 {
 public:
   DestinationIPAddress (Ipv4Address ipv4Address) : 
-    m_destIpAddrStr(ipv4Address)
+    m_destIpAddrStr (ipv4Address)
   {
 
   }
@@ -129,7 +135,7 @@ public:
 
   }
 
-  bool match(Ptr<Packet> packet)
+  bool match (Ptr<Packet> packet)
   {
     std::string destIpAddrStr = GetDestIpAddr (packet);
     Ipv4Address destIpAddr = Ipv4Address (destIpAddrStr.c_str());
@@ -146,8 +152,8 @@ class DestinationMask : public FilterElement
 {
 public:
   DestinationMask (Ipv4Mask ipv4Mask, Ipv4Address ipv4Address) : 
-    m_destMask(ipv4Mask), 
-    m_destIpAddrForSubNet(ipv4Address)
+    m_destMask (ipv4Mask), 
+    m_destIpAddrForSubNet (ipv4Address)
   {
 
   }
@@ -157,11 +163,11 @@ public:
 
   }
 
-  bool match(Ptr<Packet> packet)
+  bool match (Ptr<Packet> packet)
   {
     std::string destIpAddrStr = GetDestIpAddr (packet);
     Ipv4Address destIpAddr = Ipv4Address (destIpAddrStr.c_str());
-    return m_destMask.IsMatch(destIpAddr, m_destIpAddrForSubNet);
+    return m_destMask.IsMatch (destIpAddr, m_destIpAddrForSubNet);
   }
 
 private:
@@ -175,7 +181,7 @@ class DestinationPortNumber : public FilterElement
 {
 public:
   DestinationPortNumber (uint32_t portNumber) : 
-    m_destPortNum(portNumber)
+    m_destPortNum (portNumber)
   {
 
   }
@@ -185,7 +191,7 @@ public:
 
   }
 
-  bool match(Ptr<Packet> packet)
+  bool match (Ptr<Packet> packet)
   {
     uint32_t destPortNum = GetDestPortNum (packet);
     return destPortNum == m_destPortNum;
@@ -201,7 +207,7 @@ class ProtocolNumber : public FilterElement
 {
 public:
   ProtocolNumber (uint32_t protocolNumber) : 
-    m_protocolNum(protocolNumber)
+    m_protocolNum (protocolNumber)
   {
 
   }
@@ -211,7 +217,7 @@ public:
 
   }
 
-  bool match(Ptr<Packet> packet)
+  bool match (Ptr<Packet> packet)
   {
     uint32_t protocolNum = GetProtocolNum (packet);
     return protocolNum == m_protocolNum;

@@ -14,12 +14,20 @@ Filter::~Filter () {
 bool
 Filter::match (Ptr<Packet> p) 
 {
-  bool isMaching = false;
+  printf("match() in Filter start.\n");
 
-  for (uint32_t i = 0; i < elements.size(); i++)
+  bool isMatchedFilterElement = false;
+
+  printf("filterElements.size(): %lu\n", filterElements.size());    
+
+  for (uint32_t i = 0; i < filterElements.size(); i++)
   {
-    isMaching = elements[i]->match(p);
-    if (!isMaching)
+    isMatchedFilterElement = filterElements[i]->match (p);
+
+    printf("after match.\n");
+    printf("isMatchedFilterElement: %d\n", isMatchedFilterElement);
+
+    if (!isMatchedFilterElement)
     {
       return false;
     }

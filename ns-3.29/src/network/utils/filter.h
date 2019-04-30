@@ -22,7 +22,7 @@ public:
   /**
    * the array of pointers to FilterElement.
    */
-  vector<FilterElement*> elements;
+  vector<FilterElement*> filterElements;
 
   /**
    * \return Return true if all the FilterElement is true, otherwise false.

@@ -59,6 +59,7 @@ public:
   DrrQueue () : 
     m_deficitCounter (0)
   {
+    printf("DrrQueue constructor start. \n");
 
   }
 

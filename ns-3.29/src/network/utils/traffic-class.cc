@@ -72,7 +72,7 @@ TrafficClass::SetIsDefault(bool b)
 }
 
 bool
-TrafficClass::GetIsDefault()
+TrafficClass::GetIsDefault ()
 {
   return isDefault;
 }
@@ -80,12 +80,12 @@ TrafficClass::GetIsDefault()
 bool 
 TrafficClass::Enqueue (Ptr<Packet> p) 
 {
-  printf ("Enqueue() in TrafficClass start.\n");
+  printf("Enqueue() in TrafficClass start.\n");
 
   // Check if the queue is full. 
   if (packets >= maxPackets)
     {
-      printf ("Queue is full.\n");
+      printf("Queue is full.\n");
 
       return false;
     }
@@ -100,12 +100,12 @@ TrafficClass::Enqueue (Ptr<Packet> p)
 Ptr<Packet> 
 TrafficClass::Dequeue () 
 {
-  printf ("Dequeue() in TrafficClass start.\n");
+  printf("Dequeue() in TrafficClass start.\n");
   
   Ptr<Packet> p;
   if (m_queue.empty ()) 
     {
-      printf ("Queue is empty.\n");
+      printf("Queue is empty.\n");
       return 0;
     }
 
@@ -123,13 +123,13 @@ Ptr<Packet>
 TrafficClass::Peek () 
 {  
   Ptr<Packet> p;
-  if (m_queue.empty ()) 
+  if (m_queue.empty()) 
     {
-      printf ("Queue is empty.\n");
+      printf("Queue is empty.\n");
       return 0;
     }
 
-  p = m_queue.front ();
+  p = m_queue.front();
 
   string packetStr = p->ToString ();
   cout << "Packet peeked: " << packetStr << endl;
@@ -141,12 +141,19 @@ TrafficClass::Peek ()
 bool 
 TrafficClass::match (Ptr<Packet> p) 
 {
-  bool isMaching = false;
+  printf("match() in TrafficClass start.\n");
+
+  bool isMatchedFilter = false;
+
+  printf("filters.size(): %lu\n", filters.size());    
 
   for (uint32_t i = 0; i < filters.size(); i++)
   {
-    isMaching = filters[i]->match(p);
-    if (isMaching)
+    isMatchedFilter = filters[i]->match (p);
+
+    printf("isMatchedFilter: %d\n", isMatchedFilter);
+
+    if (isMatchedFilter)
     {
       return true;
     }

@@ -32,7 +32,7 @@ public:
   // QueueMode GetMode ();
 
 
-  vector<TrafficClass*>* GetQueuesPtr();
+  vector<TrafficClass*>* GetQueuesPtr ();
 
 
   /**

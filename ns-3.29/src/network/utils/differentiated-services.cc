@@ -7,7 +7,7 @@ namespace ns3 {
 
 DiffServ::DiffServ () 
 {
-  printf ("DiffServ() start. \n");
+  printf("DiffServ() start. \n");
 
   // TODO
   // TrafficClass trafficClass;
@@ -18,7 +18,7 @@ DiffServ::DiffServ ()
 // 'numQueue' is the number of queues. 
 DiffServ::DiffServ (uint32_t numQueue)
 {
-  printf ("DiffServ(uint32_t numQueue) start. \n");
+  printf("DiffServ(uint32_t numQueue) start. \n");
  
   // TODO
   // TrafficClass trafficClass;
@@ -27,7 +27,7 @@ DiffServ::DiffServ (uint32_t numQueue)
 }
 
 vector<TrafficClass*>* 
-DiffServ::GetQueuesPtr()
+DiffServ::GetQueuesPtr ()
 {
   return &q_class;
 }
@@ -54,7 +54,7 @@ DiffServ::~DiffServ ()
 bool
 DiffServ::Enqueue (Ptr<Packet> packet)
 {
-  printf ("Enqueue() in DiffServ start.\n");
+  printf("Enqueue() in DiffServ start.\n");
   bool b = DoEnqueue (packet);
   
   // uint32_t size = p->GetSize ();
@@ -74,7 +74,7 @@ DiffServ::Enqueue (Ptr<Packet> packet)
 Ptr<Packet>
 DiffServ::Dequeue (void)
 {
-  printf ("Dequeue() in DiffServ start.\n");
+  printf("Dequeue() in DiffServ start.\n");
   Ptr<Packet> p = DoDequeue ();
   
   // uint32_t size = p->GetSize ();
@@ -109,10 +109,10 @@ DiffServ::Peek (void) const
 bool 
 DiffServ::DoEnqueue (Ptr<Packet> p) 
 {
-  printf ("DoEnqueue() in DiffServ start.\n");
+  printf("DoEnqueue() in DiffServ start.\n");
 
-  uint32_t trafficClassToGo = Classify(p);
-  bool b = q_class[trafficClassToGo]->Enqueue(p);
+  uint32_t trafficClassToGo = Classify (p);
+  bool b = q_class[trafficClassToGo]->Enqueue (p);
   
   return b;
 }
@@ -120,11 +120,11 @@ DiffServ::DoEnqueue (Ptr<Packet> p)
 Ptr<Packet> 
 DiffServ::DoDequeue ()
 {
-  printf ("DoDequeue() in DiffServ start.\n");
+  printf("DoDequeue() in DiffServ start.\n");
 
-  uint32_t queueIndex = Schedule();
+  uint32_t queueIndex = Schedule ();
 
-  Ptr<Packet> p = q_class[queueIndex]->Dequeue();
+  Ptr<Packet> p = q_class[queueIndex]->Dequeue ();
 
   return p;
 }
@@ -132,9 +132,9 @@ DiffServ::DoDequeue ()
 Ptr<Packet> 
 DiffServ::DoRemove () 
 {
-  uint32_t queueIndex = Schedule();
+  uint32_t queueIndex = Schedule ();
 
-  Ptr<Packet> p = q_class[queueIndex]->Dequeue();
+  Ptr<Packet> p = q_class[queueIndex]->Dequeue ();
 
   return p;
 }
@@ -142,9 +142,9 @@ DiffServ::DoRemove ()
 Ptr<const Packet> 
 DiffServ::DoPeek (void) const
 {
-  uint32_t queueIndex = Schedule();
+  uint32_t queueIndex = Schedule ();
 
-  Ptr<const Packet> p = q_class[queueIndex]->Peek();
+  Ptr<const Packet> p = q_class[queueIndex]->Peek ();
 
   return p;
 }
@@ -158,19 +158,21 @@ DiffServ::Schedule () const
 uint32_t 
 DiffServ::Classify (Ptr<Packet> p)
 {
-  printf ("Classify() in DiffServ start. \n");
+  printf("Classify() in DiffServ start. \n");
+
+  printf("q_class.size(): %lu\n", q_class.size());    
 
   uint32_t defaultQueueIndex;
   for (uint32_t i = 0; i < q_class.size(); ++i)
   {
-    if (q_class[i]->match(p)) 
+    if (q_class[i]->match (p)) 
     {
       return i;
     }
 
     // Get the default queue index. 
     // The packet that does not match any filter goes to the default queue. 
-    if (q_class[i]->GetIsDefault()) 
+    if (q_class[i]->GetIsDefault ()) 
     {
        defaultQueueIndex = i;
     }

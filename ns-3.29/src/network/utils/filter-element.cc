@@ -3,11 +3,11 @@
 namespace ns3 {
 
 // Constructor
-FilterElement::FilterElement() {
+FilterElement::FilterElement () {
 
 }
 // Destructor
-FilterElement::~FilterElement() {
+FilterElement::~FilterElement () {
 
 }
 

@@ -554,7 +554,12 @@ PointToPointNetDevice::Send (
   NS_LOG_LOGIC ("p=" << packet << ", dest=" << &dest);
   NS_LOG_LOGIC ("UID is " << packet->GetUid ());
 
-  printf ("Send in PointToPointNetDevice start.\n");
+  printf("Send() in PointToPointNetDevice start.\n");
+
+  printf("packet: \n");
+  std::string packetStr = packet->ToString();
+  std::cout << packetStr << std::endl;
+
 
   //
   // If IsLinkUp() is false it means there is no channel to send any packet 
@@ -581,8 +586,8 @@ PointToPointNetDevice::Send (
   // std::string packetStr = packet->ToString();
   // std::cout << "packet1 to be enqueued: " << packetStr << std::endl;
 
-  uint32_t srcPort = GetSrcPortNum (packet);
-  printf("srcPort: %u\n", srcPort);
+  // uint32_t srcPort = GetSrcPortNum (packet);
+  // printf("srcPort: %u\n", srcPort);
 
   // ns3::PacketMetadata::Enable ();
   // Packet::EnablePrinting ();

@@ -33,12 +33,14 @@ public:
 
 
   vector<TrafficClass*>* GetQueuesPtr ();
+  const vector<TrafficClass*>* GetQueuesPtrForPeek () const;
 
 
   /**
    * \return Returns a queue index whose queue has the next packet to be transmitted.
    */
-  virtual uint32_t Schedule () const;
+  virtual uint32_t Schedule ();
+  virtual uint32_t ScheduleForPeek () const;
 
   /**
    * \brief Takes a packet and returns an integer.
@@ -46,10 +48,10 @@ public:
    */
   uint32_t Classify (Ptr<Packet> p);
 
-  virtual bool Enqueue (Ptr<Packet> p);
-  virtual Ptr<Packet> Dequeue (void);
-  virtual Ptr<Packet> Remove (void);
-  virtual Ptr<const Packet> Peek (void) const;
+  bool Enqueue (Ptr<Packet> p);
+  Ptr<Packet> Dequeue (void);
+  Ptr<Packet> Remove (void);
+  Ptr<const Packet> Peek (void) const;
 
 private:
   /**

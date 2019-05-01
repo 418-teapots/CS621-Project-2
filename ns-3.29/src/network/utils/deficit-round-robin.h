@@ -17,30 +17,27 @@ class DRR : public DiffServ
 {
 public:
 
-  static TypeId GetTypeId (void);
+  // static TypeId GetTypeId (void);
   DRR ();
   /** 
    * 'numQueue' is the number of queues. 
    * 'priorityPrams' is a list of priority_level or weight. 
    *  e.g. 300 200 100 
    */
-  DRR (uint32_t numQueue, vector<uint32_t> priorityParams);
+  DRR (uint32_t numQueue, vector<uint32_t> priorityParams, uint32_t maxPacketCount);
   virtual ~DRR ();
 
   /**
    * \return Returns a queue index whose queue has the next packet to be transmitted.
    */
   uint32_t Schedule ();
+  uint32_t ScheduleForPeek () const;
 
   void SetRoundRobinPointer (uint32_t v);
-  uint32_t GetRoundRobinPointer ();
+  uint32_t GetRoundRobinPointer () const;
+  uint32_t m_counter;
 
 private: 
-  
-  /**
-   *  A list of queue indices whose queue contains at least one packet. 
-   */ 
-  // vector<uint32_t> activeQueueList;
   
   /**
    * Indicates queue index whose queue will be serviced next.  
@@ -57,7 +54,8 @@ class DrrQueue : public TrafficClass
 {
 public:
   DrrQueue () : 
-    m_deficitCounter (0)
+    m_deficitCounter (0), 
+    m_quantumFlag (true)
   {
     printf("DrrQueue constructor start. \n");
 
@@ -74,9 +72,20 @@ public:
     return m_deficitCounter;
   }
 
+  void SetQuantumFlag (bool b)
+  {
+    m_quantumFlag = b;
+  }
+
+  bool GetQuantumFlag () const
+  {
+    return m_quantumFlag;
+  }
+
 private: 
 
   uint32_t m_deficitCounter;
+  bool m_quantumFlag;
 
 };
 

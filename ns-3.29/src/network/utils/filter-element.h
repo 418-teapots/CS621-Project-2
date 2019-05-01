@@ -183,6 +183,9 @@ public:
   DestinationPortNumber (uint32_t portNumber) : 
     m_destPortNum (portNumber)
   {
+    printf("Constructor in DestinationPortNumber start.\n");
+    printf("m_destPortNum is set. %u\n", portNumber);
+
 
   }
 
@@ -193,7 +196,11 @@ public:
 
   bool match (Ptr<Packet> packet)
   {
+    printf("match() in DestinationPortNumber start.\n");
+
     uint32_t destPortNum = GetDestPortNum (packet);
+    printf("destPortNum: %u\n", destPortNum);
+
     return destPortNum == m_destPortNum;
   }
 

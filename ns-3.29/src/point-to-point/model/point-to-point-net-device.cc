@@ -557,7 +557,7 @@ PointToPointNetDevice::Send (
   printf("Send() in PointToPointNetDevice start.\n");
 
   printf("packet: \n");
-  std::string packetStr = packet->ToString();
+  std::string packetStr = packet->ToString ();
   std::cout << packetStr << std::endl;
 
 

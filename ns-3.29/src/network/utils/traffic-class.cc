@@ -90,7 +90,7 @@ TrafficClass::Enqueue (Ptr<Packet> p)
       return false;
     }
 
-  m_queue.push (p);
+  m_queue.push(p);
 
   packets++;
 
@@ -103,18 +103,18 @@ TrafficClass::Dequeue ()
   printf("Dequeue() in TrafficClass start.\n");
   
   Ptr<Packet> p;
-  if (m_queue.empty ()) 
+  if (m_queue.empty()) 
     {
       printf("Queue is empty.\n");
       return 0;
     }
 
-  p = m_queue.front ();
+  p = m_queue.front();
   m_queue.pop ();
   packets--;
 
-  string packetStr = p->ToString ();
-  cout << "Packet dequeued: " << packetStr << endl;
+  // string packetStr = p->ToString ();
+  // cout << "Packet dequeued: " << packetStr << endl;
   
   return p;
 }
@@ -131,8 +131,8 @@ TrafficClass::Peek ()
 
   p = m_queue.front();
 
-  string packetStr = p->ToString ();
-  cout << "Packet peeked: " << packetStr << endl;
+  // string packetStr = p->ToString ();
+  // cout << "Packet peeked: " << packetStr << endl;
   
   return p;
 }

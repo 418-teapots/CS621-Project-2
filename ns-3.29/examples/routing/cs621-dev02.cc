@@ -172,12 +172,12 @@ int main (int argc, char *argv[])
     fileName = "stats_DRR.csv";
     Ptr<NetDevice> netDevice = d1d2.Get(0);
     Ptr<PointToPointNetDevice> p2pNetDevice = StaticCast<PointToPointNetDevice>(netDevice);
-    Ptr<DRR> drr = Create<DRR>(3, queueList);
+    Ptr<DRR> drr = Create<DRR>(3, queueList, maxPacketCount);
     p2pNetDevice->SetQueue(drr);
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
     Time interPacketInterval = Seconds (0.01);
-    RequestResponseClientHelper client (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client (i1i2.GetAddress (1), 2048);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -185,7 +185,7 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
 
-    RequestResponseClientHelper client2 (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client2 (i1i2.GetAddress (1), 2049);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -193,7 +193,7 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
 
-    RequestResponseClientHelper client3 (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client3 (i1i2.GetAddress (1), 2050);
     client3.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client3.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client3.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -201,6 +201,12 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (2.0));
     apps.Stop (Seconds (40.0));
   }
+
+  AsciiTraceHelper ascii;
+  p2p.EnableAsciiAll (ascii.CreateFileStream ("cs621-dev02.tr"));
+  p2p.EnablePcap("UDPsender.pcap",d0d1.Get(0), false, true);
+  p2p.EnablePcap("MiddleNode.pcap",d1d2.Get(0), false, true);
+  p2p.EnablePcap("UDPreceiver.pcap",d1d2.Get(1), false, true);
 
   //Flow Monitor
   //Use flow monitor to get stats on when the last packet in the packet train arrives

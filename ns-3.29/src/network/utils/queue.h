@@ -334,14 +334,14 @@ protected:
    * \param item the item to enqueue
    * \return true if success, false if the packet has been dropped.
    */
-  virtual bool DoEnqueue (ConstIterator pos, Ptr<Item> item);
+  bool DoEnqueue (ConstIterator pos, Ptr<Item> item);
 
   /**
    * Pull the item to dequeue from the queue
    * \param pos the position of the item to dequeue
    * \return the item.
    */
-  virtual Ptr<Item> DoDequeue (ConstIterator pos);
+  Ptr<Item> DoDequeue (ConstIterator pos);
 
   /**
    * Pull the item to drop from the queue

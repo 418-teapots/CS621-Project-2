@@ -32,6 +32,13 @@ DiffServ::GetQueuesPtr ()
   return &q_class;
 }
 
+const vector<TrafficClass*>* 
+DiffServ::GetQueuesPtrForPeek () const
+{
+  const vector<TrafficClass*>* q_classPtr = &q_class;
+  return q_classPtr;
+}
+
 DiffServ::~DiffServ () 
 {
 
@@ -142,7 +149,7 @@ DiffServ::DoRemove ()
 Ptr<const Packet> 
 DiffServ::DoPeek (void) const
 {
-  uint32_t queueIndex = Schedule ();
+  uint32_t queueIndex = ScheduleForPeek ();
 
   Ptr<const Packet> p = q_class[queueIndex]->Peek ();
 
@@ -150,8 +157,18 @@ DiffServ::DoPeek (void) const
 }
 
 uint32_t
-DiffServ::Schedule () const
+DiffServ::Schedule ()
 {
+  printf("Schedule() in DiffServ start. \n");
+
+  return 0;
+}
+
+uint32_t
+DiffServ::ScheduleForPeek () const
+{
+  printf("Schedule() in DiffServ start. \n");
+
   return 0;
 }
 
@@ -167,6 +184,7 @@ DiffServ::Classify (Ptr<Packet> p)
   {
     if (q_class[i]->match (p)) 
     {
+      printf("The packet is being enqueued into the queue %u\n", i);
       return i;
     }
 

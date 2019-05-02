@@ -76,6 +76,7 @@ int main (int argc, char *argv[])
 
   uint32_t packetSize = 1000; //#size of the packets
   uint32_t maxPacketCount = 3000;//# of packets to send
+  // std::string dataRate = "3Mbps";
   std::string dataRate = "2Mbps";
   std::string outputDataRate = "1Mbps";
   std::string configFile;

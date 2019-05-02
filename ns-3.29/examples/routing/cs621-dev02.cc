@@ -151,10 +151,15 @@ int main (int argc, char *argv[])
 
   if (configFile == "SPQ") {
     fileName = "stats_SPQ.csv";
+    Ptr<NetDevice> netDevice = d1d2.Get(0);
+    Ptr<PointToPointNetDevice> p2pNetDevice = StaticCast<PointToPointNetDevice>(netDevice);
+    Ptr<SPQ> spq = Create<SPQ>();
+    p2pNetDevice->SetQueue(spq);
+    
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
     Time interPacketInterval = Seconds (0.01);
-    RequestResponseClientHelper client (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client (i1i2.GetAddress (1), 443);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
@@ -162,7 +167,7 @@ int main (int argc, char *argv[])
     apps.Start (Seconds (5.0));
     apps.Stop (Seconds (40.0));
 
-    RequestResponseClientHelper client2 (i1i2.GetAddress (1), port);
+    RequestResponseClientHelper client2 (i1i2.GetAddress (1), 6881);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));

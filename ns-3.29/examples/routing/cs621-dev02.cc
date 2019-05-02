@@ -42,31 +42,31 @@ using namespace ns3;
 std::string fileName = "";
 
 void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
-	{
+  {
     std::ofstream myFile;
     myFile.open(fileName, std::ios_base::app);
-		flowMon->CheckForLostPackets();
-		std::map<FlowId, FlowMonitor::FlowStats> flowStats = flowMon->GetFlowStats();
-		Ptr<Ipv4FlowClassifier> classing = DynamicCast<Ipv4FlowClassifier> (fmhelper->GetClassifier());
-		for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator stats = flowStats.begin (); stats != flowStats.end (); ++stats)
-		{
-			Ipv4FlowClassifier::FiveTuple fiveTuple = classing->FindFlow (stats->first);
+    flowMon->CheckForLostPackets();
+    std::map<FlowId, FlowMonitor::FlowStats> flowStats = flowMon->GetFlowStats();
+    Ptr<Ipv4FlowClassifier> classing = DynamicCast<Ipv4FlowClassifier> (fmhelper->GetClassifier());
+    for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator stats = flowStats.begin (); stats != flowStats.end (); ++stats)
+    {
+      Ipv4FlowClassifier::FiveTuple fiveTuple = classing->FindFlow (stats->first);
       if (fiveTuple.sourceAddress == Ipv4Address("10.1.1.1") && fiveTuple.destinationAddress == Ipv4Address("10.1.2.2")) {
         myFile << stats->first << "," << stats->second.timeLastRxPacket.GetSeconds() << "," << stats->second.rxPackets <<endl;
 
-        std::cout<<"Flow ID			: " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
-  			std::cout<<"Number of Packets Received = " << stats->second.rxPackets <<std::endl;
-  			//std::cout<<"Duration		: "<<stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds()<<std::endl;
-  			std::cout<<"Last Received Packet	: "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
-  			//std::cout<<"Throughput: " << stats->second.rxBytes * 8.0 / (stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds())/1024/1024  << " Mbps"<<std::endl;
-  			std::cout<<"---------------------------------------------------------------------------"<<std::endl;
+        std::cout<<"Flow ID     : " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
+        std::cout<<"Number of Packets Received = " << stats->second.rxPackets <<std::endl;
+        //std::cout<<"Duration    : "<<stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds()<<std::endl;
+        std::cout<<"Last Received Packet  : "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
+        //std::cout<<"Throughput: " << stats->second.rxBytes * 8.0 / (stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds())/1024/1024  << " Mbps"<<std::endl;
+        std::cout<<"---------------------------------------------------------------------------"<<std::endl;
       }
-		}
+    }
     myFile.close();
-			Simulator::Schedule(Seconds(0.5),&ThroughputMonitor, fmhelper, flowMon);
+      Simulator::Schedule(Seconds(0.5),&ThroughputMonitor, fmhelper, flowMon);
 
 
-	}
+  }
 
 NS_LOG_COMPONENT_DEFINE ("SimpleGlobalRoutingExample");
 
@@ -77,7 +77,7 @@ int main (int argc, char *argv[])
   uint32_t packetSize = 1000; //#size of the packets
   uint32_t maxPacketCount = 3000;//# of packets to send
   std::string dataRate = "4Mbps";
-	std::string outputDataRate = "2Mbps";
+  std::string outputDataRate = "2Mbps";
   std::string configFile;
   std::vector<uint32_t> queueList;
   // Allow the user to override any of the defaults and the above
@@ -121,7 +121,7 @@ int main (int argc, char *argv[])
   p2p.SetDeviceAttribute ("DataRate", StringValue (dataRate));
   p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));
   NetDeviceContainer d0d1 = p2p.Install (n0n1); //outer links
-	p2p.SetDeviceAttribute ("DataRate", StringValue (outputDataRate));
+  p2p.SetDeviceAttribute ("DataRate", StringValue (outputDataRate));
   p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));
   NetDeviceContainer d1d2 = p2p.Install (n1n2); //outer links
 

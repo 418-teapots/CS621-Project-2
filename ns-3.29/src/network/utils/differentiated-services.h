@@ -25,11 +25,18 @@ public:
   DiffServ (uint32_t numQueue);
   virtual ~DiffServ ();
 
+  //QUEUE_MODE_PACKETS = 0; QUEUE_MODE_BYTES = 1;
+  typedef enum QueueMode
+  {
+    QUEUE_MODE_PACKETS,
+    QUEUE_MODE_BYTES,
+  } QueueMode;
+
   /**
    * setMode()/getMode() - the accessor and modifier for private variable m mode.
    */
-  // void SetMode (QueueMode mode);
-  // QueueMode GetMode ();
+  void SetMode (QueueMode mode);
+  QueueMode GetMode ();
 
 
   vector<TrafficClass*>* GetQueuesPtr ();
@@ -57,7 +64,7 @@ private:
   /**
    * The QueueMode specifies whether service is in byte mode or packet mode.
    */
-  // QueueMode m_mode;
+  QueueMode m_mode;
 
   /**
    * The vector (array) of TrafficClass pointers. 
@@ -73,35 +80,3 @@ private:
 } // namespace ns3
 
 #endif /* DIFFERENTIATED_SERVICES_H_ */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

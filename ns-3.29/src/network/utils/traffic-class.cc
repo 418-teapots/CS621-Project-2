@@ -12,7 +12,8 @@ TrafficClass::TrafficClass () :
   maxPackets (1000),
   maxBytes (10000),
   weight (0), 
-  priority_level (0)
+  priority_level (0),
+  isDefault (false)
 {
 
 }
@@ -164,34 +165,3 @@ TrafficClass::match (Ptr<Packet> p)
 
 
 } // namespace ns3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -46,6 +46,17 @@ DiffServ::~DiffServ ()
 
 }
 
+void 
+DiffServ::SetMode (QueueMode mode)
+{
+  m_mode = mode;
+}
+  
+DiffServ::QueueMode
+DiffServ::GetMode ()
+{
+  return m_mode;
+}
 // void 
 // DiffServ::SetMode (QueueMode mode)
 // {
@@ -206,13 +217,3 @@ DiffServ::Classify (Ptr<Packet> p)
 
 
 } // namespace ns3
-
-
-
-
-
-
-
-
-
-

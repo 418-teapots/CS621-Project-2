@@ -77,7 +77,7 @@ int main (int argc, char *argv[])
   uint32_t packetSize = 1000; //#size of the packets
   uint32_t maxPacketCount = 3000;//# of packets to send
   std::string dataRate = "4Mbps";
-	std::string outputDataRate = "3Mbps";
+	std::string outputDataRate = "2Mbps";
   std::string configFile;
   std::vector<uint32_t> queueList;
   // Allow the user to override any of the defaults and the above

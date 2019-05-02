@@ -153,10 +153,10 @@ DRR::Schedule ()
   uint32_t rrp = GetRoundRobinPointer ();
   while (m_counter > 0)
   {
-    //printf("m_counter: %u\n", m_counter);
+    printf("m_counter: %u\n", m_counter);
 
     rrp = rrp % numQueue;
-    //printf("rrp: %u\n", rrp);
+    printf("rrp: %u\n", rrp);
     DrrQueue* queuePtr = (DrrQueue*)(*queuesPtr)[rrp];
 
     // Check if the queue is empty.
@@ -164,7 +164,7 @@ DRR::Schedule ()
     if (packetsCount <= 0)
     {
       // Move on to the next queue.
-      //printf("This queue is empty. Move on to the next queue. \n");
+      printf("This queue is empty. Move on to the next queue. \n");
       rrp++;
       continue;
     }

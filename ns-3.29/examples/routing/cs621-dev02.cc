@@ -77,6 +77,7 @@ int main (int argc, char *argv[])
   uint32_t packetSize = 1000; //#size of the packets
   uint32_t maxPacketCount = 5;//# of packets to send
   std::string dataRate = "4Mbps";
+	std::string outputDataRate = "2Mbps";
   std::string configFile;
   std::vector<uint32_t> queueList;
   // Allow the user to override any of the defaults and the above
@@ -120,6 +121,8 @@ int main (int argc, char *argv[])
   p2p.SetDeviceAttribute ("DataRate", StringValue (dataRate));
   p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));
   NetDeviceContainer d0d1 = p2p.Install (n0n1); //outer links
+	p2p.SetDeviceAttribute ("DataRate", StringValue (outputDataRate));
+  p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));
   NetDeviceContainer d1d2 = p2p.Install (n1n2); //outer links
 
   //Add IP addresses

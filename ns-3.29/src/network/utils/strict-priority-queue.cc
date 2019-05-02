@@ -144,6 +144,7 @@ SPQ::Schedule ()
   {
     return uint32_t(LOW_PRIORITY);
   }
+  printf("SPQ Schedule Nothing!\n");
   return 0;
 }
 
@@ -195,12 +196,14 @@ SPQ::DoEnqueue (Ptr<ns3::Packet> p)
   {
     if (highPriorityQueue->Enqueue(p)) 
     {
-      highPriorityQueue->SetPacketsCount(highPriorityQueue->GetPacketsCount() + 1);
+      // highPriorityQueue->SetPacketsCount(highPriorityQueue->GetPacketsCount() + 1);
+      printf("HighPriorityQueue enqueue, packetsCount:%d\n", highPriorityQueue->GetPacketsCount());
       // NS_LOG_LOGIC ("High Priority Queue push");
       return true;
     }
     else 
     {
+
       return false;
     }
   }
@@ -208,8 +211,9 @@ SPQ::DoEnqueue (Ptr<ns3::Packet> p)
   {
     if (lowPriorityQueue->Enqueue(p))
     {
-      lowPriorityQueue->SetPacketsCount(lowPriorityQueue->GetPacketsCount() + 1);
 
+      // lowPriorityQueue->SetPacketsCount(lowPriorityQueue->GetPacketsCount() + 1);
+      printf("LowPriorityQueue enqueue, packetsCount:%d\n", lowPriorityQueue->GetPacketsCount());
       // NS_LOG_LOGIC ("Low Priority Queue push");
       return true;
     }
@@ -231,9 +235,9 @@ SPQ::DoDequeue ()
 
   Ptr<ns3::Packet> toDequeue = q_class[trafficClassToGo]->Dequeue();
 
+  // q_class[trafficClassToGo]->SetPacketsCount(q_class[trafficClassToGo]->GetPacketsCount() - 1);
 
-  q_class[trafficClassToGo]->SetPacketsCount(q_class[trafficClassToGo]->GetPacketsCount() - 1);
-
+  printf("PriorityQueue %d dequeue, packetsCount:%d\n", trafficClassToGo, q_class[trafficClassToGo]->GetPacketsCount());
 	return toDequeue;
 }
 
@@ -246,8 +250,7 @@ SPQ::DoRemove ()
 
   Ptr<ns3::Packet> toDequeue = q_class[trafficClassToGo]->Dequeue();
 
-  q_class[trafficClassToGo]->SetPacketsCount(q_class[trafficClassToGo]->GetPacketsCount() - 1);
-
+  // q_class[trafficClassToGo]->SetPacketsCount(q_class[trafficClassToGo]->GetPacketsCount() - 1);
 
   return toDequeue;
 }

@@ -14,11 +14,24 @@ namespace ns3 {
 
 
 SPQ::SPQ ()
-{
+{ 
+  //  vector<TrafficClass*> q_class;
+  // vector<TrafficClass*>* q_classPtr = GetQueuesPtr();
+  // *q_class = &q_classPtr;
+
+  printf("SPQ constructor\n");
+  // printf("SPQ constructor: high-%d, low-%d\n",highPort, lowPort); //C
   TrafficClass* highPriorityQueue;
+  highPriorityQueue = new TrafficClass();
   highPriorityQueue->SetPriorityLevel(uint32_t (HIGH_PRIORITY));
+
   TrafficClass* lowPriorityQueue;
+  lowPriorityQueue = new TrafficClass();
   lowPriorityQueue->SetPriorityLevel(uint32_t (LOW_PRIORITY));
+
+  // q_classPtr->push_back(highPriorityQueue); //q_class[0]:highPriorityQueue;
+
+  // q_classPtr->push_back(lowPriorityQueue);  //q_class[1]:lowPriorityQueue;
 
   q_class.push_back(highPriorityQueue); //q_class[0]:highPriorityQueue;
   q_class.push_back(lowPriorityQueue);  //q_class[1]:lowPriorityQueue;
@@ -28,6 +41,7 @@ SPQ::SPQ ()
   //HighPort Queue
   DestinationPortNumber* highPortNumber = 0;
   highPortNumber = new DestinationPortNumber (443);
+  // highPortNumber = new DestinationPortNumber (highPort); //C
 
   vector<FilterElement*> highFilterElements;
   highFilterElements.push_back(highPortNumber);
@@ -43,6 +57,7 @@ SPQ::SPQ ()
   //LowPort Queue
   DestinationPortNumber* lowPortNumber = 0;
   lowPortNumber = new DestinationPortNumber (6881);
+  // lowPortNumber = new DestinationPortNumber (lowPort); //C
 
   vector<FilterElement*> lowFilterElements;
   lowFilterElements.push_back(lowPortNumber);
@@ -54,13 +69,19 @@ SPQ::SPQ ()
   vector<Filter*> lowFilters;
   lowFilters.push_back(lowFilter);
   q_class[LOW_PRIORITY]->filters = lowFilters;
+
+  printf("[TEST]q_class size = %lu\n", q_class.size());
 }
 
 SPQ::SPQ (uint32_t highPort, uint32_t lowPort)
 {
+  printf("SPQ constructor: high-%d, low-%d\n",highPort, lowPort);
   TrafficClass* highPriorityQueue;
+  highPriorityQueue = new TrafficClass();
   highPriorityQueue->SetPriorityLevel(uint32_t (HIGH_PRIORITY));
+
   TrafficClass* lowPriorityQueue;
+  lowPriorityQueue = new TrafficClass();
   lowPriorityQueue->SetPriorityLevel(uint32_t (LOW_PRIORITY));
 
   q_class.push_back(highPriorityQueue); //q_class[0]:highPriorityQueue;
@@ -108,6 +129,7 @@ SPQ::~SPQ ()
 uint32_t
 SPQ::Schedule ()
 {
+  printf("SPQ Schedule\n");
   TrafficClass* highPriorityQueue;
   highPriorityQueue = q_class[HIGH_PRIORITY];
 
@@ -134,6 +156,7 @@ SPQ::Schedule ()
 uint32_t 
 SPQ::Classify (Ptr<ns3::Packet> p)
 {
+  printf("SPQ Classify\n");
   uint32_t defaultQueueIndex;
   for (uint32_t i = 0; i < q_class.size(); ++i)
   {
@@ -157,6 +180,7 @@ SPQ::Classify (Ptr<ns3::Packet> p)
 bool 
 SPQ::DoEnqueue (Ptr<ns3::Packet> p)
 {
+  printf("SPQ DoEnqueue\n");
   TrafficClass* highPriorityQueue;
   highPriorityQueue = q_class[HIGH_PRIORITY];
 
@@ -171,6 +195,7 @@ SPQ::DoEnqueue (Ptr<ns3::Packet> p)
   {
     if (highPriorityQueue->Enqueue(p)) 
     {
+      highPriorityQueue->SetPacketsCount(highPriorityQueue->GetPacketsCount() + 1);
       // NS_LOG_LOGIC ("High Priority Queue push");
       return true;
     }
@@ -183,6 +208,8 @@ SPQ::DoEnqueue (Ptr<ns3::Packet> p)
   {
     if (lowPriorityQueue->Enqueue(p))
     {
+      lowPriorityQueue->SetPacketsCount(lowPriorityQueue->GetPacketsCount() + 1);
+
       // NS_LOG_LOGIC ("Low Priority Queue push");
       return true;
     }
@@ -198,10 +225,14 @@ SPQ::DoEnqueue (Ptr<ns3::Packet> p)
 Ptr<ns3::Packet> 
 SPQ::DoDequeue ()
 {
+  printf("SPQ DoDequeue\n");
   uint32_t trafficClassToGo;
   trafficClassToGo = Schedule();
 
   Ptr<ns3::Packet> toDequeue = q_class[trafficClassToGo]->Dequeue();
+
+
+  q_class[trafficClassToGo]->SetPacketsCount(q_class[trafficClassToGo]->GetPacketsCount() - 1);
 
 	return toDequeue;
 }
@@ -209,17 +240,22 @@ SPQ::DoDequeue ()
 Ptr<ns3::Packet> 
 SPQ::DoRemove ()
 {
+  printf("SPQ DoRemove\n");
   uint32_t trafficClassToGo;
   trafficClassToGo = Schedule();
 
   Ptr<ns3::Packet> toDequeue = q_class[trafficClassToGo]->Dequeue();
+
+  q_class[trafficClassToGo]->SetPacketsCount(q_class[trafficClassToGo]->GetPacketsCount() - 1);
+
 
   return toDequeue;
 }
 
 Ptr<const ns3::Packet> 
 SPQ::DoPeek ()
-{
+{  
+  printf("SPQ DoPeek\n");
   uint32_t trafficClassToGo;
   trafficClassToGo = Schedule();
 

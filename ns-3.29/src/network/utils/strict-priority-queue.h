@@ -23,7 +23,7 @@ private:
   /**
    * The vector (array) of TrafficClass pointers. 
    */
-  vector<TrafficClass*> q_class;
+  // vector<TrafficClass*> q_class;
 
   enum Priority 
   {

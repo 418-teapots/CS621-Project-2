@@ -1,5 +1,7 @@
 # CS621-Project-2
-https://www.overleaf.com/5567836938cvzgshctgkrd
+https://docs.google.com/presentation/d/1VV-1ngyyMgo-Q9YdXSRjuxhnVsX-THiMQAzee5MXspY/edit?usp=sharing
+Project 1 report: https://www.overleaf.com/5567836938cvzgshctgkrd   
+Project 2 report: https://www.overleaf.com/4439697492dtgztcbqjjzh (not setup yet)
 
 ## Overview
 The ultimate purpose of this project is to learn about and implement a selection of differentiated services. Because

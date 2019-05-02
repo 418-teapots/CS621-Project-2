@@ -153,7 +153,7 @@ DRR::Schedule ()
   uint32_t rrp = GetRoundRobinPointer ();
   while (m_counter > 0)
   {
-    printf("m_counter: %u\n", m_counter);
+    //printf("m_counter: %u\n", m_counter);
 
     rrp = rrp % numQueue;
     //printf("rrp: %u\n", rrp);

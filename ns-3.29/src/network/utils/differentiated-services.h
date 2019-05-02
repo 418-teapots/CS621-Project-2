@@ -53,7 +53,7 @@ public:
    * \brief Takes a packet and returns an integer.
    * \return An integer
    */
-  uint32_t Classify (Ptr<Packet> p);
+  virtual uint32_t Classify (Ptr<Packet> p);
 
   bool Enqueue (Ptr<Packet> p);
   Ptr<Packet> Dequeue (void);

@@ -18,7 +18,12 @@ df1['rate'] = df1['packets']/df1['duration']
 df2['packets'] = df2.groupby('flowID')['numPackets'].diff()
 df2['duration'] = df2.groupby('flowID')['timePacketReceived'].diff()
 df2['rate'] = df2['packets']/df2['duration']
-
+df1['rate'] = df1['rate'].fillna(0)
+df2['rate'] = df2['rate'].fillna(0)
+df1['duration'] = df1['duration'].fillna(0)
+df2['duration'] = df2['duration'].fillna(0)
+df1['packets'] = df1['packets'].fillna(0)
+df2['packets'] = df2['packets'].fillna(0)
 df1.to_csv('SPQ.csv', index=False)
 df2.to_csv('DRR.csv', index=False)
 

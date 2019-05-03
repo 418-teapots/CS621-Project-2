@@ -111,7 +111,7 @@ int main (int argc, char *argv[])
   }
   if (configFile == "DRR") {
     dataRate = "2.4Mbps";
-    outputDataRate = "1.6Mbps";
+    outputDataRate = "1.7Mbps";
   }
 
   //Create three nodes and form a group

@@ -9,7 +9,7 @@ namespace ns3 {
 TrafficClass::TrafficClass () : 
   bytes (0),
   packets (0),
-  maxPackets (1000),
+  maxPackets (3000),
   maxBytes (10000),
   weight (0), 
   priority_level (0),

@@ -373,7 +373,7 @@ PointToPointNetDevice::Receive (Ptr<Packet> packet)
   NS_LOG_FUNCTION (this << packet);
   uint16_t protocol = 0;
 
-  printf ("Receive in PointToPointNetDevice start.\n");
+  printf ("Receive() in PointToPointNetDevice start.\n");
 
   if (m_receiveErrorModel && m_receiveErrorModel->IsCorrupt (packet) ) 
     {
@@ -556,9 +556,9 @@ PointToPointNetDevice::Send (
 
   printf("Send() in PointToPointNetDevice start.\n");
 
-  printf("packet: \n");
-  std::string packetStr = packet->ToString ();
-  std::cout << packetStr << std::endl;
+  // printf("packet: \n");
+  // std::string packetStr = packet->ToString ();
+  // std::cout << packetStr << std::endl;
 
 
   //
@@ -621,8 +621,9 @@ PointToPointNetDevice::Send (
 
           // string packetStr2 = packet->ToString ();
           // cout << "packet dequeued: " << packetStr2 << endl;
-          std::string packetStr = packet->ToString();
-          std::cout << "packet1 to be enqueued: " << packetStr << std::endl;
+          
+          // std::string packetStr = packet->ToString();
+          // std::cout << "packet1 to be enqueued: " << packetStr << std::endl;
 
 
           m_snifferTrace (packet);

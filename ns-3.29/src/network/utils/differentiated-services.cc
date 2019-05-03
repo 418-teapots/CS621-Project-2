@@ -73,6 +73,11 @@ bool
 DiffServ::Enqueue (Ptr<Packet> packet)
 {
   printf("Enqueue() in DiffServ start.\n");
+
+  std::string packetToBeEnqueued = packet->ToString ();
+  std::cout << "packet to be enqueued: " << packetToBeEnqueued << std::endl;
+
+
   bool b = DoEnqueue (packet);
   
   // uint32_t size = p->GetSize ();
@@ -94,6 +99,10 @@ DiffServ::Dequeue (void)
 {
   printf("Dequeue() in DiffServ start.\n");
   Ptr<Packet> p = DoDequeue ();
+
+  std::string packetDequeued = p->ToString ();
+  std::cout << "packet dequeued: " << packetDequeued << std::endl;
+
   
   // uint32_t size = p->GetSize ();
   // m_nBytes += size;

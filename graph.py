@@ -10,6 +10,8 @@ if not (os.path.isfile(stats_SPQ) and os.path.isfile(stats_DRR)):
 
 df1 = pd.read_csv(stats_SPQ)
 df2 = pd.read_csv(stats_DRR)
+df1['flowID'] = df1['flowID'] - 1
+df2['flowID'] = df2['flowID'] - 1
 df1['timePacketReceived'] = df1['timePacketReceived'].round(1)
 df2['timePacketReceived'] = df2['timePacketReceived'].round(1)
 df1['packets'] = df1.groupby('flowID')['numPackets'].diff()

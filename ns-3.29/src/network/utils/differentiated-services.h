@@ -38,7 +38,7 @@ public:
   void SetMode (QueueMode mode);
   QueueMode GetMode ();
 
-  vector<TrafficClass*> q_class;
+  // vector<TrafficClass*> q_class;
   vector<TrafficClass*>* GetQueuesPtr ();
   const vector<TrafficClass*>* GetQueuesPtrForPeek () const;
 
@@ -69,7 +69,7 @@ private:
   /**
    * The vector (array) of TrafficClass pointers. 
    */
-  // vector<TrafficClass*> q_class;
+  vector<TrafficClass*> q_class;
 
   virtual bool DoEnqueue (Ptr<Packet> p);
   virtual Ptr<Packet> DoDequeue ();

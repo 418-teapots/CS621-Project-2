@@ -16,7 +16,7 @@ public:
   virtual ~SPQ ();
 
   uint32_t Schedule ();
-  uint32_t Classify (Ptr<ns3::Packet> p);
+  // uint32_t Classify (Ptr<ns3::Packet> p);
 
 private:
 

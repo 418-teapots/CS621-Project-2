@@ -239,6 +239,7 @@ SPQ::DoEnqueue (Ptr<ns3::Packet> p)
     }
   }
 
+  
 }
 
 Ptr<ns3::Packet> 
@@ -269,7 +270,7 @@ SPQ::DoDequeue ()
 
   // q_class[trafficClassToGo]->SetPacketsCount(q_class[trafficClassToGo]->GetPacketsCount() - 1);
 
-  // printf("PriorityQueue %d dequeue, packetsCount:%d\n", trafficClassToGo, q_class[trafficClassToGo]->GetPacketsCount());
+  printf("PriorityQueue %d dequeue, packetsCount:%d\n", trafficClassToGo, lowPriorityQueue->GetPacketsCount());
 	return toDequeue;
 }
 

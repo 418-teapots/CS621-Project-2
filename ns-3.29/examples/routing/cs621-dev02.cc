@@ -151,15 +151,20 @@ int main (int argc, char *argv[])
   // Create a RequestResponseServer application on node three.
 
   NS_LOG_INFO ("Create Applications.");
-  uint16_t port = 9;  // well-known echo port number
-  RequestResponseServerHelper server (port);
-  // uint32_t responseSize = 1024;
-  // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-  ApplicationContainer apps = server.Install (c.Get (2));
-  apps.Start (Seconds (1.0));
-  apps.Stop (Seconds (60.0));
-
   if (configFile == "SPQ") {
+    RequestResponseServerHelper server (443);
+    // uint32_t responseSize = 1024;
+    // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
+    ApplicationContainer apps = server.Install (c.Get (2));
+    apps.Start (Seconds (1.0));
+    apps.Stop (Seconds (60.0));
+    RequestResponseServerHelper server (6881);
+    // uint32_t responseSize = 1024;
+    // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
+    ApplicationContainer apps = server.Install (c.Get (2));
+    apps.Start (Seconds (1.0));
+    apps.Stop (Seconds (60.0));
+
     fileName = "stats_SPQ.csv";
     Ptr<NetDevice> netDevice = d1d2.Get(0);
     Ptr<PointToPointNetDevice> p2pNetDevice = StaticCast<PointToPointNetDevice>(netDevice);
@@ -186,6 +191,25 @@ int main (int argc, char *argv[])
     apps.Stop (Seconds (60.0));
   }
   else { //DRR
+    RequestResponseServerHelper server (2048);
+    // uint32_t responseSize = 1024;
+    // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
+    ApplicationContainer apps = server.Install (c.Get (2));
+    apps.Start (Seconds (1.0));
+    apps.Stop (Seconds (60.0));
+    RequestResponseServerHelper server (2049);
+    // uint32_t responseSize = 1024;
+    // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
+    ApplicationContainer apps = server.Install (c.Get (2));
+    apps.Start (Seconds (1.0));
+    apps.Stop (Seconds (60.0));
+    RequestResponseServerHelper server (2050);
+    // uint32_t responseSize = 1024;
+    // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
+    ApplicationContainer apps = server.Install (c.Get (2));
+    apps.Start (Seconds (1.0));
+    apps.Stop (Seconds (60.0));
+    
     fileName = "stats_DRR.csv";
     Ptr<NetDevice> netDevice = d1d2.Get(0);
     Ptr<PointToPointNetDevice> p2pNetDevice = StaticCast<PointToPointNetDevice>(netDevice);

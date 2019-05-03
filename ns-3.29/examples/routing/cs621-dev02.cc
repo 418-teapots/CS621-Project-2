@@ -61,7 +61,7 @@ void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
       }
     }
     myFile.close();
-      Simulator::Schedule(Seconds(0.5),&ThroughputMonitor, fmhelper, flowMon);
+      Simulator::Schedule(Seconds(0.2),&ThroughputMonitor, fmhelper, flowMon);
 
 
   }
@@ -75,8 +75,8 @@ int main (int argc, char *argv[])
   uint32_t packetSize = 1000; //#size of the packets
   uint32_t maxPacketCount = 3000;//# of packets to send
   // std::string dataRate = "3Mbps";
-  std::string dataRate = "3.2Mbps";
-  std::string outputDataRate = "1.6Mbps";
+  std::string dataRate = "6.4Mbps";
+  std::string outputDataRate = "3.2Mbps";
   std::string configFile;
   std::vector<uint32_t> queueList;
   int queueSize = 0;
@@ -110,8 +110,8 @@ int main (int argc, char *argv[])
     return 0;
   }
   if (configFile == "DRR") {
-    dataRate = "4.8Mbps";
-    outputDataRate = "3.2Mbps";
+    dataRate = "9.6Mbps";
+    outputDataRate = "6.4Mbps";
   }
 
   //Create three nodes and form a group
@@ -173,7 +173,7 @@ int main (int argc, char *argv[])
 
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-    Time interPacketInterval = Seconds (0.005);
+    Time interPacketInterval = Seconds (0.0025);
     RequestResponseClientHelper client (i1i2.GetAddress (1), 443);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
@@ -217,7 +217,7 @@ int main (int argc, char *argv[])
     p2pNetDevice->SetQueue(drr);
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-    Time interPacketInterval = Seconds (0.005);
+    Time interPacketInterval = Seconds (0.0025);
     RequestResponseClientHelper client (i1i2.GetAddress (1), 2048);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));

@@ -75,8 +75,8 @@ int main (int argc, char *argv[])
   uint32_t packetSize = 1000; //#size of the packets
   uint32_t maxPacketCount = 3000;//# of packets to send
   // std::string dataRate = "3Mbps";
-  std::string dataRate = "1.6Mbps";
-  std::string outputDataRate = "0.8Mbps";
+  std::string dataRate = "3.2Mbps";
+  std::string outputDataRate = "1.7Mbps";
   std::string configFile;
   std::vector<uint32_t> queueList;
   int queueSize = 0;
@@ -110,8 +110,8 @@ int main (int argc, char *argv[])
     return 0;
   }
   if (configFile == "DRR") {
-    dataRate = "2.4Mbps";
-    outputDataRate = "1.6Mbps";
+    dataRate = "4.8Mbps";
+    outputDataRate = "3.2Mbps";
   }
 
   //Create three nodes and form a group
@@ -157,13 +157,13 @@ int main (int argc, char *argv[])
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
     ApplicationContainer apps = server1.Install (c.Get (2));
     apps.Start (Seconds (1.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
     RequestResponseServerHelper server2 (6881);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
     apps = server2.Install (c.Get (2));
     apps.Start (Seconds (1.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
 
     fileName = "stats_SPQ.csv";
     Ptr<NetDevice> netDevice = d1d2.Get(0);
@@ -173,14 +173,14 @@ int main (int argc, char *argv[])
 
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-    Time interPacketInterval = Seconds (0.01);
+    Time interPacketInterval = Seconds (0.005);
     RequestResponseClientHelper client (i1i2.GetAddress (1), 443);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client.Install (c.Get (0));
     apps.Start (Seconds (5.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
 
     RequestResponseClientHelper client2 (i1i2.GetAddress (1), 6881);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
@@ -188,7 +188,7 @@ int main (int argc, char *argv[])
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client2.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
   }
   else { //DRR
     RequestResponseServerHelper server1 (2048);
@@ -196,19 +196,19 @@ int main (int argc, char *argv[])
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
     ApplicationContainer apps = server1.Install (c.Get (2));
     apps.Start (Seconds (1.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
     RequestResponseServerHelper server2 (2049);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
     apps = server2.Install (c.Get (2));
     apps.Start (Seconds (1.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
     RequestResponseServerHelper server3 (2050);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
     apps = server3.Install (c.Get (2));
     apps.Start (Seconds (1.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
 
     fileName = "stats_DRR.csv";
     Ptr<NetDevice> netDevice = d1d2.Get(0);
@@ -217,14 +217,14 @@ int main (int argc, char *argv[])
     p2pNetDevice->SetQueue(drr);
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-    Time interPacketInterval = Seconds (0.01);
+    Time interPacketInterval = Seconds (0.005);
     RequestResponseClientHelper client (i1i2.GetAddress (1), 2048);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
 
     RequestResponseClientHelper client2 (i1i2.GetAddress (1), 2049);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
@@ -232,7 +232,7 @@ int main (int argc, char *argv[])
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client2.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
 
     RequestResponseClientHelper client3 (i1i2.GetAddress (1), 2050);
     client3.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
@@ -240,7 +240,7 @@ int main (int argc, char *argv[])
     client3.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client3.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (60.0));
+    apps.Stop (Seconds (120.0));
   }
 
   AsciiTraceHelper ascii;
@@ -266,7 +266,7 @@ int main (int argc, char *argv[])
   monitor->SetAttribute("PacketSizeBinWidth", DoubleValue(20));
   NS_LOG_INFO ("Run Simulation.");
   //Simulator::Schedule(Seconds(0.2),&sendHandler,udp, nodes2, Ptr<Packet>(&a));
-  Simulator::Stop (Seconds (60));
+  Simulator::Stop (Seconds (120));
   ThroughputMonitor(&flowmonHelper ,monitor);
   Simulator::Run ();
   NS_LOG_INFO ("Done.");

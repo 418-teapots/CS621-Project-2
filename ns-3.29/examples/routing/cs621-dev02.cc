@@ -168,7 +168,7 @@ int main (int argc, char *argv[])
 
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-    Time interPacketInterval = Seconds (0.01);
+    Time interPacketInterval = Seconds (0.02);
     RequestResponseClientHelper client (i1i2.GetAddress (1), 443);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));
@@ -193,7 +193,7 @@ int main (int argc, char *argv[])
     p2pNetDevice->SetQueue(drr);
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
-    Time interPacketInterval = Seconds (0.01);
+    Time interPacketInterval = Seconds (0.02);
     RequestResponseClientHelper client (i1i2.GetAddress (1), 2048);
     client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client.SetAttribute ("Interval", TimeValue (interPacketInterval));

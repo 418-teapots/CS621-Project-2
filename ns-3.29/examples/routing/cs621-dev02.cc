@@ -54,12 +54,10 @@ void ThroughputMonitor (FlowMonitorHelper* fmhelper, Ptr<FlowMonitor> flowMon)
       if (fiveTuple.sourceAddress == Ipv4Address("10.1.1.1") && fiveTuple.destinationAddress == Ipv4Address("10.1.2.2")) {
         myFile << stats->first << "," << stats->second.timeLastRxPacket.GetSeconds() << "," << stats->second.rxPackets <<endl;
 
-        std::cout<<"Flow ID     : " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
-        std::cout<<"Number of Packets Received = " << stats->second.rxPackets <<std::endl;
-        //std::cout<<"Duration    : "<<stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds()<<std::endl;
-        std::cout<<"Last Received Packet  : "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
-        //std::cout<<"Throughput: " << stats->second.rxBytes * 8.0 / (stats->second.timeLastRxPacket.GetSeconds()-stats->second.timeFirstTxPacket.GetSeconds())/1024/1024  << " Mbps"<<std::endl;
-        std::cout<<"---------------------------------------------------------------------------"<<std::endl;
+        //std::cout<<"Flow ID     : " << stats->first <<" ; "<< fiveTuple.sourceAddress <<" -----> "<<fiveTuple.destinationAddress<<std::endl;
+        //std::cout<<"Number of Packets Received = " << stats->second.rxPackets <<std::endl;
+        //std::cout<<"Last Received Packet  : "<< stats->second.timeLastRxPacket.GetSeconds()<<" Seconds"<<std::endl;
+        //std::cout<<"---------------------------------------------------------------------------"<<std::endl;
       }
     }
     myFile.close();
@@ -174,7 +172,7 @@ int main (int argc, char *argv[])
     apps.Stop (Seconds (60.0));
 
     RequestResponseClientHelper client2 (i1i2.GetAddress (1), 6881);
-    client2.SetAttribute ("MaxPackets", UintegerValue (9000));
+    client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
     client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client2.Install (c.Get (0));

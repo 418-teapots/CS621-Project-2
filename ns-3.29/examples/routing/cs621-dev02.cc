@@ -105,7 +105,7 @@ int main (int argc, char *argv[])
     cout << "No config file detected" << endl;
     return 0;
   }
-  if (configFile == "SPQ") {
+  if (configFile == "DRR") {
     dataRate = "3Mbps";
     outputDataRate = "1Mbps";
   }

@@ -105,10 +105,10 @@ int main (int argc, char *argv[])
     cout << "No config file detected" << endl;
     return 0;
   }
-  if (configFile == "SPQ") { 
+  if (configFile == "SPQ") {
     dataRate = "3Mbps";
   }
-  
+
   //Create three nodes and form a group
   NS_LOG_INFO ("Create nodes.");
   NodeContainer c;
@@ -152,7 +152,7 @@ int main (int argc, char *argv[])
   // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
   ApplicationContainer apps = server.Install (c.Get (2));
   apps.Start (Seconds (1.0));
-  apps.Stop (Seconds (40.0));
+  apps.Stop (Seconds (60.0));
 
   if (configFile == "SPQ") {
     fileName = "stats_SPQ.csv";
@@ -160,7 +160,7 @@ int main (int argc, char *argv[])
     Ptr<PointToPointNetDevice> p2pNetDevice = StaticCast<PointToPointNetDevice>(netDevice);
     Ptr<SPQ> spq = Create<SPQ>();
     p2pNetDevice->SetQueue(spq);
-    
+
     // (Client)
     // Create a RequestResponseClient application to send UDP datagrams from node zero to node three.
     Time interPacketInterval = Seconds (0.01);
@@ -170,7 +170,7 @@ int main (int argc, char *argv[])
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client.Install (c.Get (0));
     apps.Start (Seconds (5.0));
-    apps.Stop (Seconds (40.0));
+    apps.Stop (Seconds (60.0));
 
     RequestResponseClientHelper client2 (i1i2.GetAddress (1), 6881);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
@@ -178,7 +178,7 @@ int main (int argc, char *argv[])
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client2.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (40.0));
+    apps.Stop (Seconds (60.0));
   }
   else { //DRR
     fileName = "stats_DRR.csv";
@@ -195,7 +195,7 @@ int main (int argc, char *argv[])
     client.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (40.0));
+    apps.Stop (Seconds (60.0));
 
     RequestResponseClientHelper client2 (i1i2.GetAddress (1), 2049);
     client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
@@ -203,7 +203,7 @@ int main (int argc, char *argv[])
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client2.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (40.0));
+    apps.Stop (Seconds (60.0));
 
     RequestResponseClientHelper client3 (i1i2.GetAddress (1), 2050);
     client3.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
@@ -211,7 +211,7 @@ int main (int argc, char *argv[])
     client3.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client3.Install (c.Get (0));
     apps.Start (Seconds (2.0));
-    apps.Stop (Seconds (40.0));
+    apps.Stop (Seconds (60.0));
   }
 
   AsciiTraceHelper ascii;
@@ -237,7 +237,7 @@ int main (int argc, char *argv[])
   monitor->SetAttribute("PacketSizeBinWidth", DoubleValue(20));
   NS_LOG_INFO ("Run Simulation.");
   //Simulator::Schedule(Seconds(0.2),&sendHandler,udp, nodes2, Ptr<Packet>(&a));
-  Simulator::Stop (Seconds (40));
+  Simulator::Stop (Seconds (60));
   ThroughputMonitor(&flowmonHelper ,monitor);
   Simulator::Run ();
   NS_LOG_INFO ("Done.");

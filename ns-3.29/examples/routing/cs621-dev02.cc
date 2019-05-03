@@ -174,7 +174,7 @@ int main (int argc, char *argv[])
     apps.Stop (Seconds (60.0));
 
     RequestResponseClientHelper client2 (i1i2.GetAddress (1), 6881);
-    client2.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+    client2.SetAttribute ("MaxPackets", UintegerValue (9000));
     client2.SetAttribute ("Interval", TimeValue (interPacketInterval));
     client2.SetAttribute ("PacketSize", UintegerValue (packetSize));
     apps = client2.Install (c.Get (0));

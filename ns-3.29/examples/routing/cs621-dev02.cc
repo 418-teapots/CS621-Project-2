@@ -75,8 +75,8 @@ int main (int argc, char *argv[])
   uint32_t packetSize = 1000; //#size of the packets
   uint32_t maxPacketCount = 3000;//# of packets to send
   // std::string dataRate = "3Mbps";
-  std::string dataRate = "1.6Mbps";
-  std::string outputDataRate = "0.5Mbps";
+  std::string dataRate = "0.8Mbps";
+  std::string outputDataRate = "0.4Mbps";
   std::string configFile;
   std::vector<uint32_t> queueList;
   int queueSize = 0;
@@ -111,7 +111,7 @@ int main (int argc, char *argv[])
   }
   if (configFile == "DRR") {
     dataRate = "1.2Mbps";
-    outputDataRate = "1Mbps";
+    outputDataRate = "0.8Mbps";
   }
 
   //Create three nodes and form a group

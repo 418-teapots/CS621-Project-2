@@ -97,7 +97,7 @@ int main (int argc, char *argv[])
     while(getline(cFile, line, ','))
     {
       if (queueSize == 0) {
-        queueSize = std::stoi(line)
+        queueSize = std::stoi(line);
       }
       else {
         queueList.push_back(std::stoi(line));

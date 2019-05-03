@@ -161,7 +161,7 @@ int main (int argc, char *argv[])
     RequestResponseServerHelper server2 (6881);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server2.Install (c.Get (2));
+    apps = server2.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
 
@@ -200,13 +200,13 @@ int main (int argc, char *argv[])
     RequestResponseServerHelper server2 (2049);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server2.Install (c.Get (2));
+    apps = server2.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
     RequestResponseServerHelper server3 (2050);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server3.Install (c.Get (2));
+    apps = server3.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
 

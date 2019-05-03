@@ -152,16 +152,16 @@ int main (int argc, char *argv[])
 
   NS_LOG_INFO ("Create Applications.");
   if (configFile == "SPQ") {
-    RequestResponseServerHelper server (443);
+    RequestResponseServerHelper server1 (443);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server.Install (c.Get (2));
+    ApplicationContainer apps = server1.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
-    RequestResponseServerHelper server (6881);
+    RequestResponseServerHelper server2 (6881);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server.Install (c.Get (2));
+    ApplicationContainer apps = server2.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
 
@@ -191,25 +191,25 @@ int main (int argc, char *argv[])
     apps.Stop (Seconds (60.0));
   }
   else { //DRR
-    RequestResponseServerHelper server (2048);
+    RequestResponseServerHelper server1 (2048);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server.Install (c.Get (2));
+    ApplicationContainer apps = server1.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
-    RequestResponseServerHelper server (2049);
+    RequestResponseServerHelper server2 (2049);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server.Install (c.Get (2));
+    ApplicationContainer apps = server2.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
-    RequestResponseServerHelper server (2050);
+    RequestResponseServerHelper server3 (2050);
     // uint32_t responseSize = 1024;
     // server.SetAttribute ("PacketSize", UintegerValue (responseSize));
-    ApplicationContainer apps = server.Install (c.Get (2));
+    ApplicationContainer apps = server3.Install (c.Get (2));
     apps.Start (Seconds (1.0));
     apps.Stop (Seconds (60.0));
-    
+
     fileName = "stats_DRR.csv";
     Ptr<NetDevice> netDevice = d1d2.Get(0);
     Ptr<PointToPointNetDevice> p2pNetDevice = StaticCast<PointToPointNetDevice>(netDevice);

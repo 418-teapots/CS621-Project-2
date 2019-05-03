@@ -79,7 +79,7 @@ int main (int argc, char *argv[])
   std::string outputDataRate = "0.5Mbps";
   std::string configFile;
   std::vector<uint32_t> queueList;
-  std::int queueSize = 0;
+  int queueSize = 0;
   // Allow the user to override any of the defaults and the above
   CommandLine cmd;
   cmd.AddValue("conf", "Specify the config file", configFile);
@@ -96,7 +96,7 @@ int main (int argc, char *argv[])
     std::string line;
     while(getline(cFile, line, ','))
     {
-      if (queueSize == 0 ) {
+      if (queueSize == 0) {
         queueSize = std::stoi(line)
       }
       else {

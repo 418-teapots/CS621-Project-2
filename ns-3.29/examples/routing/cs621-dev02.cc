@@ -110,7 +110,7 @@ int main (int argc, char *argv[])
     return 0;
   }
   if (configFile == "DRR") {
-    dataRate = "2Mbps";
+    dataRate = "1.2Mbps";
     outputDataRate = "1Mbps";
   }
 
@@ -129,10 +129,10 @@ int main (int argc, char *argv[])
   NS_LOG_INFO ("Create channels.");
   PointToPointHelper p2p;
   p2p.SetDeviceAttribute ("DataRate", StringValue (dataRate));
-  p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));
+  p2p.SetChannelAttribute ("Delay", StringValue ("2ms"));
   NetDeviceContainer d0d1 = p2p.Install (n0n1); //outer links
   p2p.SetDeviceAttribute ("DataRate", StringValue (outputDataRate));
-  p2p.SetChannelAttribute ("Delay", StringValue ("10ms"));
+  p2p.SetChannelAttribute ("Delay", StringValue ("2ms"));
   NetDeviceContainer d1d2 = p2p.Install (n1n2); //outer links
 
   //Add IP addresses
